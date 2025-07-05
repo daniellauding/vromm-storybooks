@@ -14,4 +14,4 @@ export * from './utils';
 export * from './hooks';
 
 // Styles
-import './styles/globals.css'; 
+import './styles/globals.scss'; 

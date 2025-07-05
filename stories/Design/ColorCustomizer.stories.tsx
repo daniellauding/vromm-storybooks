@@ -134,14 +134,28 @@ ${cssExport}
               
               {/* Color preview swatches */}
               <div className="grid grid-cols-5 gap-1">
-                {[100, 300, 500, 700, 900].map(shade => (
-                  <div
-                    key={shade}
-                    className={`w-full h-6 rounded-sm border border-neutral-200`}
-                    style={{ backgroundColor: `rgb(var(--vromm-color-${name}-${shade}))` }}
-                    title={`${name}-${shade}`}
-                  />
-                ))}
+                {[100, 300, 500, 700, 900].map(shade => {
+                  // Generate actual color value instead of CSS variable
+                  const hex = color.replace('#', '');
+                  const r = parseInt(hex.substring(0, 2), 16);
+                  const g = parseInt(hex.substring(2, 4), 16);
+                  const b = parseInt(hex.substring(4, 6), 16);
+                  
+                  const factor = shade === 500 ? 1 : shade < 500 ? 1 + (500 - shade) / 500 * 0.9 : 1 - (shade - 500) / 500 * 0.6;
+                  const newR = Math.round(Math.min(255, Math.max(0, r * factor)));
+                  const newG = Math.round(Math.min(255, Math.max(0, g * factor)));
+                  const newB = Math.round(Math.min(255, Math.max(0, b * factor)));
+                  const actualColor = `rgb(${newR}, ${newG}, ${newB})`;
+                  
+                  return (
+                    <div
+                      key={shade}
+                      className={`w-full h-6 rounded-sm border border-neutral-200`}
+                      style={{ backgroundColor: actualColor }}
+                      title={`${name}-${shade}`}
+                    />
+                  );
+                })}
               </div>
             </div>
           ))}

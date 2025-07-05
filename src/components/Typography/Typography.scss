@@ -1,0 +1,11 @@
+/* Typography Component Styles - Minimal since components use Tailwind classes */
+
+// Base text styles - only for design system font families
+.vromm-text {
+  font-family: var(--vromm-font-family-sans);
+}
+
+// Base title styles - only for design system font families
+.vromm-title {
+  font-family: var(--vromm-font-family-title);
+} 

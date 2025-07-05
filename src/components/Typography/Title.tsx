@@ -55,15 +55,15 @@ const weightClasses = {
 };
 
 const variantClasses = {
-  default: 'text-foreground',
-  weak: 'text-muted-foreground',
-  disabled: 'text-neutral-400 cursor-not-allowed',
-  inverted: 'text-background',
-  primary: 'text-primary-600',
-  secondary: 'text-secondary-600',
-  success: 'text-success-600',
-  warning: 'text-warning-600',
-  error: 'text-error-600',
+  default: 'text-gray-900 dark:text-gray-100',
+  weak: 'text-gray-600 dark:text-gray-400',
+  disabled: 'text-gray-400 cursor-not-allowed dark:text-gray-500',
+  inverted: 'text-white dark:text-gray-900',
+  primary: 'text-blue-600 dark:text-blue-400',
+  secondary: 'text-gray-600 dark:text-gray-400',
+  success: 'text-green-600 dark:text-green-400',
+  warning: 'text-yellow-600 dark:text-yellow-400',
+  error: 'text-red-600 dark:text-red-400',
 };
 
 const alignClasses = {

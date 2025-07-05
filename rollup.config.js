@@ -38,7 +38,7 @@ export default {
       config: {
         path: './postcss.config.cjs',
       },
-      extensions: ['.css'],
+      extensions: ['.css', '.scss'],
       minimize: true,
       inject: {
         insertAt: 'top', // Insert at top so host project CSS wins

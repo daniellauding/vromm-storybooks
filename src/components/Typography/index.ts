@@ -1,6 +1,7 @@
-export * from './Title';
-export * from './Text';
+import './Typography.scss';
 
-// Re-export for convenience
+export { Text } from './Text';
 export { Title } from './Title';
-export { Text } from './Text'; 
+
+export type { TextProps } from './Text';
+export type { TitleProps } from './Title'; 

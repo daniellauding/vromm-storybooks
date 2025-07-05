@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { cn } from '../../utils/cn';
 import { LucideIcon } from 'lucide-react';
+import './Button.scss';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -84,204 +85,46 @@ export interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorEl
   children?: React.ReactNode;
 }
 
-// Base button styles
-const baseButtonClasses = [
-  'inline-flex',
-  'items-center',
-  'justify-center',
-  'gap-2',
-  'font-title',
-  'font-extrabold',
-  'italic',
-  'transition-all',
-  'duration-200',
-  'ease-in-out',
-  'focus:outline-none',
-  'focus:ring-2',
-  'focus:ring-offset-2',
-  'disabled:opacity-50',
-  'disabled:cursor-not-allowed',
-  'disabled:pointer-events-none',
-  'select-none',
-  'relative',
-  'overflow-hidden',
-  'border',
-  'rounded-md',
-].join(' ');
+// Base button classes using SCSS
+const baseButtonClasses = 'vromm-button';
 
-// Size variants
+// Size variants using SCSS
 const sizeClasses = {
-  xs: 'px-2.5 py-1.5 text-xs min-h-[28px]',
-  sm: 'px-3 py-2 text-sm min-h-[32px]',
-  md: 'px-4 py-2.5 text-sm min-h-[40px]',
-  lg: 'px-6 py-3 text-base min-h-[48px]',
+  xs: 'vromm-button--xs',
+  sm: 'vromm-button--sm',
+  md: 'vromm-button--md',
+  lg: 'vromm-button--lg',
 };
 
-// Icon only size adjustments
+// Icon only size adjustments using SCSS
 const iconOnlySizeClasses = {
-  xs: 'w-7 h-7 p-1.5',
-  sm: 'w-8 h-8 p-2',
-  md: 'w-10 h-10 p-2.5',
-  lg: 'w-12 h-12 p-3',
+  xs: 'vromm-button--icon-xs',
+  sm: 'vromm-button--icon-sm',
+  md: 'vromm-button--icon-md',
+  lg: 'vromm-button--icon-lg',
 };
 
-// Variant and fill combinations
+// Variant and fill combinations using SCSS
 const variantFillClasses = {
   primary: {
-    solid: [
-      'bg-primary-600',
-      'text-white',
-      'border-primary-600',
-      'hover:bg-primary-700',
-      'hover:border-primary-700',
-      'focus:ring-primary-500',
-      'active:bg-primary-800',
-      'shadow-sm',
-      'hover:shadow-md',
-    ].join(' '),
-    outline: [
-      'bg-transparent',
-      'text-primary-600',
-      'border-primary-600',
-      'hover:bg-primary-50',
-      'hover:text-primary-700',
-      'focus:ring-primary-500',
-      'active:bg-primary-100',
-      'dark:hover:bg-primary-950',
-      'dark:text-primary-400',
-      'dark:border-primary-400',
-      'dark:hover:text-primary-300',
-    ].join(' '),
-    text: [
-      'bg-transparent',
-      'text-primary-600',
-      'border-transparent',
-      'hover:bg-primary-50',
-      'hover:text-primary-700',
-      'focus:ring-primary-500',
-      'active:bg-primary-100',
-      'dark:hover:bg-primary-950',
-      'dark:text-primary-400',
-      'dark:hover:text-primary-300',
-    ].join(' '),
+    solid: 'vromm-button--primary-solid',
+    outline: 'vromm-button--primary-outline',
+    text: 'vromm-button--primary-text',
   },
   secondary: {
-    solid: [
-      'bg-neutral-100',
-      'text-neutral-900',
-      'border-neutral-300',
-      'hover:bg-neutral-200',
-      'hover:border-neutral-400',
-      'focus:ring-neutral-500',
-      'active:bg-neutral-300',
-      'shadow-sm',
-      'hover:shadow-md',
-      'dark:bg-neutral-800',
-      'dark:text-neutral-100',
-      'dark:border-neutral-600',
-      'dark:hover:bg-neutral-700',
-    ].join(' '),
-    outline: [
-      'bg-transparent',
-      'text-neutral-700',
-      'border-neutral-300',
-      'hover:bg-neutral-50',
-      'hover:text-neutral-900',
-      'focus:ring-neutral-500',
-      'active:bg-neutral-100',
-      'dark:text-neutral-300',
-      'dark:border-neutral-600',
-      'dark:hover:bg-neutral-800',
-      'dark:hover:text-neutral-100',
-    ].join(' '),
-    text: [
-      'bg-transparent',
-      'text-neutral-700',
-      'border-transparent',
-      'hover:bg-neutral-50',
-      'hover:text-neutral-900',
-      'focus:ring-neutral-500',
-      'active:bg-neutral-100',
-      'dark:text-neutral-300',
-      'dark:hover:bg-neutral-800',
-      'dark:hover:text-neutral-100',
-    ].join(' '),
+    solid: 'vromm-button--secondary-solid',
+    outline: 'vromm-button--secondary-outline',
+    text: 'vromm-button--secondary-text',
   },
   destructive: {
-    solid: [
-      'bg-error-600',
-      'text-white',
-      'border-error-600',
-      'hover:bg-error-700',
-      'hover:border-error-700',
-      'focus:ring-error-500',
-      'active:bg-error-800',
-      'shadow-sm',
-      'hover:shadow-md',
-    ].join(' '),
-    outline: [
-      'bg-transparent',
-      'text-error-600',
-      'border-error-600',
-      'hover:bg-error-50',
-      'hover:text-error-700',
-      'focus:ring-error-500',
-      'active:bg-error-100',
-      'dark:hover:bg-error-950',
-      'dark:text-error-400',
-      'dark:border-error-400',
-      'dark:hover:text-error-300',
-    ].join(' '),
-    text: [
-      'bg-transparent',
-      'text-error-600',
-      'border-transparent',
-      'hover:bg-error-50',
-      'hover:text-error-700',
-      'focus:ring-error-500',
-      'active:bg-error-100',
-      'dark:hover:bg-error-950',
-      'dark:text-error-400',
-      'dark:hover:text-error-300',
-    ].join(' '),
+    solid: 'vromm-button--destructive-solid',
+    outline: 'vromm-button--destructive-outline',
+    text: 'vromm-button--destructive-text',
   },
   success: {
-    solid: [
-      'bg-success-600',
-      'text-white',
-      'border-success-600',
-      'hover:bg-success-700',
-      'hover:border-success-700',
-      'focus:ring-success-500',
-      'active:bg-success-800',
-      'shadow-sm',
-      'hover:shadow-md',
-    ].join(' '),
-    outline: [
-      'bg-transparent',
-      'text-success-600',
-      'border-success-600',
-      'hover:bg-success-50',
-      'hover:text-success-700',
-      'focus:ring-success-500',
-      'active:bg-success-100',
-      'dark:hover:bg-success-950',
-      'dark:text-success-400',
-      'dark:border-success-400',
-      'dark:hover:text-success-300',
-    ].join(' '),
-    text: [
-      'bg-transparent',
-      'text-success-600',
-      'border-transparent',
-      'hover:bg-success-50',
-      'hover:text-success-700',
-      'focus:ring-success-500',
-      'active:bg-success-100',
-      'dark:hover:bg-success-950',
-      'dark:text-success-400',
-      'dark:hover:text-success-300',
-    ].join(' '),
+    solid: 'vromm-button--success-solid',
+    outline: 'vromm-button--success-outline',
+    text: 'vromm-button--success-text',
   },
 };
 
@@ -337,8 +180,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     baseButtonClasses,
     fillClasses,
     iconOnly ? iconOnlySizeClasses[size] : sizeClasses[size],
-    fullWidth && 'w-full',
-    loading && 'cursor-wait',
+    fullWidth && 'vromm-button--full',
+    loading && 'vromm-button--loading',
     className
   );
 
@@ -361,7 +204,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
       {/* Loading spinner */}
       {loading && (
         <svg
-          className="animate-spin"
+          className="vromm-spinner"
           width={iconSize}
           height={iconSize}
           viewBox="0 0 24 24"
@@ -437,8 +280,8 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(({
     baseButtonClasses,
     fillClasses,
     iconOnly ? iconOnlySizeClasses[size] : sizeClasses[size],
-    fullWidth && 'w-full',
-    'no-underline', // Remove default anchor underline
+    fullWidth && 'vromm-button--full',
+    'vromm-link-button', // Remove default anchor underline
     className
   );
 
