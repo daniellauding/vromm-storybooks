@@ -26,10 +26,8 @@ npm link @daniellauding/vromm-design-system
 
 ### Basic Setup
 ```tsx
-// Import components
+// Import components - CSS is automatically included!
 import { Title, Text, Button } from '@daniellauding/vromm-design-system';
-// IMPORTANT: Import styles for web
-import '@daniellauding/vromm-design-system/dist/styles.css';
 
 function App() {
   return (
@@ -320,7 +318,8 @@ The design system automatically supports dark mode:
    - Use `--legacy-peer-deps` flag: `npm install @daniellauding/vromm-design-system --legacy-peer-deps`
 
 3. **Styles not working in web**
-   - Make sure to import the CSS: `import '@daniellauding/vromm-design-system/dist/styles.css'`
+   - Update to version 1.0.1 or later: `npm update @daniellauding/vromm-design-system`
+   - CSS is now automatically bundled - no separate import needed!
 
 4. **Colors not updating**
    - Check your CSS custom properties are properly defined
@@ -493,7 +492,7 @@ npm install lucide-react
 **App.js:**
 ```tsx
 import React from 'react';
-import '@daniellauding/vromm-design-system/dist/styles.css'; // REQUIRED!
+// CSS is automatically included - no separate import needed!
 import { Title, Text, Button } from '@daniellauding/vromm-design-system';
 import { Play, Download, Heart, Settings } from 'lucide-react';
 
@@ -868,9 +867,9 @@ export default App;
 
 ### **React Web Setup:**
 - [ ] `npm install @daniellauding/vromm-design-system`
-- [ ] Import CSS: `import '@daniellauding/vromm-design-system/dist/styles.css'`
 - [ ] Import components: `import { Title, Text, Button } from '@daniellauding/vromm-design-system'`
 - [ ] (Optional) Install icons: `npm install lucide-react`
+- [ ] ✨ **CSS is automatically included - no separate import needed!**
 
 ### **React Native Setup:**
 - [ ] `npm install @daniellauding/vromm-design-system --legacy-peer-deps`  
