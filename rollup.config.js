@@ -40,9 +40,8 @@ export default {
       },
       extensions: ['.css'],
       minimize: true,
-      inject: {
-        insertAt: 'top',
-      },
+      inject: true, // Auto-inject CSS into JS bundle
+      extract: false, // Don't create separate CSS file
     }),
     babel({
       exclude: 'node_modules/**',

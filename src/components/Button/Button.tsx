@@ -329,9 +329,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     }
   };
 
+  // Safely get variant and fill classes with fallbacks
+  const variantClasses = variantFillClasses[variant] || variantFillClasses.secondary;
+  const fillClasses = variantClasses[fill] || variantClasses.solid;
+  
   const classes = cn(
     baseButtonClasses,
-    variantFillClasses[variant][fill],
+    fillClasses,
     iconOnly ? iconOnlySizeClasses[size] : sizeClasses[size],
     fullWidth && 'w-full',
     loading && 'cursor-wait',
@@ -425,9 +429,13 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(({
     }
   };
 
+  // Safely get variant and fill classes with fallbacks
+  const variantClasses = variantFillClasses[variant] || variantFillClasses.secondary;
+  const fillClasses = variantClasses[fill] || variantClasses.solid;
+  
   const classes = cn(
     baseButtonClasses,
-    variantFillClasses[variant][fill],
+    fillClasses,
     iconOnly ? iconOnlySizeClasses[size] : sizeClasses[size],
     fullWidth && 'w-full',
     'no-underline', // Remove default anchor underline
