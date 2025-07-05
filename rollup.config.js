@@ -36,11 +36,13 @@ export default {
     }),
     postcss({
       config: {
-        path: './postcss.config.js',
+        path: './postcss.config.cjs',
       },
       extensions: ['.css'],
       minimize: true,
-      inject: true, // Auto-inject CSS into JS bundle
+      inject: {
+        insertAt: 'top', // Insert at top so host project CSS wins
+      },
       extract: false, // Don't create separate CSS file
     }),
     babel({

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Title, Text } from '@daniellauding/vromm-design-system';
-import '@daniellauding/vromm-design-system/dist/styles.css'; // Required for web
 
 export function TextUsageExample() {
   return (
