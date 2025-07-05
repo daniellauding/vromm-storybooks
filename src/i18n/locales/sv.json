@@ -1,0 +1,40 @@
+{
+  "common": {
+    "loading": "Laddar...",
+    "error": "Fel",
+    "success": "Framgång",
+    "warning": "Varning",
+    "info": "Information"
+  },
+  "typography": {
+    "heading": "Rubrik",
+    "title": "Titel",
+    "text": "Text",
+    "caption": "Bildtext",
+    "label": "Etikett"
+  },
+  "actions": {
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "submit": "Skicka",
+    "edit": "Redigera",
+    "delete": "Radera",
+    "close": "Stäng",
+    "back": "Tillbaka",
+    "next": "Nästa",
+    "previous": "Föregående"
+  },
+  "examples": {
+    "welcome": "Välkommen till Vromm Design System",
+    "description": "Ett omfattande komponentbibliotek byggt med React, TypeScript och Tailwind CSS",
+    "features": {
+      "title": "Funktioner",
+      "responsive": "Responsiv Design",
+      "darkMode": "Stöd för Mörkt Läge",
+      "i18n": "Internationalisering",
+      "a11y": "Tillgänglighet",
+      "typescript": "TypeScript Stöd",
+      "storybook": "Storybook Dokumentation"
+    }
+  }
+} 

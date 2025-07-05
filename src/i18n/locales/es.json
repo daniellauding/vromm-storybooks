@@ -1,0 +1,40 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información"
+  },
+  "typography": {
+    "heading": "Encabezado",
+    "title": "Título",
+    "text": "Texto",
+    "caption": "Leyenda",
+    "label": "Etiqueta"
+  },
+  "actions": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior"
+  },
+  "examples": {
+    "welcome": "Bienvenido a Vromm Design System",
+    "description": "Una biblioteca de componentes completa construida con React, TypeScript y Tailwind CSS",
+    "features": {
+      "title": "Características",
+      "responsive": "Diseño Responsivo",
+      "darkMode": "Soporte para Modo Oscuro",
+      "i18n": "Internacionalización",
+      "a11y": "Accesibilidad",
+      "typescript": "Soporte para TypeScript",
+      "storybook": "Documentación Storybook"
+    }
+  }
+} 
