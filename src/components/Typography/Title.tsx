@@ -1,24 +1,52 @@
 import React, { forwardRef } from 'react';
-import { TypographyProps } from '../../types';
-import { cn } from '../../utils';
+import { cn } from '../../utils/cn';
 
-const sizeStyles = {
-  xs: 'text-xs',
-  sm: 'text-sm',
-  base: 'text-base',
-  lg: 'text-lg',
-  xl: 'text-xl',
-  '2xl': 'text-2xl',
-  '3xl': 'text-3xl',
-  '4xl': 'text-4xl',
-  '5xl': 'text-5xl',
-  '6xl': 'text-6xl',
-  '7xl': 'text-7xl',
-  '8xl': 'text-8xl',
-  '9xl': 'text-9xl',
+export interface TitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  children: React.ReactNode;
+  /**
+   * Heading level (semantic HTML)
+   */
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
+  /**
+   * Visual size (independent of semantic level)
+   */
+  size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl';
+  /**
+   * Font weight
+   */
+  weight?: 'light' | 'normal' | 'medium' | 'semibold' | 'bold';
+  /**
+   * Text color variant
+   */
+  variant?: 'default' | 'weak' | 'disabled' | 'inverted' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+  /**
+   * Text alignment
+   */
+  align?: 'left' | 'center' | 'right' | 'justify';
+  /**
+   * Whether text should be truncated with ellipsis
+   */
+  truncate?: boolean;
+  /**
+   * Font family variant
+   */
+  family?: 'title' | 'sans' | 'mono';
+}
+
+const sizeClasses = {
+  xs: 'text-base',
+  sm: 'text-lg',
+  base: 'text-xl',
+  lg: 'text-2xl',
+  xl: 'text-3xl',
+  '2xl': 'text-4xl',
+  '3xl': 'text-5xl',
+  '4xl': 'text-6xl',
+  '5xl': 'text-7xl',
+  '6xl': 'text-8xl',
 };
 
-const weightStyles = {
+const weightClasses = {
   light: 'font-light',
   normal: 'font-normal',
   medium: 'font-medium',
@@ -26,116 +54,97 @@ const weightStyles = {
   bold: 'font-bold',
 };
 
-const variantStyles = {
-  primary: 'text-slate-900 dark:text-slate-50',
-  secondary: 'text-slate-600 dark:text-slate-400',
-  tertiary: 'text-slate-500 dark:text-slate-500',
-  success: 'text-green-600 dark:text-green-400',
-  warning: 'text-amber-600 dark:text-amber-400',
-  error: 'text-red-600 dark:text-red-400',
+const variantClasses = {
+  default: 'text-foreground',
+  weak: 'text-muted-foreground',
+  disabled: 'text-neutral-400 cursor-not-allowed',
+  inverted: 'text-background',
+  primary: 'text-primary-600',
+  secondary: 'text-secondary-600',
+  success: 'text-success-600',
+  warning: 'text-warning-600',
+  error: 'text-error-600',
 };
 
-const alignStyles = {
+const alignClasses = {
   left: 'text-left',
   center: 'text-center',
   right: 'text-right',
   justify: 'text-justify',
 };
 
-const transformStyles = {
-  none: 'normal-case',
-  uppercase: 'uppercase',
-  lowercase: 'lowercase',
-  capitalize: 'capitalize',
+const familyClasses = {
+  title: 'font-title font-extrabold italic',
+  sans: 'font-sans',
+  mono: 'font-mono',
 };
 
-export interface TitleProps extends TypographyProps {
-  level?: 1 | 2 | 3 | 4 | 5 | 6;
-}
+/**
+ * Title component for headings and titles with semantic HTML support.
+ * 
+ * Features:
+ * - Semantic heading levels (h1-h6) for accessibility
+ * - Visual size independent of semantic level
+ * - Font weight control
+ * - Color variants for different semantic meanings
+ * - Text alignment options
+ * - Text truncation support
+ * - Font family variants (sans/mono)
+ * - Dark mode support via design tokens
+ */
+export const Title = forwardRef<HTMLHeadingElement, TitleProps>(({
+  children,
+  level = 1,
+  size = '2xl',
+  weight = 'semibold',
+  variant = 'default',
+  align = 'left',
+  truncate = false,
+  family = 'title',
+  className,
+  ...props
+}, ref) => {
+  // Map level to HTML tag
+  const tagMap = {
+    1: 'h1',
+    2: 'h2',
+    3: 'h3',
+    4: 'h4',
+    5: 'h5',
+    6: 'h6',
+  } as const;
 
-const Title = forwardRef<HTMLHeadingElement, TitleProps>(
-  (
-    {
-      as,
-      level = 1,
-      size = '2xl',
-      weight = 'semibold',
-      variant = 'primary',
-      align = 'left',
-      transform = 'none',
-      italic = false,
-      underline = false,
-      truncate = false,
-      balance = false,
-      className,
-      children,
-      'data-testid': testId,
-      ...props
-    },
-    ref
-  ) => {
-    // Determine the HTML element to use
-    const Component = (as || (`h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6')) as 'h1';
+  const Component = tagMap[level];
+  
+  const classes = cn(
+    // Base styles
+    'tracking-tight leading-tight',
+    // Size
+    sizeClasses[size],
+    // Weight
+    weightClasses[weight],
+    // Variant
+    variantClasses[variant],
+    // Alignment
+    alignClasses[align],
+    // Font family
+    familyClasses[family],
+    // Truncation
+    truncate && 'truncate',
+    // Dark mode support
+    'dark:text-opacity-90',
+    className
+  );
 
-    // Default sizes for different heading levels
-    const defaultSizes = {
-      1: '4xl',
-      2: '3xl',
-      3: '2xl',
-      4: 'xl',
-      5: 'lg',
-      6: 'base',
-    } as const;
+  return (
+    <Component
+      ref={ref}
+      className={classes}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+});
 
-    // Use provided size or default based on level
-    const finalSize = size || defaultSizes[level];
-
-    const classes = cn(
-      // Base styles
-      'font-sans',
-      'vromm-transition',
-      
-      // Size styles
-      sizeStyles[finalSize],
-      
-      // Weight styles
-      weightStyles[weight],
-      
-      // Variant styles
-      variantStyles[variant],
-      
-      // Alignment styles
-      alignStyles[align],
-      
-      // Transform styles
-      transformStyles[transform],
-      
-      // Conditional styles
-      {
-        'italic': italic,
-        'underline': underline,
-        'truncate': truncate,
-        'text-balance': balance,
-      },
-      
-      // Custom className
-      className
-    );
-
-    return (
-      <Component
-        ref={ref}
-        className={classes}
-        data-testid={testId}
-        {...props}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
-
-Title.displayName = 'Title';
-
-export { Title };
-export default Title; 
+Title.displayName = 'Title'; 

@@ -1,6 +1,7 @@
 export * from './colors';
 export * from './typography';
 export * from './spacing';
+export * from './brand-colors';
 
 // Combined tokens for easy access
 export const tokens = {

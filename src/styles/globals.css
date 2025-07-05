@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap');
 
 @tailwind base;
@@ -6,64 +6,149 @@
 @tailwind utilities;
 
 :root {
-  --vromm-primary-50: #f0f9ff;
-  --vromm-primary-100: #e0f2fe;
-  --vromm-primary-200: #bae6fd;
-  --vromm-primary-300: #7dd3fc;
-  --vromm-primary-400: #38bdf8;
-  --vromm-primary-500: #0ea5e9;
-  --vromm-primary-600: #0284c7;
-  --vromm-primary-700: #0369a1;
-  --vromm-primary-800: #075985;
-  --vromm-primary-900: #0c4a6e;
+  /* Design Tokens - Primary Colors */
+  --vromm-color-primary-50: #f0f9ff;
+  --vromm-color-primary-100: #e0f2fe;
+  --vromm-color-primary-200: #bae6fd;
+  --vromm-color-primary-300: #7dd3fc;
+  --vromm-color-primary-400: #38bdf8;
+  --vromm-color-primary-500: #0ea5e9;
+  --vromm-color-primary-600: #0284c7;
+  --vromm-color-primary-700: #0369a1;
+  --vromm-color-primary-800: #075985;
+  --vromm-color-primary-900: #0c4a6e;
+
+  /* Design Tokens - Secondary Colors */
+  --vromm-color-secondary-50: #f8fafc;
+  --vromm-color-secondary-100: #f1f5f9;
+  --vromm-color-secondary-200: #e2e8f0;
+  --vromm-color-secondary-300: #cbd5e1;
+  --vromm-color-secondary-400: #94a3b8;
+  --vromm-color-secondary-500: #64748b;
+  --vromm-color-secondary-600: #475569;
+  --vromm-color-secondary-700: #334155;
+  --vromm-color-secondary-800: #1e293b;
+  --vromm-color-secondary-900: #0f172a;
+
+  /* Design Tokens - Neutral Colors */
+  --vromm-color-neutral-50: #fafafa;
+  --vromm-color-neutral-100: #f5f5f5;
+  --vromm-color-neutral-200: #e5e5e5;
+  --vromm-color-neutral-300: #d4d4d4;
+  --vromm-color-neutral-400: #a3a3a3;
+  --vromm-color-neutral-500: #737373;
+  --vromm-color-neutral-600: #525252;
+  --vromm-color-neutral-700: #404040;
+  --vromm-color-neutral-800: #262626;
+  --vromm-color-neutral-900: #171717;
+
+  /* Design Tokens - Semantic Colors */
+  --vromm-color-success-50: #f0fdf4;
+  --vromm-color-success-100: #dcfce7;
+  --vromm-color-success-200: #bbf7d0;
+  --vromm-color-success-300: #86efac;
+  --vromm-color-success-400: #4ade80;
+  --vromm-color-success-500: #22c55e;
+  --vromm-color-success-600: #16a34a;
+  --vromm-color-success-700: #15803d;
+  --vromm-color-success-800: #166534;
+  --vromm-color-success-900: #14532d;
+
+  --vromm-color-warning-50: #fffbeb;
+  --vromm-color-warning-100: #fef3c7;
+  --vromm-color-warning-200: #fde68a;
+  --vromm-color-warning-300: #fcd34d;
+  --vromm-color-warning-400: #fbbf24;
+  --vromm-color-warning-500: #f59e0b;
+  --vromm-color-warning-600: #d97706;
+  --vromm-color-warning-700: #b45309;
+  --vromm-color-warning-800: #92400e;
+  --vromm-color-warning-900: #78350f;
+
+  --vromm-color-error-50: #fef2f2;
+  --vromm-color-error-100: #fee2e2;
+  --vromm-color-error-200: #fecaca;
+  --vromm-color-error-300: #fca5a5;
+  --vromm-color-error-400: #f87171;
+  --vromm-color-error-500: #ef4444;
+  --vromm-color-error-600: #dc2626;
+  --vromm-color-error-700: #b91c1c;
+  --vromm-color-error-800: #991b1b;
+  --vromm-color-error-900: #7f1d1d;
+
+  /* Semantic Text Colors */
+  --vromm-color-text: var(--vromm-color-neutral-900);
+  --vromm-color-text-weak: var(--vromm-color-neutral-600);
+  --vromm-color-text-disabled: var(--vromm-color-neutral-400);
+  --vromm-color-text-inverted: var(--vromm-color-neutral-50);
+
+  /* Semantic Background Colors */
+  --vromm-color-background: #ffffff;
+  --vromm-color-background-medium: var(--vromm-color-neutral-50);
+  --vromm-color-background-strong: var(--vromm-color-neutral-100);
+  --vromm-color-background-disabled: var(--vromm-color-neutral-100);
+
+  /* Semantic Border Colors */
+  --vromm-color-border: var(--vromm-color-neutral-300);
+  --vromm-color-border-weak: var(--vromm-color-neutral-200);
+  --vromm-color-border-strong: var(--vromm-color-neutral-400);
+  --vromm-color-border-disabled: var(--vromm-color-neutral-200);
+
+  /* Typography Tokens */
+  --vromm-font-family-title: 'Rubik', sans-serif;
+  --vromm-font-family-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --vromm-font-family-mono: 'Fira Code', 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+
+  /* Spacing Tokens */
+  --vromm-spacing-xs: 0.25rem;
+  --vromm-spacing-sm: 0.5rem;
+  --vromm-spacing-md: 1rem;
+  --vromm-spacing-lg: 1.5rem;
+  --vromm-spacing-xl: 2rem;
+  --vromm-spacing-2xl: 3rem;
+
+  /* Border Radius Tokens */
+  --vromm-radius-sm: 0.25rem;
+  --vromm-radius-md: 0.375rem;
+  --vromm-radius-lg: 0.5rem;
+  --vromm-radius-xl: 0.75rem;
 }
 
 .dark {
-  --vromm-bg-primary: #0f172a;
-  --vromm-bg-secondary: #1e293b;
-  --vromm-bg-tertiary: #334155;
-  --vromm-text-primary: #f8fafc;
-  --vromm-text-secondary: #cbd5e1;
-  --vromm-text-tertiary: #94a3b8;
-  --vromm-border-primary: #334155;
-  --vromm-border-secondary: #475569;
-  --vromm-border-tertiary: #64748b;
-}
+  /* Dark Mode Overrides */
+  --vromm-color-text: var(--vromm-color-neutral-50);
+  --vromm-color-text-weak: var(--vromm-color-neutral-300);
+  --vromm-color-text-disabled: var(--vromm-color-neutral-500);
+  --vromm-color-text-inverted: var(--vromm-color-neutral-900);
 
-.light {
-  --vromm-bg-primary: #ffffff;
-  --vromm-bg-secondary: #f8fafc;
-  --vromm-bg-tertiary: #f1f5f9;
-  --vromm-text-primary: #0f172a;
-  --vromm-text-secondary: #475569;
-  --vromm-text-tertiary: #64748b;
-  --vromm-border-primary: #e2e8f0;
-  --vromm-border-secondary: #cbd5e1;
-  --vromm-border-tertiary: #94a3b8;
+  --vromm-color-background: var(--vromm-color-neutral-900);
+  --vromm-color-background-medium: var(--vromm-color-neutral-800);
+  --vromm-color-background-strong: var(--vromm-color-neutral-700);
+  --vromm-color-background-disabled: var(--vromm-color-neutral-800);
+
+  --vromm-color-border: var(--vromm-color-neutral-600);
+  --vromm-color-border-weak: var(--vromm-color-neutral-700);
+  --vromm-color-border-strong: var(--vromm-color-neutral-500);
+  --vromm-color-border-disabled: var(--vromm-color-neutral-700);
 }
 
 @layer base {
   * {
-    @apply border-slate-200;
+    border-color: var(--vromm-color-border);
   }
   
   body {
-    @apply bg-white text-slate-900;
+    background-color: var(--vromm-color-background);
+    color: var(--vromm-color-text);
+    font-family: var(--vromm-font-family-sans);
     font-feature-settings: "rlig" 1, "calt" 1;
-  }
-  
-  .dark body {
-    @apply bg-slate-900 text-slate-50;
   }
 }
 
 @layer components {
   .vromm-focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white;
-  }
-
-  .vromm-focus-ring-dark {
-    @apply dark:focus:ring-offset-slate-900;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    focus-ring-offset-color: var(--vromm-color-background);
   }
 
   .vromm-transition {
