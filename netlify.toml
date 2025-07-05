@@ -1,5 +1,3 @@
-# Vromm Design System Storybook Deployment
-# Updated: 2025-01-05
 [build]
   publish = "storybook-static"
   command = "npm run build-storybook"
