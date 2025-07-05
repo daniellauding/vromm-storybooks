@@ -1,6 +1,6 @@
 {
   "name": "@daniellauding/vromm-design-system",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Vromm Design System - A comprehensive component library with Storybook",
   "main": "dist/index.js",
@@ -92,4 +92,4 @@
     "i18next": "^23.0.0",
     "lucide-react": "^0.291.0"
   }
-} 
+}
