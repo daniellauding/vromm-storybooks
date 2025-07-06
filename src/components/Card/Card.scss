@@ -3,18 +3,20 @@
 /* Card Component Styles - Updated with Brand Colors and Map Preview Support */
 
 .vromm-card {
-  background-color: var(--vromm-color-background);
-  border-color: var(--vromm-color-border);
-  border-radius: var(--vromm-radius-brand);
+  background-color: #ffffff;
+  border-color: #e5e7eb;
+  border-radius: 12px;
   border-width: 1px;
-  color: var(--vromm-color-text);
+  color: #000000;
   transition: all 0.2s ease-in-out;
 }
 
-@include vromm-dark-mode() {
+// Automatic dark mode support using system preference
+@media (prefers-color-scheme: dark) {
   .vromm-card {
-    background-color: var(--vromm-color-neutral-900);
-    border-color: var(--vromm-color-neutral-800);
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
   }
 }
 
@@ -25,13 +27,25 @@
 
 .vromm-card--outline {
   box-shadow: 0 0 #0000;
-  border-color: var(--vromm-color-border);
+  border-color: #e5e7eb;
   border-width: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .vromm-card--outline {
+    border-color: #374151;
+  }
 }
 
 .vromm-card--elevated {
   border-width: 0;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .vromm-card--elevated {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .vromm-card--glass {
@@ -40,10 +54,10 @@
   backdrop-filter: blur(4px);
 }
 
-@include vromm-dark-mode() {
+@media (prefers-color-scheme: dark) {
   .vromm-card--glass {
-    background-color: rgba(9, 9, 11, 0.7);
-    border-color: rgba(64, 64, 64, 0.2);
+    background-color: rgba(31, 41, 55, 0.7);
+    border-color: rgba(55, 65, 81, 0.2);
   }
 }
 
@@ -83,8 +97,8 @@
 }
 
 .vromm-card-title {
-  color: var(--vromm-text-page-title);
-  font-family: var(--vromm-font-family-title);
+  color: #072f2d;
+  font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: -0.025em;
@@ -93,18 +107,18 @@
 }
 
 .vromm-card-description {
-  color: var(--vromm-text-body);
+  color: #395857;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
-@include vromm-dark-mode() {
+@media (prefers-color-scheme: dark) {
   .vromm-card-title {
-    color: var(--vromm-text-page-title-dark);
+    color: #e6f1ef;
   }
   
   .vromm-card-description {
-    color: var(--vromm-text-body-dark);
+    color: #a8c4c1;
   }
 }
 
@@ -132,8 +146,8 @@
 
 // Responsive image container
 .vromm-card .rounded-t-brand {
-  border-top-left-radius: var(--vromm-radius-brand);
-  border-top-right-radius: var(--vromm-radius-brand);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 // Override card padding for map preview cards with images
@@ -382,6 +396,28 @@
 
 .text-gray-900 {
   color: rgb(17 24 39);
+}
+
+@media (prefers-color-scheme: dark) {
+  .text-gray-300 {
+    color: rgb(156 163 175);
+  }
+
+  .text-gray-500 {
+    color: rgb(156 163 175);
+  }
+
+  .text-gray-600 {
+    color: rgb(209 213 219);
+  }
+
+  .text-gray-700 {
+    color: rgb(229 231 235);
+  }
+
+  .text-gray-900 {
+    color: rgb(243 244 246);
+  }
 }
 
 .text-yellow-400 {

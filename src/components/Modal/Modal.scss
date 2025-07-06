@@ -37,18 +37,23 @@
   text-align: left;
   vertical-align: middle;
   background-color: #ffffff;
-  border-radius: var(--vromm-radius-brand);
+  border-radius: var(--vromm-radius-brand, 12px);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   transition: all 0.15s ease-in-out;
-  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  transform: translateX(var(--tw-translate-x, 0)) translateY(var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1));
   max-height: 90vh;
   overflow: hidden;
+  color: #000000;
+  border: 1px solid #e5e7eb;
 }
 
-// Dark mode support
-@include vromm-dark-mode() {
+// Automatic dark mode support using system preference
+@media (prefers-color-scheme: dark) {
   .vromm-modal-content {
-    background-color: var(--vromm-color-neutral-900);
+    background-color: #1f2937;
+    color: #f9fafb;
+    border-color: #374151;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -96,39 +101,52 @@
 }
 
 .vromm-modal-title {
-  color: var(--vromm-color-page-title);
+  color: #072f2d;
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 1.75rem;
+  font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  .vromm-modal-title {
+    color: #e6f1ef;
+  }
 }
 
 // Transparent close button - no background or border
 .vromm-modal-close {
   border-radius: 0.375rem;
   transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  background: transparent !important;
+  border: none !important;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.5rem;
   
   &:focus {
     outline: 2px solid transparent;
     outline-offset: 2px;
-    box-shadow: 0 0 0 2px var(--vromm-color-primary-500);
-    ring-offset-width: 2px;
+    box-shadow: 0 0 0 2px #00ffb6;
   }
   
   &:hover,
   &:focus {
-    background-color: transparent;
+    background-color: transparent !important;
   }
-  
-  background: transparent !important;
-  border: none !important;
-  color: var(--vromm-color-text-weak);
   
   &:hover {
-    color: var(--vromm-color-text);
+    color: #374151;
   }
-  
-  &:focus {
-    ring-color: var(--vromm-color-primary-500);
+}
+
+@media (prefers-color-scheme: dark) {
+  .vromm-modal-close {
+    color: #9ca3af;
+    
+    &:hover {
+      color: #d1d5db;
+    }
   }
 }
 
@@ -136,7 +154,13 @@
 .vromm-modal-body {
   padding: 1.5rem;
   overflow-y: auto;
-  color: var(--vromm-color-text);
+  color: #395857;
+}
+
+@media (prefers-color-scheme: dark) {
+  .vromm-modal-body {
+    color: #a8c4c1;
+  }
 }
 
 // Modal footer - removed border top
@@ -145,41 +169,59 @@
   justify-content: flex-end;
   gap: 0.75rem;
   padding: 1.5rem;
-  background-color: var(--vromm-color-neutral-50);
+  background-color: #f9fafb;
 }
 
-@include vromm-dark-mode() {
+@media (prefers-color-scheme: dark) {
   .vromm-modal-footer {
-    background-color: var(--vromm-color-neutral-800);
+    background-color: #111827;
   }
 }
 
 // Alert modal variants using brand colors
 .vromm-alert-modal--info {
   .vromm-modal-icon {
-    color: var(--vromm-color-primary-600);
-    background-color: var(--vromm-color-primary-100);
+    color: #00ffb6;
+    background-color: rgba(0, 255, 182, 0.1);
   }
 }
 
 .vromm-alert-modal--success {
   .vromm-modal-icon {
-    color: var(--vromm-color-success-600);
-    background-color: var(--vromm-color-success-100);
+    color: #22c55e;
+    background-color: rgba(34, 197, 94, 0.1);
   }
 }
 
 .vromm-alert-modal--warning {
   .vromm-modal-icon {
-    color: var(--vromm-color-warning-600);
-    background-color: var(--vromm-color-warning-100);
+    color: #f59e0b;
+    background-color: rgba(245, 158, 11, 0.1);
   }
 }
 
 .vromm-alert-modal--destructive {
   .vromm-modal-icon {
-    color: var(--vromm-color-error-600);
-    background-color: var(--vromm-color-error-100);
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .vromm-alert-modal--info .vromm-modal-icon {
+    background-color: rgba(0, 255, 182, 0.2);
+  }
+  
+  .vromm-alert-modal--success .vromm-modal-icon {
+    background-color: rgba(34, 197, 94, 0.2);
+  }
+  
+  .vromm-alert-modal--warning .vromm-modal-icon {
+    background-color: rgba(245, 158, 11, 0.2);
+  }
+  
+  .vromm-alert-modal--destructive .vromm-modal-icon {
+    background-color: rgba(239, 68, 68, 0.2);
   }
 }
 
@@ -214,22 +256,22 @@
 
 .vromm-modal-content-enter {
   opacity: 0;
-  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(0.95) scaleY(0.95);
+  transform: translateX(var(--tw-translate-x, 0)) translateY(var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(0.95) scaleY(0.95);
 }
 
 .vromm-modal-content-enter-active {
   opacity: 1;
-  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(1) scaleY(1);
+  transform: translateX(var(--tw-translate-x, 0)) translateY(var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(1) scaleY(1);
   transition: all 0.3s ease-in-out;
 }
 
 .vromm-modal-content-exit {
   opacity: 1;
-  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(1) scaleY(1);
+  transform: translateX(var(--tw-translate-x, 0)) translateY(var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(1) scaleY(1);
 }
 
 .vromm-modal-content-exit-active {
   opacity: 0;
-  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(0.95) scaleY(0.95);
+  transform: translateX(var(--tw-translate-x, 0)) translateY(var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(0.95) scaleY(0.95);
   transition: all 0.3s ease-in-out;
 } 
