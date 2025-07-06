@@ -40,10 +40,8 @@ export default {
       },
       extensions: ['.css', '.scss'],
       minimize: true,
-      inject: {
-        insertAt: 'top', // Insert at top so host project CSS wins
-      },
-      extract: false, // Don't create separate CSS file
+      extract: 'style.css', // Extract CSS to separate file
+      sourceMap: true,
     }),
     babel({
       exclude: 'node_modules/**',
