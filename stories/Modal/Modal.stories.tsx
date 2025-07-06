@@ -45,12 +45,45 @@ const meta: Meta<typeof Modal> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Light mode wrapper that overrides dark mode CSS
+const LightWrapper = ({ children }: { children: React.ReactNode }) => (
+  <div
+    style={{
+      '--vromm-modal-bg': '#ffffff',
+      '--vromm-modal-text': '#000000',
+      '--vromm-modal-border': '#e5e7eb',
+      backgroundColor: '#ffffff',
+      colorScheme: 'light',
+    } as React.CSSProperties}
+  >
+    <style>
+      {`
+        .vromm-modal-content {
+          background-color: #ffffff !important;
+          color: #000000 !important;
+          border-color: #e5e7eb !important;
+        }
+        .vromm-modal-title {
+          color: #072f2d !important;
+        }
+        .vromm-modal-body {
+          color: #395857 !important;
+        }
+        .vromm-modal-footer {
+          background-color: #f9fafb !important;
+        }
+      `}
+    </style>
+    {children}
+  </div>
+);
+
 // Modal Wrapper Component for Stories
 const ModalWrapper = (props: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
+    <LightWrapper>
       <Button onClick={() => setIsOpen(true)}>
         Open Modal
       </Button>
@@ -70,7 +103,7 @@ const ModalWrapper = (props: any) => {
           </Text>
         </div>
       </Modal>
-    </div>
+    </LightWrapper>
   );
 };
 
@@ -92,46 +125,48 @@ export const Sizes: Story = {
     const sizes = ['sm', 'md', 'lg', 'xl', 'full'] as const;
 
     return (
-      <div className="space-y-4">
-        <div className="flex flex-wrap gap-2">
+      <LightWrapper>
+        <div className="space-y-4">
+          <div className="flex flex-wrap gap-2">
+            {sizes.map((size) => (
+              <Button
+                key={size}
+                onClick={() => setOpenModal(size)}
+                variant="secondary"
+              >
+                Open {size.toUpperCase()} Modal
+              </Button>
+            ))}
+          </div>
+
           {sizes.map((size) => (
-            <Button
+            <Modal
               key={size}
-              onClick={() => setOpenModal(size)}
-              variant="secondary"
+              isOpen={openModal === size}
+              onClose={() => setOpenModal(null)}
+              title={`${size.toUpperCase()} Modal`}
+              description={`This is a ${size} sized modal`}
+              size={size}
             >
-              Open {size.toUpperCase()} Modal
-            </Button>
+              <div className="space-y-4">
+                <Text>
+                  This modal is sized as "{size}". Different sizes are useful for different types of content.
+                </Text>
+                <Text>
+                  Small modals work well for simple confirmations, while larger modals can accommodate 
+                  complex forms and detailed content.
+                </Text>
+                {size === 'full' && (
+                  <Text>
+                    Full-size modals take up most of the viewport and are perfect for detailed 
+                    workflows or when you need maximum screen real estate.
+                  </Text>
+                )}
+              </div>
+            </Modal>
           ))}
         </div>
-
-        {sizes.map((size) => (
-          <Modal
-            key={size}
-            isOpen={openModal === size}
-            onClose={() => setOpenModal(null)}
-            title={`${size.toUpperCase()} Modal`}
-            description={`This is a ${size} sized modal`}
-            size={size}
-          >
-            <div className="space-y-4">
-              <Text>
-                This modal is sized as "{size}". Different sizes are useful for different types of content.
-              </Text>
-              <Text>
-                Small modals work well for simple confirmations, while larger modals can accommodate 
-                complex forms and detailed content.
-              </Text>
-              {size === 'full' && (
-                <Text>
-                  Full-size modals take up most of the viewport and are perfect for detailed 
-                  workflows or when you need maximum screen real estate.
-                </Text>
-              )}
-            </div>
-          </Modal>
-        ))}
-      </div>
+      </LightWrapper>
     );
   },
 };
@@ -155,7 +190,7 @@ export const WithCustomHeader: Story = {
     );
 
     return (
-      <div>
+      <LightWrapper>
         <Button onClick={() => setIsOpen(true)}>
           Open Modal with Custom Header
         </Button>
@@ -176,7 +211,7 @@ export const WithCustomHeader: Story = {
             </Text>
           </div>
         </Modal>
-      </div>
+      </LightWrapper>
     );
   },
 };
@@ -215,7 +250,7 @@ export const WithFooter: Story = {
     );
 
     return (
-      <div>
+      <LightWrapper>
         <Button onClick={() => setIsOpen(true)}>
           Open Modal with Footer
         </Button>
@@ -237,7 +272,7 @@ export const WithFooter: Story = {
             </Text>
           </div>
         </Modal>
-      </div>
+      </LightWrapper>
     );
   },
 };
@@ -247,76 +282,78 @@ export const AlertModals: Story = {
     const [openAlert, setOpenAlert] = useState<string | null>(null);
 
     return (
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <Button
-            variant="primary"
-            onClick={() => setOpenAlert('info')}
-          >
-            Info Alert
-          </Button>
-          <Button
+      <LightWrapper>
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <Button
+              variant="primary"
+              onClick={() => setOpenAlert('info')}
+            >
+              Info Alert
+            </Button>
+            <Button
+              variant="success"
+              onClick={() => setOpenAlert('success')}
+            >
+              Success Alert
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => setOpenAlert('warning')}
+            >
+              Warning Alert
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => setOpenAlert('destructive')}
+            >
+              Destructive Alert
+            </Button>
+          </div>
+
+          <AlertModal
+            isOpen={openAlert === 'info'}
+            onClose={() => setOpenAlert(null)}
+            variant="info"
+            title="Information"
+            message="This is an informational alert modal. It's used to provide additional context or instructions to users."
+            confirmText="Got it"
+            showCancel={false}
+          />
+
+          <AlertModal
+            isOpen={openAlert === 'success'}
+            onClose={() => setOpenAlert(null)}
             variant="success"
-            onClick={() => setOpenAlert('success')}
-          >
-            Success Alert
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => setOpenAlert('warning')}
-          >
-            Warning Alert
-          </Button>
-          <Button
+            title="Success!"
+            message="Your action was completed successfully. All changes have been saved."
+            confirmText="Continue"
+            showCancel={false}
+          />
+
+          <AlertModal
+            isOpen={openAlert === 'warning'}
+            onClose={() => setOpenAlert(null)}
+            variant="warning"
+            title="Warning"
+            message="This action may have unintended consequences. Please review your changes before proceeding."
+            confirmText="Proceed anyway"
+            cancelText="Review changes"
+            onConfirm={() => console.log('User proceeded despite warning')}
+          />
+
+          <AlertModal
+            isOpen={openAlert === 'destructive'}
+            onClose={() => setOpenAlert(null)}
             variant="destructive"
-            onClick={() => setOpenAlert('destructive')}
-          >
-            Destructive Alert
-          </Button>
+            title="Delete Item"
+            message="Are you sure you want to delete this item? This action cannot be undone and all associated data will be permanently removed."
+            confirmText="Delete"
+            cancelText="Cancel"
+            onConfirm={() => console.log('Item deleted')}
+          />
         </div>
-
-        <AlertModal
-          isOpen={openAlert === 'info'}
-          onClose={() => setOpenAlert(null)}
-          variant="info"
-          title="Information"
-          message="This is an informational alert modal. It's used to provide additional context or instructions to users."
-          confirmText="Got it"
-          showCancel={false}
-        />
-
-        <AlertModal
-          isOpen={openAlert === 'success'}
-          onClose={() => setOpenAlert(null)}
-          variant="success"
-          title="Success!"
-          message="Your action was completed successfully. All changes have been saved."
-          confirmText="Continue"
-          showCancel={false}
-        />
-
-        <AlertModal
-          isOpen={openAlert === 'warning'}
-          onClose={() => setOpenAlert(null)}
-          variant="warning"
-          title="Warning"
-          message="This action may have unintended consequences. Please review your changes before proceeding."
-          confirmText="Proceed anyway"
-          cancelText="Review changes"
-          onConfirm={() => console.log('User proceeded despite warning')}
-        />
-
-        <AlertModal
-          isOpen={openAlert === 'destructive'}
-          onClose={() => setOpenAlert(null)}
-          variant="destructive"
-          title="Delete Item"
-          message="Are you sure you want to delete this item? This action cannot be undone and all associated data will be permanently removed."
-          confirmText="Delete"
-          cancelText="Cancel"
-          onConfirm={() => console.log('Item deleted')}
-        />
-      </div>
+      </LightWrapper>
     );
   },
 };
@@ -330,5 +367,90 @@ export const Interactive: Story = {
     showCloseButton: true,
     closeOnOverlayClick: true,
     closeOnEscape: true,
+  },
+};
+
+// Dark mode demonstration
+export const DarkModePreview: Story = {
+  render: () => {
+    const [isStandardOpen, setIsStandardOpen] = useState(false);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+
+    return (
+      <div style={{ backgroundColor: '#1a1a1a', padding: '2rem', borderRadius: '8px', minHeight: '400px' }}>
+        <div className="space-y-4">
+          <h3 style={{ color: 'white', marginBottom: '1rem' }}>🌙 Dark Mode Modals</h3>
+          
+          <div className="flex gap-4">
+            <Button variant="primary" onClick={() => setIsStandardOpen(true)}>
+              Open Standard Modal
+            </Button>
+            <Button variant="destructive" onClick={() => setIsAlertOpen(true)}>
+              Open Alert Modal
+            </Button>
+          </div>
+
+          <Modal
+            isOpen={isStandardOpen}
+            onClose={() => setIsStandardOpen(false)}
+            title="Dark Mode Modal"
+            description="This modal automatically adapts to dark mode"
+            size="md"
+            footer={
+              <div className="flex gap-3 justify-end">
+                <Button variant="secondary" onClick={() => setIsStandardOpen(false)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onClick={() => setIsStandardOpen(false)}>
+                  Save
+                </Button>
+              </div>
+            }
+          >
+            <div className="space-y-4">
+              <Text>
+                🌙 This modal demonstrates automatic dark mode adaptation with proper background colors, 
+                text colors, and border styling.
+              </Text>
+              <Text>
+                The modal header, body, and footer all use CSS variables that automatically 
+                switch between light and dark themes based on system preference or manual setting.
+              </Text>
+              <Text>
+                Notice how the close button, borders, and shadows all adapt appropriately 
+                to provide excellent contrast and readability in dark mode.
+              </Text>
+            </div>
+          </Modal>
+
+          <AlertModal
+            isOpen={isAlertOpen}
+            onClose={() => setIsAlertOpen(false)}
+            variant="destructive"
+            title="Dark Mode Alert"
+            message="Alert modals also automatically adapt to dark mode with proper color schemes and contrast ratios for accessibility."
+            confirmText="Delete"
+            cancelText="Cancel"
+            onConfirm={() => console.log('Item deleted in dark mode')}
+          />
+
+          <div style={{ color: 'white', fontSize: '14px', marginTop: '2rem' }}>
+            <p><strong>Dark Mode Features:</strong></p>
+            <ul style={{ marginLeft: '1rem', marginTop: '0.5rem' }}>
+              <li>✅ Automatic background color switching</li>
+              <li>✅ Proper text contrast ratios</li>
+              <li>✅ Adapted border and shadow colors</li>
+              <li>✅ Transparent close button styling</li>
+              <li>✅ Footer background adaptation</li>
+              <li>✅ Works in any React project with CSS import</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    layout: 'fullscreen',
+    backgrounds: { default: 'dark' },
   },
 }; 
