@@ -80,7 +80,7 @@ module.exports = {
           900: '#78350f',
         },
         
-        // Our custom colors using CSS custom properties
+        // Our custom brand colors using CSS custom properties
         primary: {
           50: 'var(--vromm-color-primary-50)',
           100: 'var(--vromm-color-primary-100)',
@@ -156,6 +156,31 @@ module.exports = {
           800: 'var(--vromm-color-error-800)',
           900: 'var(--vromm-color-error-900)',
         },
+        
+        // Button semantic colors for easy usage
+        'button-primary': {
+          DEFAULT: 'var(--vromm-button-primary-bg)',
+          hover: 'var(--vromm-button-primary-hover)', 
+          text: 'var(--vromm-button-primary-text)',
+          border: 'var(--vromm-button-primary-border)',
+        },
+        'button-secondary': {
+          DEFAULT: 'var(--vromm-button-secondary-bg)',
+          hover: 'var(--vromm-button-secondary-hover)',
+          text: 'var(--vromm-button-secondary-text)', 
+          border: 'var(--vromm-button-secondary-border)',
+        },
+        'button-tertiary': {
+          DEFAULT: 'var(--vromm-button-tertiary-bg)',
+          hover: 'var(--vromm-button-tertiary-hover)',
+          text: 'var(--vromm-button-tertiary-text)',
+          border: 'var(--vromm-button-tertiary-border)',
+        },
+        
+        // Brand text colors
+        'page-title': 'var(--vromm-color-page-title)',
+        'body-text': 'var(--vromm-color-text)',
+        
         // Semantic color aliases
         background: 'var(--vromm-color-background)',
         foreground: 'var(--vromm-color-text)',
@@ -186,6 +211,7 @@ module.exports = {
         'vromm-md': 'var(--vromm-radius-md)',
         'vromm-lg': 'var(--vromm-radius-lg)',
         'vromm-xl': 'var(--vromm-radius-xl)',
+        'brand': 'var(--vromm-radius-brand)', // 12px brand radius
       },
       fontSize: {
         'text-xs': ['0.75rem', { lineHeight: '1rem' }],
@@ -198,6 +224,9 @@ module.exports = {
         'text-4xl': ['2.25rem', { lineHeight: '2.5rem' }],
         'text-5xl': ['3rem', { lineHeight: '1' }],
         'text-6xl': ['3.75rem', { lineHeight: '1' }],
+      },
+      fontWeight: {
+        'brand': '600', // Brand font weight
       },
       keyframes: {
         'fade-in': {

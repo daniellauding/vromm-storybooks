@@ -1,14 +1,14 @@
-/* Button Component Styles - Scoped to avoid conflicts */
+/* Button Component Styles - Updated with Brand Styling */
 
 // Base button styles using @apply for cleaner code
 .vromm-button {
   @apply inline-flex items-center justify-center gap-2;
-  @apply font-extrabold italic;
+  @apply font-title font-brand italic uppercase; /* Rubik 600 italic uppercase */
   @apply transition-all duration-200 ease-in-out;
   @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
   @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
   @apply select-none relative overflow-hidden;
-  @apply border rounded-md cursor-pointer;
+  @apply border rounded-brand cursor-pointer; /* 12px border radius */
   
   // Use design system font
   font-family: var(--vromm-font-family-title);
@@ -57,53 +57,184 @@
   @apply w-full;
 }
 
-// Variant styles using CSS custom properties
+// Primary Variant - Brand Colors
 .vromm-button--primary-solid {
   @apply shadow-sm hover:shadow-md;
-  @apply bg-blue-600 text-white border-blue-600;
-  @apply hover:bg-blue-700 hover:border-blue-700;
-  @apply active:bg-blue-800;
-  @apply focus:ring-blue-500;
+  background-color: var(--vromm-button-primary-bg);
+  color: var(--vromm-button-primary-text);
+  border-color: var(--vromm-button-primary-border);
+  
+  &:hover {
+    background-color: var(--vromm-button-primary-hover);
+    border-color: var(--vromm-button-primary-hover);
+  }
+  
+  &:active {
+    background-color: var(--vromm-button-primary-hover);
+    transform: translateY(1px);
+  }
+  
+  &:focus {
+    @apply ring-primary-500;
+  }
 }
 
 .vromm-button--primary-outline {
-  @apply bg-transparent text-blue-600 border-blue-600;
-  @apply hover:bg-blue-50 hover:text-blue-700;
-  @apply active:bg-blue-100;
-  @apply focus:ring-blue-500;
+  background-color: transparent;
+  color: var(--vromm-button-primary-bg);
+  border-color: var(--vromm-button-primary-border);
+  
+  &:hover {
+    background-color: var(--vromm-button-primary-bg);
+    color: var(--vromm-button-primary-text);
+  }
+  
+  &:active {
+    background-color: var(--vromm-button-primary-hover);
+    color: var(--vromm-button-primary-text);
+  }
+  
+  &:focus {
+    @apply ring-primary-500;
+  }
 }
 
 .vromm-button--primary-text {
-  @apply bg-transparent border-transparent text-blue-600;
-  @apply hover:bg-blue-50 hover:text-blue-700;
-  @apply active:bg-blue-100;
-  @apply focus:ring-blue-500;
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--vromm-button-primary-bg);
+  
+  &:hover {
+    background-color: rgba(0, 255, 182, 0.1); /* primary with 10% opacity */
+  }
+  
+  &:active {
+    background-color: rgba(0, 255, 182, 0.2); /* primary with 20% opacity */
+  }
+  
+  &:focus {
+    @apply ring-primary-500;
+  }
 }
 
-// Secondary variants
+// Secondary Variant - Brand Colors
 .vromm-button--secondary-solid {
   @apply shadow-sm hover:shadow-md;
-  @apply bg-gray-100 text-gray-900 border-gray-300;
-  @apply hover:bg-gray-200 hover:border-gray-400;
-  @apply active:bg-gray-300;
-  @apply focus:ring-gray-500;
+  background-color: var(--vromm-button-secondary-bg);
+  color: var(--vromm-button-secondary-text);
+  border-color: var(--vromm-button-secondary-border);
+  
+  &:hover {
+    background-color: var(--vromm-button-secondary-hover);
+    border-color: var(--vromm-button-secondary-hover);
+  }
+  
+  &:active {
+    background-color: var(--vromm-button-secondary-hover);
+    transform: translateY(1px);
+  }
+  
+  &:focus {
+    @apply ring-secondary-500;
+  }
 }
 
 .vromm-button--secondary-outline {
-  @apply bg-transparent text-gray-700 border-gray-300;
-  @apply hover:bg-gray-50 hover:text-gray-900;
-  @apply active:bg-gray-100;
-  @apply focus:ring-gray-500;
+  background-color: transparent;
+  color: var(--vromm-button-secondary-bg);
+  border-color: var(--vromm-button-secondary-border);
+  
+  &:hover {
+    background-color: var(--vromm-button-secondary-bg);
+    color: var(--vromm-button-secondary-text);
+  }
+  
+  &:active {
+    background-color: var(--vromm-button-secondary-hover);
+    color: var(--vromm-button-secondary-text);
+  }
+  
+  &:focus {
+    @apply ring-secondary-500;
+  }
 }
 
 .vromm-button--secondary-text {
-  @apply bg-transparent border-transparent text-gray-700;
-  @apply hover:bg-gray-50 hover:text-gray-900;
-  @apply active:bg-gray-100;
-  @apply focus:ring-gray-500;
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--vromm-button-secondary-bg);
+  
+  &:hover {
+    background-color: rgba(0, 72, 71, 0.1); /* secondary with 10% opacity */
+  }
+  
+  &:active {
+    background-color: rgba(0, 72, 71, 0.2); /* secondary with 20% opacity */
+  }
+  
+  &:focus {
+    @apply ring-secondary-500;
+  }
 }
 
-// Destructive variants
+// Tertiary Variant - Brand Colors
+.vromm-button--tertiary-solid {
+  @apply shadow-sm hover:shadow-md;
+  background-color: var(--vromm-button-tertiary-bg);
+  color: var(--vromm-button-tertiary-text);
+  border-color: var(--vromm-button-tertiary-border);
+  
+  &:hover {
+    background-color: var(--vromm-button-tertiary-hover);
+  }
+  
+  &:active {
+    background-color: var(--vromm-button-tertiary-hover);
+    transform: translateY(1px);
+  }
+  
+  &:focus {
+    @apply ring-primary-500;
+  }
+}
+
+.vromm-button--tertiary-outline {
+  background-color: transparent;
+  color: var(--vromm-button-tertiary-text);
+  border-color: var(--vromm-button-tertiary-text);
+  
+  &:hover {
+    background-color: var(--vromm-button-tertiary-bg);
+  }
+  
+  &:active {
+    background-color: var(--vromm-button-tertiary-hover);
+  }
+  
+  &:focus {
+    @apply ring-primary-500;
+  }
+}
+
+.vromm-button--tertiary-text {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--vromm-button-tertiary-text);
+  
+  &:hover {
+    background-color: var(--vromm-button-tertiary-bg);
+  }
+  
+  &:active {
+    background-color: var(--vromm-button-tertiary-hover);
+  }
+  
+  &:focus {
+    @apply ring-primary-500;
+  }
+}
+
+// Legacy destructive variants (keeping for backward compatibility)
 .vromm-button--destructive-solid {
   @apply shadow-sm hover:shadow-md;
   @apply bg-red-600 text-white border-red-600;
@@ -126,7 +257,7 @@
   @apply focus:ring-red-500;
 }
 
-// Success variants
+// Legacy success variants (keeping for backward compatibility)
 .vromm-button--success-solid {
   @apply shadow-sm hover:shadow-md;
   @apply bg-green-600 text-white border-green-600;

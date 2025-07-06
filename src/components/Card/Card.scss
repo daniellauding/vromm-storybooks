@@ -1,0 +1,84 @@
+/* Card Component Styles */
+
+.vromm-card {
+  @apply rounded-brand transition-all duration-200;
+  @apply border border-border;
+  @apply bg-background text-foreground;
+  @apply dark:bg-neutral-900 dark:border-neutral-800;
+}
+
+.vromm-card--default {
+  @apply shadow-sm;
+}
+
+.vromm-card--outline {
+  @apply border-2 border-border shadow-none;
+}
+
+.vromm-card--elevated {
+  @apply shadow-lg border-0;
+}
+
+.vromm-card--glass {
+  @apply backdrop-blur-sm bg-white border-white;
+  @apply dark:bg-neutral-900 dark:border-neutral-700;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .vromm-card--glass {
+  background-color: rgba(23, 23, 23, 0.7);
+  border-color: rgba(64, 64, 64, 0.2);
+}
+
+// Size variants
+.vromm-card--sm {
+  @apply p-3;
+}
+
+.vromm-card--md {
+  @apply p-4;
+}
+
+.vromm-card--lg {
+  @apply p-6;
+}
+
+// Card Header
+.vromm-card-header {
+  @apply flex flex-col space-y-1.5 pb-4;
+}
+
+// Card Content
+.vromm-card-content {
+  @apply flex-1;
+}
+
+// Card Footer
+.vromm-card-footer {
+  @apply flex items-center pt-4;
+}
+
+// Card Title
+.vromm-card-title {
+  @apply text-lg font-semibold leading-none tracking-tight;
+  color: var(--vromm-text-page-title);
+  font-family: var(--vromm-font-family-title);
+}
+
+// Card Description
+.vromm-card-description {
+  @apply text-sm;
+  color: var(--vromm-text-body);
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .vromm-card-title {
+    color: var(--vromm-text-page-title-dark);
+  }
+  
+  .vromm-card-description {
+    color: var(--vromm-text-body-dark);
+  }
+} 

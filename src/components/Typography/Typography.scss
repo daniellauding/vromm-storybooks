@@ -1,17 +1,56 @@
-/* Typography Component Styles - Scoped to avoid conflicts */
+/* Typography Component Styles - Updated with Brand Colors */
 
-// Base typography styles using @apply for cleaner code
-.vromm-typography {
-  @apply transition-colors;
-}
-
-// Title font family - Rubrik for headers
+// Base font styles
 .vromm-title {
-  font-family: Rubrik, system-ui, sans-serif;
-  @apply font-extrabold italic;
+  font-family: var(--vromm-font-family-title);
 }
 
-// Text font family - System UI stack for body text
 .vromm-text {
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-} 
+  font-family: var(--vromm-font-family-sans);
+}
+
+// Page title variant - using brand page title color
+.vromm-title--page-title {
+  color: var(--vromm-color-page-title);
+}
+
+// Text variants using brand colors
+.vromm-text--body {
+  color: var(--vromm-color-text);
+}
+
+.vromm-text--weak {
+  color: var(--vromm-color-text-weak);
+}
+
+.vromm-text--disabled {
+  color: var(--vromm-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.vromm-text--inverted {
+  color: var(--vromm-color-text-inverted);
+}
+
+// Semantic color variants
+.vromm-text--primary {
+  color: var(--vromm-color-primary-600);
+}
+
+.vromm-text--secondary {
+  color: var(--vromm-color-secondary-600);
+}
+
+.vromm-text--success {
+  color: var(--vromm-color-success-600);
+}
+
+.vromm-text--warning {
+  color: var(--vromm-color-warning-600);
+}
+
+.vromm-text--error {
+  color: var(--vromm-color-error-600);
+}
+
+// Dark mode overrides are handled automatically via CSS variables in globals.scss 

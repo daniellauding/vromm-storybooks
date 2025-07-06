@@ -1,0 +1,249 @@
+/* Chip Component Styles - Brand Aligned */
+
+// Base chip styles
+.vromm-chip {
+  @apply inline-flex items-center justify-center gap-1;
+  @apply font-medium rounded-brand transition-all duration-200;
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply select-none relative;
+  font-family: var(--vromm-font-family-body);
+  
+  // Hover and focus states for clickable chips
+  &.vromm-chip--clickable {
+    @apply cursor-pointer;
+    
+    &:hover {
+      @apply shadow-sm transform scale-105;
+    }
+    
+    &:active {
+      @apply transform scale-95;
+    }
+    
+    &:focus {
+      @apply ring-primary-500;
+    }
+  }
+  
+  // Disabled state
+  &.vromm-chip--disabled {
+    @apply opacity-50 cursor-not-allowed pointer-events-none;
+  }
+}
+
+// Size variants
+.vromm-chip--sm {
+  @apply px-2 py-1 text-xs;
+  min-height: 24px;
+  
+  .vromm-chip-icon {
+    @apply w-3 h-3;
+  }
+  
+  .vromm-chip-remove {
+    @apply w-4 h-4 ml-1;
+  }
+}
+
+.vromm-chip--md {
+  @apply px-3 py-1.5 text-sm;
+  min-height: 32px;
+  
+  .vromm-chip-icon {
+    @apply w-4 h-4;
+  }
+  
+  .vromm-chip-remove {
+    @apply w-5 h-5 ml-1.5;
+  }
+}
+
+.vromm-chip--lg {
+  @apply px-4 py-2 text-base;
+  min-height: 40px;
+  
+  .vromm-chip-icon {
+    @apply w-5 h-5;
+  }
+  
+  .vromm-chip-remove {
+    @apply w-6 h-6 ml-2;
+  }
+}
+
+// Variant styles using brand colors
+.vromm-chip--default {
+  @apply bg-gray-100 text-gray-800 border border-gray-200;
+  @apply dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700;
+}
+
+.vromm-chip--secondary {
+  @apply bg-gray-200 text-gray-900 border border-gray-300;
+  @apply dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600;
+}
+
+.vromm-chip--outline {
+  @apply bg-transparent border-2;
+  color: var(--vromm-text-page-title);
+  border-color: var(--vromm-border-default);
+  
+  &:hover {
+    background-color: var(--vromm-button-tertiary-bg);
+  }
+}
+
+.vromm-chip--filled {
+  @apply bg-gray-900 text-white border border-gray-900;
+  @apply dark:bg-gray-100 dark:text-gray-900 dark:border-gray-100;
+}
+
+// Color variants
+.vromm-chip--color-default {
+  // Uses the variant's default colors
+}
+
+.vromm-chip--color-primary {
+  background-color: var(--vromm-button-primary-bg);
+  color: var(--vromm-button-primary-text);
+  border-color: var(--vromm-button-primary-border);
+  
+  &.vromm-chip--outline {
+    @apply bg-transparent;
+    color: var(--vromm-button-primary-bg);
+    border-color: var(--vromm-button-primary-bg);
+    
+    &:hover {
+      background-color: var(--vromm-button-primary-bg);
+      color: var(--vromm-button-primary-text);
+    }
+  }
+}
+
+.vromm-chip--color-secondary {
+  background-color: var(--vromm-button-secondary-bg);
+  color: var(--vromm-button-secondary-text);
+  border-color: var(--vromm-button-secondary-border);
+  
+  &.vromm-chip--outline {
+    @apply bg-transparent;
+    color: var(--vromm-button-secondary-bg);
+    border-color: var(--vromm-button-secondary-bg);
+    
+    &:hover {
+      background-color: var(--vromm-button-secondary-bg);
+      color: var(--vromm-button-secondary-text);
+    }
+  }
+}
+
+.vromm-chip--color-success {
+  @apply bg-green-100 text-green-800 border-green-200;
+  @apply dark:bg-green-900/30 dark:text-green-300 dark:border-green-800;
+  
+  &.vromm-chip--outline {
+    @apply bg-transparent text-green-600 border-green-500;
+    @apply dark:text-green-400 dark:border-green-400;
+    
+    &:hover {
+      @apply bg-green-50 dark:bg-green-900/20;
+    }
+  }
+}
+
+.vromm-chip--color-warning {
+  @apply bg-yellow-100 text-yellow-800 border-yellow-200;
+  @apply dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-800;
+  
+  &.vromm-chip--outline {
+    @apply bg-transparent text-yellow-600 border-yellow-500;
+    @apply dark:text-yellow-400 dark:border-yellow-400;
+    
+    &:hover {
+      @apply bg-yellow-50 dark:bg-yellow-900/20;
+    }
+  }
+}
+
+.vromm-chip--color-error {
+  @apply bg-red-100 text-red-800 border-red-200;
+  @apply dark:bg-red-900/30 dark:text-red-300 dark:border-red-800;
+  
+  &.vromm-chip--outline {
+    @apply bg-transparent text-red-600 border-red-500;
+    @apply dark:text-red-400 dark:border-red-400;
+    
+    &:hover {
+      @apply bg-red-50 dark:bg-red-900/20;
+    }
+  }
+}
+
+// Icon styling
+.vromm-chip-icon {
+  @apply flex items-center justify-center flex-shrink-0;
+  color: currentColor;
+}
+
+// Content styling
+.vromm-chip-content {
+  @apply truncate;
+}
+
+// Remove button styling
+.vromm-chip-remove {
+  @apply flex items-center justify-center flex-shrink-0;
+  @apply rounded-full transition-colors;
+  @apply hover:bg-black/10 dark:hover:bg-white/10;
+  @apply focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-current;
+  color: currentColor;
+  
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  
+  &:active {
+    @apply transform scale-95;
+  }
+}
+
+// Animation for removal
+@keyframes vromm-chip-remove {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.vromm-chip--removing {
+  animation: vromm-chip-remove 200ms ease-out forwards;
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .vromm-chip {
+    @apply border-2;
+  }
+  
+  .vromm-chip--outline {
+    @apply border-2;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .vromm-chip {
+    @apply transition-none;
+  }
+  
+  .vromm-chip--removing {
+    animation: none;
+    @apply opacity-0;
+  }
+} 

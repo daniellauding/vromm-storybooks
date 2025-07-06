@@ -7,7 +7,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   /**
    * Button variant
    */
-  variant?: 'primary' | 'secondary' | 'destructive' | 'success';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'success';
   /**
    * Button size
    */
@@ -50,7 +50,7 @@ export interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorEl
   /**
    * Button variant
    */
-  variant?: 'primary' | 'secondary' | 'destructive' | 'success';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'success';
   /**
    * Button size
    */
@@ -115,6 +115,11 @@ const variantFillClasses = {
     solid: 'vromm-button--secondary-solid',
     outline: 'vromm-button--secondary-outline',
     text: 'vromm-button--secondary-text',
+  },
+  tertiary: {
+    solid: 'vromm-button--tertiary-solid',
+    outline: 'vromm-button--tertiary-outline',
+    text: 'vromm-button--tertiary-text',
   },
   destructive: {
     solid: 'vromm-button--destructive-solid',

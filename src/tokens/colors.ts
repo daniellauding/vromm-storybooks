@@ -1,30 +1,30 @@
 export const colors = {
-  // Primary colors
+  // Primary colors - Updated with new brand palette
   primary: {
-    50: '#f0f9ff',
-    100: '#e0f2fe',
-    200: '#bae6fd',
-    300: '#7dd3fc',
-    400: '#38bdf8',
-    500: '#0ea5e9',
-    600: '#0284c7',
-    700: '#0369a1',
-    800: '#075985',
-    900: '#0c4a6e',
+    50: '#edfffe',
+    100: '#ccfff5',
+    200: '#99ffed',
+    300: '#5cfce3',
+    400: '#1ef4d1',
+    500: '#00ffb6', // Main brand color
+    600: '#00e1a1',
+    700: '#00b881',
+    800: '#008f67',
+    900: '#006652',
   },
   
-  // Secondary colors
+  // Secondary colors - Dark teal palette
   secondary: {
-    50: '#f8fafc',
-    100: '#f1f5f9',
-    200: '#e2e8f0',
-    300: '#cbd5e1',
-    400: '#94a3b8',
-    500: '#64748b',
-    600: '#475569',
-    700: '#334155',
-    800: '#1e293b',
-    900: '#0f172a',
+    50: '#e6f1f0',
+    100: '#ccded1',
+    200: '#99bcb4',
+    300: '#669a96',
+    400: '#337979',
+    500: '#004847', // Main secondary color
+    600: '#003936',
+    700: '#002b2a',
+    800: '#001c1c',
+    900: '#000e0e',
   },
   
   // Neutral colors
@@ -88,12 +88,13 @@ export const colors = {
     tertiary: '#f1f5f9',
   },
   
-  // Text colors
+  // Text colors - Updated with brand colors
   text: {
-    primary: '#0f172a',
+    primary: '#3c5b59',     // Body text
     secondary: '#475569',
     tertiary: '#64748b',
     inverse: '#ffffff',
+    pageTitle: '#072f2d',   // Page titles
   },
   
   // Border colors
@@ -101,6 +102,28 @@ export const colors = {
     primary: '#e2e8f0',
     secondary: '#cbd5e1',
     tertiary: '#94a3b8',
+  },
+  
+  // Button semantic colors
+  button: {
+    primary: {
+      bg: '#00ffb6',
+      hover: '#00e1a1',
+      text: '#145251',
+      border: '#00ffb6',
+    },
+    secondary: {
+      bg: '#004847',
+      hover: '#003936',
+      text: '#ffffff',
+      border: '#004847',
+    },
+    tertiary: {
+      bg: '#e6f1ef',
+      hover: '#d1e7e3',
+      text: '#004847',
+      border: 'transparent',
+    },
   },
 } as const;
 

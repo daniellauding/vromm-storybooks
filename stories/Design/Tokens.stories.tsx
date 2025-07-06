@@ -121,6 +121,7 @@ export const Colors: Story = {
       { id: 'neutral', label: 'Neutral' },
       { id: 'primary', label: 'Primary' },
       { id: 'secondary', label: 'Secondary' },
+      { id: 'button', label: 'Button Colors' },
       { id: 'success', label: 'Success' },
       { id: 'warning', label: 'Warning' },
       { id: 'error', label: 'Error' },
@@ -129,15 +130,23 @@ export const Colors: Story = {
 
     const neutralTokens = [
       {
-        name: 'neutral/text',
-        colorValue: '#171717',
+        name: 'page-title',
+        colorValue: '#072f2d',
+        cssVar: 'var(--vromm-color-page-title)',
+        scssVar: '$vromm-color-page-title',
+        jsVar: 'tokens.vrommColorPageTitle',
+        description: 'Page title color'
+      },
+      {
+        name: 'text/body',
+        colorValue: '#3c5b59',
         cssVar: 'var(--vromm-color-text)',
         scssVar: '$vromm-color-text',
         jsVar: 'tokens.vrommColorText',
-        description: 'Primary text color'
+        description: 'Primary body text color'
       },
       {
-        name: 'neutral/text-weak',
+        name: 'text/weak',
         colorValue: '#525252',
         cssVar: 'var(--vromm-color-text-weak)',
         scssVar: '$vromm-color-text-weak',
@@ -145,7 +154,7 @@ export const Colors: Story = {
         description: 'Secondary text color'
       },
       {
-        name: 'neutral/text-disabled',
+        name: 'text/disabled',
         colorValue: '#a3a3a3',
         cssVar: 'var(--vromm-color-text-disabled)',
         scssVar: '$vromm-color-text-disabled',
@@ -153,7 +162,7 @@ export const Colors: Story = {
         description: 'Disabled text color'
       },
       {
-        name: 'neutral/text-inverted',
+        name: 'text/inverted',
         colorValue: '#fafafa',
         cssVar: 'var(--vromm-color-text-inverted)',
         scssVar: '$vromm-color-text-inverted',
@@ -161,7 +170,7 @@ export const Colors: Story = {
         description: 'Inverted text color for dark backgrounds'
       },
       {
-        name: 'neutral/background',
+        name: 'background',
         colorValue: '#ffffff',
         cssVar: 'var(--vromm-color-background)',
         scssVar: '$vromm-color-background',
@@ -169,7 +178,7 @@ export const Colors: Story = {
         description: 'Primary background color'
       },
       {
-        name: 'neutral/background-medium',
+        name: 'background/medium',
         colorValue: '#fafafa',
         cssVar: 'var(--vromm-color-background-medium)',
         scssVar: '$vromm-color-background-medium',
@@ -177,7 +186,7 @@ export const Colors: Story = {
         description: 'Medium background color'
       },
       {
-        name: 'neutral/border',
+        name: 'border',
         colorValue: '#d4d4d4',
         cssVar: 'var(--vromm-color-border)',
         scssVar: '$vromm-color-border',
@@ -189,24 +198,101 @@ export const Colors: Story = {
     const primaryTokens = [
       {
         name: 'primary/50',
-        colorValue: '#f0f9ff',
+        colorValue: '#edfffe',
         cssVar: 'var(--vromm-color-primary-50)',
         scssVar: '$vromm-color-primary-50',
         jsVar: 'tokens.vrommColorPrimary50',
       },
       {
         name: 'primary/500',
-        colorValue: '#0ea5e9',
+        colorValue: '#00ffb6',
         cssVar: 'var(--vromm-color-primary-500)',
         scssVar: '$vromm-color-primary-500',
         jsVar: 'tokens.vrommColorPrimary500',
+        description: 'Main brand color - Mint Green'
+      },
+      {
+        name: 'primary/600',
+        colorValue: '#00e1a1',
+        cssVar: 'var(--vromm-color-primary-600)',
+        scssVar: '$vromm-color-primary-600',
+        jsVar: 'tokens.vrommColorPrimary600',
+        description: 'Primary hover state'
       },
       {
         name: 'primary/900',
-        colorValue: '#0c4a6e',
+        colorValue: '#006652',
         cssVar: 'var(--vromm-color-primary-900)',
         scssVar: '$vromm-color-primary-900',
         jsVar: 'tokens.vrommColorPrimary900',
+      },
+    ];
+
+    const secondaryTokens = [
+      {
+        name: 'secondary/50',
+        colorValue: '#e6f1f0',
+        cssVar: 'var(--vromm-color-secondary-50)',
+        scssVar: '$vromm-color-secondary-50',
+        jsVar: 'tokens.vrommColorSecondary50',
+      },
+      {
+        name: 'secondary/500',
+        colorValue: '#004847',
+        cssVar: 'var(--vromm-color-secondary-500)',
+        scssVar: '$vromm-color-secondary-500',
+        jsVar: 'tokens.vrommColorSecondary500',
+        description: 'Main secondary color - Dark Teal'
+      },
+      {
+        name: 'secondary/600',
+        colorValue: '#003936',
+        cssVar: 'var(--vromm-color-secondary-600)',
+        scssVar: '$vromm-color-secondary-600',
+        jsVar: 'tokens.vrommColorSecondary600',
+        description: 'Secondary hover state'
+      },
+      {
+        name: 'secondary/900',
+        colorValue: '#000e0e',
+        cssVar: 'var(--vromm-color-secondary-900)',
+        scssVar: '$vromm-color-secondary-900',
+        jsVar: 'tokens.vrommColorSecondary900',
+      },
+    ];
+
+    const buttonTokens = [
+      {
+        name: 'button/primary',
+        colorValue: '#00ffb6',
+        cssVar: 'var(--vromm-button-primary-bg)',
+        scssVar: '$vromm-button-primary-bg',
+        jsVar: 'tokens.vrommButtonPrimaryBg',
+        description: 'Primary button background'
+      },
+      {
+        name: 'button/primary-text',
+        colorValue: '#145251',
+        cssVar: 'var(--vromm-button-primary-text)',
+        scssVar: '$vromm-button-primary-text',
+        jsVar: 'tokens.vrommButtonPrimaryText',
+        description: 'Primary button text color'
+      },
+      {
+        name: 'button/secondary',
+        colorValue: '#004847',
+        cssVar: 'var(--vromm-button-secondary-bg)',
+        scssVar: '$vromm-button-secondary-bg',
+        jsVar: 'tokens.vrommButtonSecondaryBg',
+        description: 'Secondary button background'
+      },
+      {
+        name: 'button/tertiary',
+        colorValue: '#e6f1ef',
+        cssVar: 'var(--vromm-button-tertiary-bg)',
+        scssVar: '$vromm-button-tertiary-bg',
+        jsVar: 'tokens.vrommButtonTertiaryBg',
+        description: 'Tertiary button background'
       },
     ];
 
@@ -214,7 +300,8 @@ export const Colors: Story = {
       switch (activeCategory) {
         case 'neutral': return neutralTokens;
         case 'primary': return primaryTokens;
-        case 'secondary': return [];
+        case 'secondary': return secondaryTokens;
+        case 'button': return buttonTokens;
         case 'success': return [];
         case 'warning': return [];
         case 'error': return [];

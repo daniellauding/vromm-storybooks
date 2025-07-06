@@ -8,29 +8,29 @@
 @tailwind utilities;
 
 :root {
-  /* Design Tokens - Primary Colors */
-  --vromm-color-primary-50: #f0f9ff;
-  --vromm-color-primary-100: #e0f2fe;
-  --vromm-color-primary-200: #bae6fd;
-  --vromm-color-primary-300: #7dd3fc;
-  --vromm-color-primary-400: #38bdf8;
-  --vromm-color-primary-500: #0ea5e9;
-  --vromm-color-primary-600: #0284c7;
-  --vromm-color-primary-700: #0369a1;
-  --vromm-color-primary-800: #075985;
-  --vromm-color-primary-900: #0c4a6e;
+  /* Design Tokens - Primary Colors (Updated Brand Palette) */
+  --vromm-color-primary-50: #edfffe;
+  --vromm-color-primary-100: #ccfff5;
+  --vromm-color-primary-200: #99ffed;
+  --vromm-color-primary-300: #5cfce3;
+  --vromm-color-primary-400: #1ef4d1;
+  --vromm-color-primary-500: #00ffb6;
+  --vromm-color-primary-600: #00e1a1;
+  --vromm-color-primary-700: #00b881;
+  --vromm-color-primary-800: #008f67;
+  --vromm-color-primary-900: #006652;
 
-  /* Design Tokens - Secondary Colors */
-  --vromm-color-secondary-50: #f8fafc;
-  --vromm-color-secondary-100: #f1f5f9;
-  --vromm-color-secondary-200: #e2e8f0;
-  --vromm-color-secondary-300: #cbd5e1;
-  --vromm-color-secondary-400: #94a3b8;
-  --vromm-color-secondary-500: #64748b;
-  --vromm-color-secondary-600: #475569;
-  --vromm-color-secondary-700: #334155;
-  --vromm-color-secondary-800: #1e293b;
-  --vromm-color-secondary-900: #0f172a;
+  /* Design Tokens - Secondary Colors (Dark Teal) */
+  --vromm-color-secondary-50: #e6f1f0;
+  --vromm-color-secondary-100: #ccded1;
+  --vromm-color-secondary-200: #99bcb4;
+  --vromm-color-secondary-300: #669a96;
+  --vromm-color-secondary-400: #337979;
+  --vromm-color-secondary-500: #004847;
+  --vromm-color-secondary-600: #003936;
+  --vromm-color-secondary-700: #002b2a;
+  --vromm-color-secondary-800: #001c1c;
+  --vromm-color-secondary-900: #000e0e;
 
   /* Design Tokens - Neutral Colors */
   --vromm-color-neutral-50: #fafafa;
@@ -78,11 +78,28 @@
   --vromm-color-error-800: #991b1b;
   --vromm-color-error-900: #7f1d1d;
 
-  /* Semantic Text Colors */
-  --vromm-color-text: var(--vromm-color-neutral-900);
+  /* Brand Text Colors */
+  --vromm-color-page-title: #072f2d;
+  --vromm-color-text: #3c5b59;
   --vromm-color-text-weak: var(--vromm-color-neutral-600);
   --vromm-color-text-disabled: var(--vromm-color-neutral-400);
   --vromm-color-text-inverted: var(--vromm-color-neutral-50);
+
+  /* Button Semantic Colors */
+  --vromm-button-primary-bg: #00ffb6;
+  --vromm-button-primary-hover: #00e1a1;
+  --vromm-button-primary-text: #145251;
+  --vromm-button-primary-border: #00ffb6;
+
+  --vromm-button-secondary-bg: #004847;
+  --vromm-button-secondary-hover: #003936;
+  --vromm-button-secondary-text: #ffffff;
+  --vromm-button-secondary-border: #004847;
+
+  --vromm-button-tertiary-bg: #e6f1ef;
+  --vromm-button-tertiary-hover: #d1e7e3;
+  --vromm-button-tertiary-text: #004847;
+  --vromm-button-tertiary-border: transparent;
 
   /* Semantic Background Colors */
   --vromm-color-background: #ffffff;
@@ -114,14 +131,32 @@
   --vromm-radius-md: 0.375rem;
   --vromm-radius-lg: 0.5rem;
   --vromm-radius-xl: 0.75rem;
+  --vromm-radius-brand: 0.75rem; /* 12px - brand border radius */
 }
 
 .dark {
   /* Dark Mode Overrides */
-  --vromm-color-text: var(--vromm-color-neutral-50);
+  --vromm-color-page-title: #e6f1ef;
+  --vromm-color-text: #a8c4c1;
   --vromm-color-text-weak: var(--vromm-color-neutral-300);
   --vromm-color-text-disabled: var(--vromm-color-neutral-500);
   --vromm-color-text-inverted: var(--vromm-color-neutral-900);
+
+  /* Dark Mode Button Colors */
+  --vromm-button-primary-bg: #00ffb6;
+  --vromm-button-primary-hover: #00e1a1;
+  --vromm-button-primary-text: #145251;
+  --vromm-button-primary-border: #00ffb6;
+
+  --vromm-button-secondary-bg: #004847;
+  --vromm-button-secondary-hover: #006662;
+  --vromm-button-secondary-text: #ffffff;
+  --vromm-button-secondary-border: #004847;
+
+  --vromm-button-tertiary-bg: #1a2e2c;
+  --vromm-button-tertiary-hover: #243432;
+  --vromm-button-tertiary-text: #00ffb6;
+  --vromm-button-tertiary-border: transparent;
 
   --vromm-color-background: var(--vromm-color-neutral-900);
   --vromm-color-background-medium: var(--vromm-color-neutral-800);

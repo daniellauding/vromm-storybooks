@@ -14,16 +14,73 @@ export interface BrandColors {
 }
 
 /**
- * Default Vromm Brand Colors
- * 
- * Change these values to customize your brand:
+ * Vromm Brand Colors - Updated with new brand palette
  */
-export const defaultBrandColors: BrandColors = {
-  primary: '#0ea5e9',     // Sky blue - your main brand color
-  secondary: '#64748b',   // Slate gray - secondary actions
+export const vrommBrandColors: BrandColors = {
+  primary: '#00ffb6',     // Bright mint green - main brand color
+  secondary: '#004847',   // Dark teal - secondary actions
   success: '#22c55e',     // Green - success states
   warning: '#f59e0b',     // Amber - warning states
   error: '#ef4444',       // Red - error states
+};
+
+/**
+ * Semantic Button Colors
+ * Define specific colors for button variants
+ */
+export const buttonColors = {
+  primary: {
+    bg: '#00ffb6',
+    hover: '#00e1a1',
+    text: '#145251',
+    border: '#00ffb6',
+  },
+  secondary: {
+    bg: '#004847',
+    hover: '#003936',
+    text: '#ffffff',
+    border: '#004847',
+  },
+  tertiary: {
+    bg: '#e6f1ef',
+    hover: '#d1e7e3',
+    text: '#004847',
+    border: 'transparent',
+  },
+  // Dark mode variants
+  dark: {
+    primary: {
+      bg: '#00ffb6',
+      hover: '#00e1a1',
+      text: '#145251',
+      border: '#00ffb6',
+    },
+    secondary: {
+      bg: '#004847',
+      hover: '#006662',
+      text: '#ffffff',
+      border: '#004847',
+    },
+    tertiary: {
+      bg: '#1a2e2c',
+      hover: '#243432',
+      text: '#00ffb6',
+      border: 'transparent',
+    },
+  }
+};
+
+/**
+ * Semantic Text Colors
+ */
+export const textColors = {
+  pageTitle: '#072f2d',
+  body: '#3c5b59',
+  // Dark mode variants
+  dark: {
+    pageTitle: '#e6f1ef',
+    body: '#a8c4c1',
+  }
 };
 
 /**

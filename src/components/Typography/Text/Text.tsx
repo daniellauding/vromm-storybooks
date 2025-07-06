@@ -60,15 +60,15 @@ const weightClasses = {
 };
 
 const variantClasses = {
-  default: 'text-gray-900 dark:text-gray-100',
-  weak: 'text-gray-600 dark:text-gray-400',
-  disabled: 'text-gray-400 cursor-not-allowed dark:text-gray-500',
-  inverted: 'text-white dark:text-gray-900',
-  primary: 'text-blue-600 dark:text-blue-400',
-  secondary: 'text-gray-600 dark:text-gray-400',
-  success: 'text-green-600 dark:text-green-400',
-  warning: 'text-yellow-600 dark:text-yellow-400',
-  error: 'text-red-600 dark:text-red-400',
+  default: 'vromm-text--body',
+  weak: 'vromm-text--weak',
+  disabled: 'vromm-text--disabled',
+  inverted: 'vromm-text--inverted',
+  primary: 'vromm-text--primary',
+  secondary: 'vromm-text--secondary',
+  success: 'vromm-text--success',
+  warning: 'vromm-text--warning',
+  error: 'vromm-text--error',
 };
 
 const alignClasses = {
@@ -89,7 +89,7 @@ const familyClasses = {
  * Features:
  * - Multiple size options from xs to 6xl
  * - Font weight control
- * - Color variants for different semantic meanings
+ * - Color variants for different semantic meanings using brand colors
  * - Text alignment options
  * - Text truncation with max lines support
  * - Font family variants (sans/mono)
@@ -119,7 +119,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(({
     sizeClasses[size],
     // Weight
     weightClasses[weight],
-    // Variant
+    // Variant (now using brand colors)
     variantClasses[variant],
     // Alignment
     alignClasses[align],
@@ -128,8 +128,6 @@ export const Text = forwardRef<HTMLElement, TextProps>(({
     // Truncation
     truncate && 'truncate',
     maxLines && 'line-clamp-' + maxLines,
-    // Dark mode support
-    'dark:text-opacity-90',
     className
   );
 

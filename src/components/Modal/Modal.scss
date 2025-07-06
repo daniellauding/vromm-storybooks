@@ -1,4 +1,4 @@
-/* Modal Component Styles - Scoped to avoid conflicts */
+/* Modal Component Styles - Updated with Brand Colors */
 
 // Base modal styles using @apply for cleaner code
 .vromm-modal {
@@ -20,7 +20,7 @@
 
 .vromm-modal-content {
   @apply relative inline-block w-full text-left align-middle transition-all transform;
-  @apply bg-white dark:bg-gray-800 rounded-lg shadow-xl;
+  @apply bg-white dark:bg-neutral-900 rounded-brand shadow-xl;
   @apply max-h-[90vh] overflow-hidden;
 }
 
@@ -57,55 +57,72 @@
   @apply max-w-none w-[95vw] h-[95vh];
 }
 
-// Modal header
+// Modal header - removed border bottom
 .vromm-modal-header {
-  @apply flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700;
+  @apply flex items-center justify-between p-6;
 }
 
 .vromm-modal-title {
-  @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
+  color: var(--vromm-color-page-title);
+  @apply text-lg font-semibold;
 }
 
+// Transparent close button - no background or border
 .vromm-modal-close {
-  @apply rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-200;
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
-  @apply transition-colors duration-200;
+  @apply rounded-md transition-colors duration-200;
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply hover:bg-transparent focus:bg-transparent;
+  background: transparent !important;
+  border: none !important;
+  color: var(--vromm-color-text-weak);
+  
+  &:hover {
+    color: var(--vromm-color-text);
+  }
+  
+  &:focus {
+    @apply ring-primary-500;
+  }
 }
 
 // Modal body
 .vromm-modal-body {
   @apply p-6 overflow-y-auto;
-  @apply text-gray-700 dark:text-gray-300;
+  color: var(--vromm-color-text);
 }
 
-// Modal footer
+// Modal footer - removed border top
 .vromm-modal-footer {
-  @apply flex justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700;
-  @apply bg-gray-50 dark:bg-gray-900;
+  @apply flex justify-end gap-3 p-6;
+  @apply bg-neutral-50 dark:bg-neutral-800;
 }
 
-// Alert modal variants
+// Alert modal variants using brand colors
 .vromm-alert-modal--info {
   .vromm-modal-icon {
-    @apply text-blue-600 bg-blue-100 dark:bg-blue-900 dark:text-blue-400;
+    color: var(--vromm-color-primary-600);
+    background-color: var(--vromm-color-primary-100);
   }
 }
 
 .vromm-alert-modal--success {
   .vromm-modal-icon {
-    @apply text-green-600 bg-green-100 dark:bg-green-900 dark:text-green-400;
+    color: var(--vromm-color-success-600);
+    background-color: var(--vromm-color-success-100);
   }
 }
 
 .vromm-alert-modal--warning {
   .vromm-modal-icon {
-    @apply text-yellow-600 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-400;
+    color: var(--vromm-color-warning-600);
+    background-color: var(--vromm-color-warning-100);
   }
 }
 
 .vromm-alert-modal--destructive {
   .vromm-modal-icon {
-    @apply text-red-600 bg-red-100 dark:bg-red-900 dark:text-red-400;
+    color: var(--vromm-color-error-600);
+    background-color: var(--vromm-color-error-100);
   }
 }
 

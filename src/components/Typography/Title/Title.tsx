@@ -19,7 +19,7 @@ export interface TitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
   /**
    * Text color variant
    */
-  variant?: 'default' | 'weak' | 'disabled' | 'inverted' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+  variant?: 'page-title' | 'default' | 'weak' | 'disabled' | 'inverted' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   /**
    * Text alignment
    */
@@ -56,15 +56,16 @@ const weightClasses = {
 };
 
 const variantClasses = {
-  default: 'text-gray-900 dark:text-gray-100',
-  weak: 'text-gray-600 dark:text-gray-400',
-  disabled: 'text-gray-400 cursor-not-allowed dark:text-gray-500',
-  inverted: 'text-white dark:text-gray-900',
-  primary: 'text-blue-600 dark:text-blue-400',
-  secondary: 'text-gray-600 dark:text-gray-400',
-  success: 'text-green-600 dark:text-green-400',
-  warning: 'text-yellow-600 dark:text-yellow-400',
-  error: 'text-red-600 dark:text-red-400',
+  'page-title': 'vromm-title--page-title',
+  default: 'vromm-text--body',
+  weak: 'vromm-text--weak',
+  disabled: 'vromm-text--disabled',
+  inverted: 'vromm-text--inverted',
+  primary: 'vromm-text--primary',
+  secondary: 'vromm-text--secondary',
+  success: 'vromm-text--success',
+  warning: 'vromm-text--warning',
+  error: 'vromm-text--error',
 };
 
 const alignClasses = {
@@ -98,7 +99,7 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>(({
   level = 1,
   size = '2xl',
   weight = 'semibold',
-  variant = 'default',
+  variant = 'page-title',
   align = 'left',
   truncate = false,
   family = 'title',

@@ -1,0 +1,94 @@
+/* Badge Component Styles - Brand Aligned */
+
+// Base badge styles
+.vromm-badge {
+  @apply inline-flex items-center justify-center;
+  @apply font-medium rounded-brand transition-colors;
+  @apply border focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply whitespace-nowrap;
+  font-family: var(--vromm-font-family-body);
+}
+
+// Size variants
+.vromm-badge--sm {
+  @apply px-2 py-1 text-xs;
+  min-height: 20px;
+}
+
+.vromm-badge--md {
+  @apply px-2.5 py-1.5 text-sm;
+  min-height: 24px;
+}
+
+.vromm-badge--lg {
+  @apply px-3 py-2 text-base;
+  min-height: 28px;
+}
+
+// Variant styles using brand colors
+.vromm-badge--default {
+  background-color: var(--vromm-button-primary-bg);
+  color: var(--vromm-button-primary-text);
+  border-color: var(--vromm-button-primary-border);
+}
+
+.vromm-badge--secondary {
+  background-color: var(--vromm-button-secondary-bg);
+  color: var(--vromm-button-secondary-text);
+  border-color: var(--vromm-button-secondary-border);
+}
+
+.vromm-badge--outline {
+  @apply bg-transparent;
+  color: var(--vromm-text-page-title);
+  border-color: var(--vromm-border-default);
+}
+
+.vromm-badge--destructive {
+  @apply bg-red-100 text-red-800 border-red-200;
+  @apply dark:bg-red-900/30 dark:text-red-300 dark:border-red-800;
+}
+
+.vromm-badge--success {
+  @apply bg-green-100 text-green-800 border-green-200;
+  @apply dark:bg-green-900/30 dark:text-green-300 dark:border-green-800;
+}
+
+.vromm-badge--warning {
+  @apply bg-yellow-100 text-yellow-800 border-yellow-200;
+  @apply dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-800;
+}
+
+// Hover states for interactive badges
+.vromm-badge[role="button"],
+.vromm-badge[tabindex] {
+  @apply cursor-pointer;
+  
+  &:hover {
+    @apply shadow-sm;
+  }
+  
+  &:focus {
+    @apply ring-primary-500;
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .vromm-badge--default {
+    background-color: var(--vromm-button-primary-bg-dark);
+    color: var(--vromm-button-primary-text-dark);
+    border-color: var(--vromm-button-primary-border-dark);
+  }
+  
+  .vromm-badge--secondary {
+    background-color: var(--vromm-button-secondary-bg-dark);
+    color: var(--vromm-button-secondary-text-dark);
+    border-color: var(--vromm-button-secondary-border-dark);
+  }
+  
+  .vromm-badge--outline {
+    color: var(--vromm-text-page-title-dark);
+    border-color: var(--vromm-border-default-dark);
+  }
+} 
