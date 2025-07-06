@@ -1,0 +1,182 @@
+/* 
+ * Vromm Design System - Brand Configuration
+ * 
+ * This file contains all brand colors, typography, and design tokens.
+ * Import this file in component SCSS to get consistent branding.
+ * 
+ * To customize for different projects:
+ * 1. Copy this file to your project
+ * 2. Change the values below
+ * 3. All components will automatically use the new brand
+ */
+
+// ===== BRAND COLORS =====
+$vromm-primary: #00ffb6;           // Mint green - main brand color
+$vromm-primary-hover: #00e1a1;     // Darker mint for hover states
+$vromm-primary-text: #145251;      // Dark teal text on primary bg
+$vromm-primary-light: #e6f1ef;     // Very light mint for backgrounds
+
+$vromm-secondary: #004847;         // Dark teal - secondary actions
+$vromm-secondary-hover: #003936;   // Darker teal for hover
+$vromm-secondary-text: #ffffff;    // White text on secondary bg
+
+$vromm-tertiary-bg: #e6f1ef;       // Light mint background
+$vromm-tertiary-hover: #d1e7e3;    // Slightly darker mint
+$vromm-tertiary-text: #004847;     // Dark teal text
+
+// Text Colors
+$vromm-text-title: #072f2d;        // Page titles
+$vromm-text-body: #395857;         // Body text (corrected color)
+$vromm-text-weak: #6b7280;         // Muted text
+$vromm-text-disabled: #9ca3af;     // Disabled text
+$vromm-text-inverted: #ffffff;     // Text on dark backgrounds
+
+// Status Colors
+$vromm-success: #22c55e;           // Green for success
+$vromm-warning: #f59e0b;           // Amber for warnings
+$vromm-error: #ef4444;             // Red for errors
+
+// Dark Mode Colors
+$vromm-dark-title: #e6f1ef;        // Light mint for dark mode titles
+$vromm-dark-body: #a8c4c1;         // Lighter teal for dark mode body
+$vromm-dark-bg: #1a2e2c;           // Dark background
+$vromm-dark-surface: #243432;      // Dark surface color
+
+// ===== TYPOGRAPHY =====
+$vromm-font-title: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$vromm-font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$vromm-font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+
+// Font Weights
+$vromm-weight-light: 300;
+$vromm-weight-normal: 400;
+$vromm-weight-medium: 500;
+$vromm-weight-semibold: 600;
+$vromm-weight-bold: 700;
+
+// ===== SPACING & LAYOUT =====
+$vromm-radius-sm: 6px;             // Small border radius
+$vromm-radius-md: 8px;             // Medium border radius
+$vromm-radius-lg: 12px;            // Large border radius (brand standard)
+$vromm-radius-xl: 16px;            // Extra large border radius
+$vromm-radius-full: 9999px;        // Fully rounded
+
+// Shadows
+$vromm-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$vromm-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$vromm-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$vromm-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// Focus Ring
+$vromm-focus-ring: 0 0 0 2px rgba(0, 255, 182, 0.5);
+$vromm-focus-ring-secondary: 0 0 0 2px rgba(0, 72, 71, 0.5);
+
+// ===== COMPONENT MIXINS =====
+
+// Base component styles
+@mixin vromm-base-component {
+  box-sizing: border-box;
+  font-family: $vromm-font-body;
+}
+
+// Button base styles
+@mixin vromm-button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: $vromm-font-title;
+  font-weight: 800; /* Rubik 800 weight */
+  font-style: italic;
+  text-transform: uppercase;
+  border-radius: $vromm-radius-lg;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+
+  &:focus {
+    outline: none;
+    box-shadow: $vromm-focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+// Input base styles
+@mixin vromm-input-base {
+  display: block;
+  width: 100%;
+  border-radius: $vromm-radius-md;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff; /* Always light background */
+  font-family: $vromm-font-body;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $vromm-text-body; /* Use brand body text color */
+  transition: all 0.2s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: $vromm-primary;
+    box-shadow: $vromm-focus-ring;
+    background-color: #ffffff; /* Ensure focus keeps light background */
+  }
+
+  &:disabled {
+    background-color: #f9fafb;
+    color: $vromm-text-disabled;
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: $vromm-text-weak;
+  }
+}
+
+// Card base styles
+@mixin vromm-card-base {
+  background-color: #ffffff;
+  border-radius: $vromm-radius-lg;
+  border: 1px solid #e5e7eb;
+  box-shadow: $vromm-shadow-sm;
+  color: $vromm-text-body;
+  transition: all 0.2s ease-in-out;
+}
+
+// Dark mode media query
+@mixin vromm-dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+// ===== UTILITY FUNCTIONS =====
+
+// Convert color to rgba with opacity
+@function vromm-rgba($color, $opacity) {
+  @return rgba($color, $opacity);
+}
+
+// ===== EASY CUSTOMIZATION EXAMPLE =====
+/*
+To customize colors for a different project, change these values:
+
+$vromm-primary: #your-primary-color;
+$vromm-secondary: #your-secondary-color;
+$vromm-text-title: #your-title-color;
+$vromm-text-body: #your-body-color;
+
+All components will automatically pick up the new colors!
+*/ 

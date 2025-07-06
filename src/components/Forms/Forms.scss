@@ -1,228 +1,587 @@
-/* Forms Component Styles - Scoped to avoid conflicts */
+/* Forms Component - Self-Contained with Vromm Branding */
+@import '../../tokens/brand-config.scss';
 
-// Base form styles using @apply for cleaner code
+// Base form styles - self-contained
 .vromm-form-field {
-  @apply w-full;
+  width: 100%;
 }
 
 .vromm-form-label {
-  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+  display: block;
+  font-size: 14px;
+  font-weight: $vromm-weight-medium;
+  color: $vromm-text-title;
+  margin-bottom: 8px;
+  font-family: $vromm-font-body;
 }
 
 .vromm-form-helper {
-  @apply mt-2 text-sm;
+  margin-top: 8px;
+  font-size: 14px;
+  font-family: $vromm-font-body;
 }
 
 .vromm-form-helper--error {
-  @apply text-red-600 dark:text-red-400;
+  color: $vromm-error;
 }
 
 .vromm-form-helper--normal {
-  @apply text-gray-500 dark:text-gray-400;
+  color: $vromm-text-weak;
 }
 
-// Input styles
+// INPUT STYLES - Simple light styling like search component
 .vromm-input {
-  @apply w-full rounded-lg transition-colors;
-  @apply placeholder:text-gray-500 dark:placeholder:text-gray-400;
-  @apply text-gray-900 dark:text-gray-100;
-  @apply focus:outline-none;
+  display: block;
+  width: 100%;
+  border-radius: $vromm-radius-md;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  font-family: $vromm-font-body;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $vromm-text-body;
+  transition: all 0.2s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: $vromm-primary;
+    box-shadow: $vromm-focus-ring;
+  }
+
+  &:disabled {
+    background-color: #f9fafb;
+    color: $vromm-text-disabled;
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: $vromm-text-weak;
+  }
 }
 
 .vromm-input--default {
-  @apply border border-gray-300 dark:border-gray-600;
-  @apply bg-white dark:bg-gray-900;
-  @apply focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  // Default styling already applied above
 }
 
 .vromm-input--filled {
-  @apply border-0 bg-gray-100 dark:bg-gray-800;
-  @apply focus:ring-2 focus:ring-blue-500;
+  border: none;
+  background-color: #f9fafb;
+  
+  &:focus {
+    background-color: #ffffff;
+    border-color: $vromm-primary;
+    box-shadow: $vromm-focus-ring;
+  }
 }
 
 .vromm-input--outline {
-  @apply border-2 border-gray-300 dark:border-gray-600;
-  @apply bg-transparent;
-  @apply focus:border-blue-500 focus:ring-0;
+  border: 2px solid #d1d5db;
+  background-color: transparent;
+  
+  &:focus {
+    border-color: $vromm-primary;
+    box-shadow: none;
+  }
 }
 
 .vromm-input--error {
-  @apply border-red-500 dark:border-red-500;
-  @apply focus:ring-red-500 focus:border-red-500;
+  border-color: $vromm-error;
+  
+  &:focus {
+    border-color: $vromm-error;
+    box-shadow: 0 0 0 2px rgba($vromm-error, 0.2);
+  }
 }
 
 // Input sizes
 .vromm-input--sm {
-  @apply h-8 px-3 text-sm;
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
 }
 
 .vromm-input--md {
-  @apply h-10 px-4 text-base;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 16px;
 }
 
 .vromm-input--lg {
-  @apply h-12 px-5 text-lg;
+  height: 48px;
+  padding: 0 20px;
+  font-size: 18px;
 }
 
-// TextArea styles
+// TEXTAREA STYLES - Same as input but with textarea-specific properties
 .vromm-textarea {
-  @apply w-full rounded-lg transition-colors;
-  @apply placeholder:text-gray-500 dark:placeholder:text-gray-400;
-  @apply text-gray-900 dark:text-gray-100;
-  @apply focus:outline-none;
+  display: block;
+  width: 100%;
+  border-radius: $vromm-radius-md;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  font-family: $vromm-font-body;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $vromm-text-body;
+  transition: all 0.2s ease-in-out;
+  resize: vertical;
+  min-height: 80px;
+
+  &:focus {
+    outline: none;
+    border-color: $vromm-primary;
+    box-shadow: $vromm-focus-ring;
+  }
+
+  &:disabled {
+    background-color: #f9fafb;
+    color: $vromm-text-disabled;
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: $vromm-text-weak;
+  }
 }
 
 .vromm-textarea--sm {
-  @apply p-3 text-sm;
+  padding: 12px;
+  font-size: 14px;
 }
 
 .vromm-textarea--md {
-  @apply p-4 text-base;
+  padding: 16px;
+  font-size: 16px;
 }
 
 .vromm-textarea--lg {
-  @apply p-5 text-lg;
+  padding: 20px;
+  font-size: 18px;
 }
 
-// Select styles
+// SELECT STYLES - Same as input but with select-specific properties
 .vromm-select {
-  @apply w-full rounded-lg transition-colors;
-  @apply text-gray-900 dark:text-gray-100;
-  @apply focus:outline-none appearance-none cursor-pointer pr-10;
+  display: block;
+  width: 100%;
+  border-radius: $vromm-radius-md;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  font-family: $vromm-font-body;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $vromm-text-body;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  cursor: pointer;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+
+  &:focus {
+    outline: none;
+    border-color: $vromm-primary;
+    box-shadow: $vromm-focus-ring;
+  }
+
+  &:disabled {
+    background-color: #f9fafb;
+    color: $vromm-text-disabled;
+    cursor: not-allowed;
+  }
 }
 
-// Switch styles
+// SWITCH STYLES - Brand colored
 .vromm-switch {
-  @apply relative inline-flex items-center cursor-pointer rounded-full;
-  @apply border-2 border-transparent transition-colors duration-200 ease-in-out;
-  @apply focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: $vromm-radius-full;
+  border: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+  
+  &:focus-within {
+    outline: none;
+    box-shadow: $vromm-focus-ring;
+  }
 }
 
 .vromm-switch--sm {
-  @apply w-9 h-5;
+  width: 36px;
+  height: 20px;
 }
 
 .vromm-switch--md {
-  @apply w-11 h-6;
+  width: 44px;
+  height: 24px;
 }
 
 .vromm-switch--lg {
-  @apply w-14 h-7;
+  width: 56px;
+  height: 28px;
 }
 
 .vromm-switch-thumb {
-  @apply inline-block transform rounded-full bg-white shadow-lg ring-0;
-  @apply transition duration-200 ease-in-out;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: $vromm-shadow-sm;
+  transition: transform 0.2s ease-in-out;
 }
 
 .vromm-switch-thumb--sm {
-  @apply w-4 h-4;
+  width: 16px;
+  height: 16px;
 }
 
 .vromm-switch-thumb--md {
-  @apply w-5 h-5;
+  width: 20px;
+  height: 20px;
 }
 
 .vromm-switch-thumb--lg {
-  @apply w-6 h-6;
+  width: 24px;
+  height: 24px;
 }
 
 .vromm-switch--checked {
-  @apply bg-blue-600;
+  background-color: $vromm-primary;
 }
 
 .vromm-switch--unchecked {
-  @apply bg-gray-300 dark:bg-gray-600;
+  background-color: #d1d5db;
 }
 
 .vromm-switch-thumb--checked-sm {
-  @apply translate-x-4;
+  transform: translateX(16px);
 }
 
 .vromm-switch-thumb--checked-md {
-  @apply translate-x-5;
+  transform: translateX(20px);
 }
 
 .vromm-switch-thumb--checked-lg {
-  @apply translate-x-7;
+  transform: translateX(28px);
 }
 
 .vromm-switch-thumb--unchecked {
-  @apply translate-x-0;
+  transform: translateX(0);
 }
 
-// Checkbox styles
+// CHECKBOX STYLES - Brand colored
 .vromm-checkbox {
-  @apply rounded border-2 bg-white dark:bg-gray-900;
-  @apply text-blue-600 shadow-sm;
-  @apply focus:ring-2 focus:ring-offset-0 transition-colors;
+  @include vromm-base-component;
+  border-radius: $vromm-radius-sm;
+  border: 2px solid #d1d5db;
+  background-color: #ffffff;
+  color: $vromm-primary;
+  box-shadow: $vromm-shadow-sm;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+    box-shadow: $vromm-focus-ring;
+  }
+  
+  &:checked {
+    background-color: $vromm-primary;
+    border-color: $vromm-primary;
+    color: white;
+  }
 }
 
 .vromm-checkbox--sm {
-  @apply w-4 h-4;
+  width: 16px;
+  height: 16px;
 }
 
 .vromm-checkbox--md {
-  @apply w-5 h-5;
+  width: 20px;
+  height: 20px;
 }
 
 .vromm-checkbox--lg {
-  @apply w-6 h-6;
+  width: 24px;
+  height: 24px;
 }
 
 .vromm-checkbox--error {
-  @apply border-red-500 focus:ring-red-500;
+  border-color: $vromm-error;
+  
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($vromm-error, 0.2);
+  }
+  
+  &:checked {
+    background-color: $vromm-error;
+    border-color: $vromm-error;
+  }
 }
 
 .vromm-checkbox--normal {
-  @apply border-gray-300 dark:border-gray-600 focus:ring-blue-500;
+  // Default styles already applied above
 }
 
-// FileUpload styles
+// FILE UPLOAD STYLES
 .vromm-file-upload {
-  @apply relative rounded-lg transition-colors cursor-pointer;
+  position: relative;
+  border-radius: $vromm-radius-lg;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  border: 2px solid #d1d5db;
+  background-color: #f9fafb;
 }
 
 .vromm-file-upload--default {
-  @apply border-2 border-gray-300 dark:border-gray-600;
-  @apply bg-gray-50 dark:bg-gray-800;
+  // Default styles already applied above
 }
 
 .vromm-file-upload--dashed {
-  @apply border-2 border-dashed border-gray-300 dark:border-gray-600;
-  @apply bg-white dark:bg-gray-900;
+  border-style: dashed;
+  background-color: #ffffff;
 }
 
 .vromm-file-upload--drag {
-  @apply border-blue-500 bg-blue-50 dark:bg-blue-900/20;
+  border-color: $vromm-primary;
+  background-color: rgba($vromm-primary, 0.05);
 }
 
 .vromm-file-upload--error {
-  @apply border-red-500 dark:border-red-500;
+  border-color: $vromm-error;
 }
 
 .vromm-file-upload--sm {
-  @apply p-4;
+  padding: 16px;
 }
 
 .vromm-file-upload--md {
-  @apply p-6;
+  padding: 24px;
 }
 
 .vromm-file-upload--lg {
-  @apply p-8;
+  padding: 32px;
 }
 
 .vromm-file-upload-input {
-  @apply absolute inset-0 w-full h-full opacity-0 cursor-pointer;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .vromm-file-item {
-  @apply flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  background-color: #f9fafb;
+  border-radius: $vromm-radius-md;
+  font-family: $vromm-font-body;
+  font-size: 14px;
+  color: $vromm-text-body;
 }
 
 .vromm-file-remove {
-  @apply ml-2 p-1 text-gray-400 hover:text-red-500 transition-colors;
-} 
+  margin-left: 8px;
+  padding: 4px;
+  color: $vromm-text-weak;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  border: none;
+  background: none;
+  border-radius: $vromm-radius-sm;
+  
+  &:hover {
+    color: $vromm-error;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: $vromm-focus-ring;
+  }
+}
+
+// SEARCH COMPONENT STYLES
+.vromm-search {
+  position: relative;
+  width: 100%;
+}
+
+.vromm-search-input {
+  display: block;
+  width: 100%;
+  border-radius: $vromm-radius-md;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  font-family: $vromm-font-body;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $vromm-text-body;
+  transition: all 0.2s ease-in-out;
+  padding-left: 40px; // Space for search icon
+  padding-right: 80px; // Space for buttons
+  height: 40px;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  &:focus {
+    outline: none;
+    border-color: $vromm-primary;
+    box-shadow: $vromm-focus-ring;
+  }
+
+  &:disabled {
+    background-color: #f9fafb;
+    color: $vromm-text-disabled;
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: $vromm-text-weak;
+  }
+}
+
+.vromm-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $vromm-text-weak;
+  pointer-events: none;
+}
+
+.vromm-search-buttons {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.vromm-search-button {
+  padding: 4px;
+  border: none;
+  background: none;
+  border-radius: $vromm-radius-sm;
+  color: $vromm-text-weak;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    color: $vromm-primary;
+    background-color: rgba($vromm-primary, 0.1);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: $vromm-focus-ring;
+  }
+}
+
+.vromm-search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: $vromm-radius-md;
+  box-shadow: $vromm-shadow-lg;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+.vromm-search-suggestion {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.15s ease-in-out;
+  
+  &:hover,
+  &.vromm-search-suggestion--active {
+    background-color: rgba($vromm-primary, 0.05);
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+// Dark mode support - ONLY when system prefers dark mode
+@include vromm-dark-mode {
+  .vromm-form-label {
+    color: $vromm-dark-title;
+  }
+  
+  .vromm-form-helper--normal {
+    color: darken($vromm-dark-body, 20%);
+  }
+  
+  // Only apply dark styling when actually in dark mode
+  .vromm-input,
+  .vromm-textarea,
+  .vromm-select,
+  .vromm-search-input {
+    background-color: $vromm-dark-surface;
+    color: $vromm-dark-body;
+    border-color: lighten($vromm-dark-surface, 10%);
+    
+    &::placeholder {
+      color: darken($vromm-dark-body, 20%);
+    }
+    
+    &:focus {
+      background-color: $vromm-dark-surface;
+    }
+  }
+  
+  .vromm-input--filled {
+    background-color: lighten($vromm-dark-surface, 5%);
+    
+    &:focus {
+      background-color: $vromm-dark-surface;
+    }
+  }
+  
+  .vromm-switch--unchecked {
+    background-color: lighten($vromm-dark-surface, 10%);
+  }
+  
+  .vromm-checkbox {
+    background-color: $vromm-dark-surface;
+    border-color: lighten($vromm-dark-surface, 10%);
+  }
+  
+  .vromm-file-upload {
+    background-color: $vromm-dark-surface;
+    border-color: lighten($vromm-dark-surface, 10%);
+  }
+  
+  .vromm-file-upload--dashed {
+    background-color: lighten($vromm-dark-surface, 5%);
+  }
+  
+  .vromm-file-item {
+    background-color: lighten($vromm-dark-surface, 5%);
+    color: $vromm-dark-body;
+  }
+  
+  .vromm-search-suggestions {
+    background-color: $vromm-dark-surface;
+    border-color: lighten($vromm-dark-surface, 10%);
+  }
+}
+
 // Import Slider styles
 @import "./Slider/Slider.scss";

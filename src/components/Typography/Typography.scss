@@ -1,56 +1,94 @@
-/* Typography Component Styles - Updated with Brand Colors */
+/* Typography Component - Self-Contained with Vromm Branding */
+@import '../../tokens/brand-config.scss';
 
-// Base font styles
+// Base font styles - self-contained
 .vromm-title {
-  font-family: var(--vromm-font-family-title);
+  @include vromm-base-component;
+  font-family: $vromm-font-title;
+  font-weight: 800; /* Rubik 800 weight */
+  font-style: italic;
+  line-height: 1.2;
+  margin: 0; // Reset browser defaults
 }
 
 .vromm-text {
-  font-family: var(--vromm-font-family-sans);
+  @include vromm-base-component;
+  font-family: $vromm-font-body;
+  font-weight: $vromm-weight-normal;
+  line-height: 1.6;
+  margin: 0; // Reset browser defaults
 }
 
 // Page title variant - using brand page title color
 .vromm-title--page-title {
-  color: var(--vromm-color-page-title);
+  color: $vromm-text-title;
+  font-weight: $vromm-weight-bold;
 }
 
 // Text variants using brand colors
 .vromm-text--body {
-  color: var(--vromm-color-text);
+  color: $vromm-text-body;
 }
 
 .vromm-text--weak {
-  color: var(--vromm-color-text-weak);
+  color: $vromm-text-weak;
 }
 
 .vromm-text--disabled {
-  color: var(--vromm-color-text-disabled);
+  color: $vromm-text-disabled;
   cursor: not-allowed;
 }
 
 .vromm-text--inverted {
-  color: var(--vromm-color-text-inverted);
+  color: $vromm-text-inverted;
 }
 
 // Semantic color variants
 .vromm-text--primary {
-  color: var(--vromm-color-primary-600);
+  color: $vromm-primary;
+  font-weight: $vromm-weight-medium;
 }
 
 .vromm-text--secondary {
-  color: var(--vromm-color-secondary-600);
+  color: $vromm-secondary;
+  font-weight: $vromm-weight-medium;
 }
 
 .vromm-text--success {
-  color: var(--vromm-color-success-600);
+  color: $vromm-success;
 }
 
 .vromm-text--warning {
-  color: var(--vromm-color-warning-600);
+  color: $vromm-warning;
 }
 
 .vromm-text--error {
-  color: var(--vromm-color-error-600);
+  color: $vromm-error;
 }
 
-// Dark mode overrides are handled automatically via CSS variables in globals.scss 
+// Dark mode overrides
+@include vromm-dark-mode {
+  .vromm-title--page-title {
+    color: $vromm-dark-title;
+  }
+  
+  .vromm-text--body {
+    color: $vromm-dark-body;
+  }
+  
+  .vromm-text--weak {
+    color: lighten($vromm-text-weak, 10%);
+  }
+  
+  .vromm-text--disabled {
+    color: darken($vromm-text-disabled, 10%);
+  }
+  
+  .vromm-text--primary {
+    color: $vromm-primary; // Mint green stays same in dark mode
+  }
+  
+  .vromm-text--secondary {
+    color: $vromm-primary; // Use mint for secondary in dark mode
+  }
+} 

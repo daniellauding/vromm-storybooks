@@ -1,288 +1,324 @@
-/* Button Component Styles - Updated with Brand Styling */
+/* Button Component - Self-Contained with Vromm Branding */
+@import '../../tokens/brand-config.scss';
 
-// Base button styles using @apply for cleaner code
+// Base button styles - completely self-contained
 .vromm-button {
-  @apply inline-flex items-center justify-center gap-2;
-  @apply font-title font-brand italic uppercase; /* Rubik 600 italic uppercase */
-  @apply transition-all duration-200 ease-in-out;
-  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
-  @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
-  @apply select-none relative overflow-hidden;
-  @apply border rounded-brand cursor-pointer; /* 12px border radius */
+  @include vromm-button-base;
   
-  // Use design system font
-  font-family: var(--vromm-font-family-title);
+  // Reset any browser defaults (but preserve font settings from mixin)
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 1px solid transparent;
+  /* font: inherit; REMOVED - was overriding Rubik 800 italic */
+  color: inherit;
+  text-align: inherit;
+  line-height: normal;
+  box-sizing: border-box;
 }
 
-// Size variants using @apply
+// Size variants - no Tailwind dependencies
 .vromm-button--xs {
-  @apply px-2.5 py-1.5 text-xs;
+  padding: 6px 10px;
+  font-size: 12px;
   min-height: 28px;
 }
 
 .vromm-button--sm {
-  @apply px-3 py-2 text-sm;
+  padding: 8px 12px;
+  font-size: 14px;
   min-height: 32px;
 }
 
 .vromm-button--md {
-  @apply px-4 py-2.5 text-sm;
+  padding: 10px 16px;
+  font-size: 14px;
   min-height: 40px;
 }
 
 .vromm-button--lg {
-  @apply px-6 py-3 text-base;
+  padding: 12px 24px;
+  font-size: 16px;
   min-height: 48px;
 }
 
 // Icon-only variants
 .vromm-button--icon-xs {
-  @apply w-7 h-7 p-1.5;
+  width: 28px;
+  height: 28px;
+  padding: 6px;
 }
 
 .vromm-button--icon-sm {
-  @apply w-8 h-8 p-2;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
 }
 
 .vromm-button--icon-md {
-  @apply w-10 h-10 p-2.5;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
 }
 
 .vromm-button--icon-lg {
-  @apply w-12 h-12 p-3;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
 }
 
 // Full width
 .vromm-button--full {
-  @apply w-full;
+  width: 100%;
 }
 
-// Primary Variant - Brand Colors
+// PRIMARY VARIANT - Vromm Brand Colors
 .vromm-button--primary-solid {
-  @apply shadow-sm hover:shadow-md;
-  background-color: var(--vromm-button-primary-bg);
-  color: var(--vromm-button-primary-text);
-  border-color: var(--vromm-button-primary-border);
+  background-color: $vromm-primary;
+  color: $vromm-primary-text;
+  border-color: $vromm-primary;
+  box-shadow: $vromm-shadow-sm;
   
-  &:hover {
-    background-color: var(--vromm-button-primary-hover);
-    border-color: var(--vromm-button-primary-hover);
-  }
-  
-  &:active {
-    background-color: var(--vromm-button-primary-hover);
-    transform: translateY(1px);
+  &:hover:not(:disabled) {
+    background-color: $vromm-primary-hover;
+    border-color: $vromm-primary-hover;
+    box-shadow: $vromm-shadow-md;
   }
   
   &:focus {
-    @apply ring-primary-500;
+    box-shadow: $vromm-focus-ring;
   }
 }
 
 .vromm-button--primary-outline {
   background-color: transparent;
-  color: var(--vromm-button-primary-bg);
-  border-color: var(--vromm-button-primary-border);
+  color: $vromm-primary;
+  border-color: $vromm-primary;
   
-  &:hover {
-    background-color: var(--vromm-button-primary-bg);
-    color: var(--vromm-button-primary-text);
-  }
-  
-  &:active {
-    background-color: var(--vromm-button-primary-hover);
-    color: var(--vromm-button-primary-text);
+  &:hover:not(:disabled) {
+    background-color: $vromm-primary;
+    color: $vromm-primary-text;
+    border-color: $vromm-primary;
   }
   
   &:focus {
-    @apply ring-primary-500;
+    box-shadow: $vromm-focus-ring;
   }
 }
 
 .vromm-button--primary-text {
   background-color: transparent;
+  color: $vromm-primary;
   border-color: transparent;
-  color: var(--vromm-button-primary-bg);
   
-  &:hover {
-    background-color: rgba(0, 255, 182, 0.1); /* primary with 10% opacity */
+  &:hover:not(:disabled) {
+    background-color: rgba($vromm-primary, 0.1);
   }
   
-  &:active {
-    background-color: rgba(0, 255, 182, 0.2); /* primary with 20% opacity */
+  &:active:not(:disabled) {
+    background-color: rgba($vromm-primary, 0.2);
   }
   
   &:focus {
-    @apply ring-primary-500;
+    box-shadow: $vromm-focus-ring;
   }
 }
 
-// Secondary Variant - Brand Colors
+// SECONDARY VARIANT - Vromm Brand Colors
 .vromm-button--secondary-solid {
-  @apply shadow-sm hover:shadow-md;
-  background-color: var(--vromm-button-secondary-bg);
-  color: var(--vromm-button-secondary-text);
-  border-color: var(--vromm-button-secondary-border);
+  background-color: $vromm-secondary;
+  color: $vromm-secondary-text;
+  border-color: $vromm-secondary;
+  box-shadow: $vromm-shadow-sm;
   
-  &:hover {
-    background-color: var(--vromm-button-secondary-hover);
-    border-color: var(--vromm-button-secondary-hover);
-  }
-  
-  &:active {
-    background-color: var(--vromm-button-secondary-hover);
-    transform: translateY(1px);
+  &:hover:not(:disabled) {
+    background-color: $vromm-secondary-hover;
+    border-color: $vromm-secondary-hover;
+    box-shadow: $vromm-shadow-md;
   }
   
   &:focus {
-    @apply ring-secondary-500;
+    box-shadow: $vromm-focus-ring-secondary;
   }
 }
 
 .vromm-button--secondary-outline {
   background-color: transparent;
-  color: var(--vromm-button-secondary-bg);
-  border-color: var(--vromm-button-secondary-border);
+  color: $vromm-secondary;
+  border-color: $vromm-secondary;
   
-  &:hover {
-    background-color: var(--vromm-button-secondary-bg);
-    color: var(--vromm-button-secondary-text);
-  }
-  
-  &:active {
-    background-color: var(--vromm-button-secondary-hover);
-    color: var(--vromm-button-secondary-text);
+  &:hover:not(:disabled) {
+    background-color: $vromm-secondary;
+    color: $vromm-secondary-text;
+    border-color: $vromm-secondary;
   }
   
   &:focus {
-    @apply ring-secondary-500;
+    box-shadow: $vromm-focus-ring-secondary;
   }
 }
 
 .vromm-button--secondary-text {
   background-color: transparent;
+  color: $vromm-secondary;
   border-color: transparent;
-  color: var(--vromm-button-secondary-bg);
   
-  &:hover {
-    background-color: rgba(0, 72, 71, 0.1); /* secondary with 10% opacity */
+  &:hover:not(:disabled) {
+    background-color: rgba($vromm-secondary, 0.1);
   }
   
-  &:active {
-    background-color: rgba(0, 72, 71, 0.2); /* secondary with 20% opacity */
+  &:active:not(:disabled) {
+    background-color: rgba($vromm-secondary, 0.2);
   }
   
   &:focus {
-    @apply ring-secondary-500;
+    box-shadow: $vromm-focus-ring-secondary;
   }
 }
 
-// Tertiary Variant - Brand Colors
+// TERTIARY VARIANT - Vromm Brand Colors
 .vromm-button--tertiary-solid {
-  @apply shadow-sm hover:shadow-md;
-  background-color: var(--vromm-button-tertiary-bg);
-  color: var(--vromm-button-tertiary-text);
-  border-color: var(--vromm-button-tertiary-border);
+  background-color: $vromm-tertiary-bg;
+  color: $vromm-tertiary-text;
+  border-color: transparent;
+  box-shadow: $vromm-shadow-sm;
   
-  &:hover {
-    background-color: var(--vromm-button-tertiary-hover);
-  }
-  
-  &:active {
-    background-color: var(--vromm-button-tertiary-hover);
-    transform: translateY(1px);
+  &:hover:not(:disabled) {
+    background-color: $vromm-tertiary-hover;
+    box-shadow: $vromm-shadow-md;
   }
   
   &:focus {
-    @apply ring-primary-500;
+    box-shadow: $vromm-focus-ring;
   }
 }
 
 .vromm-button--tertiary-outline {
   background-color: transparent;
-  color: var(--vromm-button-tertiary-text);
-  border-color: var(--vromm-button-tertiary-text);
+  color: $vromm-tertiary-text;
+  border-color: $vromm-tertiary-text;
   
-  &:hover {
-    background-color: var(--vromm-button-tertiary-bg);
-  }
-  
-  &:active {
-    background-color: var(--vromm-button-tertiary-hover);
+  &:hover:not(:disabled) {
+    background-color: $vromm-tertiary-bg;
   }
   
   &:focus {
-    @apply ring-primary-500;
+    box-shadow: $vromm-focus-ring;
   }
 }
 
 .vromm-button--tertiary-text {
   background-color: transparent;
+  color: $vromm-tertiary-text;
   border-color: transparent;
-  color: var(--vromm-button-tertiary-text);
   
-  &:hover {
-    background-color: var(--vromm-button-tertiary-bg);
+  &:hover:not(:disabled) {
+    background-color: $vromm-tertiary-bg;
   }
   
-  &:active {
-    background-color: var(--vromm-button-tertiary-hover);
+  &:active:not(:disabled) {
+    background-color: $vromm-tertiary-hover;
   }
   
   &:focus {
-    @apply ring-primary-500;
+    box-shadow: $vromm-focus-ring;
   }
 }
 
-// Legacy destructive variants (keeping for backward compatibility)
+// STATUS VARIANTS
 .vromm-button--destructive-solid {
-  @apply shadow-sm hover:shadow-md;
-  @apply bg-red-600 text-white border-red-600;
-  @apply hover:bg-red-700 hover:border-red-700;
-  @apply active:bg-red-800;
-  @apply focus:ring-red-500;
+  background-color: $vromm-error;
+  color: white;
+  border-color: $vromm-error;
+  box-shadow: $vromm-shadow-sm;
+  
+  &:hover:not(:disabled) {
+    background-color: darken($vromm-error, 10%);
+    border-color: darken($vromm-error, 10%);
+    box-shadow: $vromm-shadow-md;
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($vromm-error, 0.5);
+  }
 }
 
 .vromm-button--destructive-outline {
-  @apply bg-transparent text-red-600 border-red-600;
-  @apply hover:bg-red-50 hover:text-red-700;
-  @apply active:bg-red-100;
-  @apply focus:ring-red-500;
+  background-color: transparent;
+  color: $vromm-error;
+  border-color: $vromm-error;
+  
+  &:hover:not(:disabled) {
+    background-color: rgba($vromm-error, 0.1);
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($vromm-error, 0.5);
+  }
 }
 
 .vromm-button--destructive-text {
-  @apply bg-transparent border-transparent text-red-600;
-  @apply hover:bg-red-50 hover:text-red-700;
-  @apply active:bg-red-100;
-  @apply focus:ring-red-500;
+  background-color: transparent;
+  color: $vromm-error;
+  border-color: transparent;
+  
+  &:hover:not(:disabled) {
+    background-color: rgba($vromm-error, 0.1);
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($vromm-error, 0.5);
+  }
 }
 
-// Legacy success variants (keeping for backward compatibility)
 .vromm-button--success-solid {
-  @apply shadow-sm hover:shadow-md;
-  @apply bg-green-600 text-white border-green-600;
-  @apply hover:bg-green-700 hover:border-green-700;
-  @apply active:bg-green-800;
-  @apply focus:ring-green-500;
+  background-color: $vromm-success;
+  color: white;
+  border-color: $vromm-success;
+  box-shadow: $vromm-shadow-sm;
+  
+  &:hover:not(:disabled) {
+    background-color: darken($vromm-success, 10%);
+    border-color: darken($vromm-success, 10%);
+    box-shadow: $vromm-shadow-md;
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($vromm-success, 0.5);
+  }
 }
 
 .vromm-button--success-outline {
-  @apply bg-transparent text-green-600 border-green-600;
-  @apply hover:bg-green-50 hover:text-green-700;
-  @apply active:bg-green-100;
-  @apply focus:ring-green-500;
+  background-color: transparent;
+  color: $vromm-success;
+  border-color: $vromm-success;
+  
+  &:hover:not(:disabled) {
+    background-color: rgba($vromm-success, 0.1);
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($vromm-success, 0.5);
+  }
 }
 
 .vromm-button--success-text {
-  @apply bg-transparent border-transparent text-green-600;
-  @apply hover:bg-green-50 hover:text-green-700;
-  @apply active:bg-green-100;
-  @apply focus:ring-green-500;
+  background-color: transparent;
+  color: $vromm-success;
+  border-color: transparent;
+  
+  &:hover:not(:disabled) {
+    background-color: rgba($vromm-success, 0.1);
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($vromm-success, 0.5);
+  }
 }
 
 // Loading state
 .vromm-button--loading {
-  @apply cursor-wait;
+  cursor: wait;
 }
 
 // Loading spinner animation
@@ -295,7 +331,52 @@
   animation: vromm-spin 1s linear infinite;
 }
 
-// Link button specific
+// Link button - remove default anchor styling and ensure transparency
 .vromm-link-button {
-  @apply no-underline;
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent !important; /* Force transparent for all link button variants */
+  
+  &:visited {
+    color: inherit;
+  }
+  
+  &:hover {
+    text-decoration: none;
+  }
+  
+  // Override any background colors for link button variants
+  &.vromm-button--primary-solid,
+  &.vromm-button--secondary-solid,
+  &.vromm-button--tertiary-solid,
+  &.vromm-button--destructive-solid,
+  &.vromm-button--success-solid {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    
+    &:hover:not(:disabled) {
+      background-color: rgba(0, 0, 0, 0.05) !important; /* Very subtle hover */
+      box-shadow: none !important;
+    }
+  }
+}
+
+// Dark mode support
+@include vromm-dark-mode {
+  .vromm-button--tertiary-solid {
+    background-color: $vromm-dark-surface;
+    color: $vromm-primary;
+    
+    &:hover:not(:disabled) {
+      background-color: lighten($vromm-dark-surface, 5%);
+    }
+  }
+  
+  .vromm-button--secondary-text {
+    color: $vromm-primary;
+  }
+  
+  .vromm-button--tertiary-text {
+    color: $vromm-primary;
+  }
 } 
