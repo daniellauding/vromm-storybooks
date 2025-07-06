@@ -1,0 +1,228 @@
+/* Forms Component Styles - Scoped to avoid conflicts */
+
+// Base form styles using @apply for cleaner code
+.vromm-form-field {
+  @apply w-full;
+}
+
+.vromm-form-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+}
+
+.vromm-form-helper {
+  @apply mt-2 text-sm;
+}
+
+.vromm-form-helper--error {
+  @apply text-red-600 dark:text-red-400;
+}
+
+.vromm-form-helper--normal {
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+// Input styles
+.vromm-input {
+  @apply w-full rounded-lg transition-colors;
+  @apply placeholder:text-gray-500 dark:placeholder:text-gray-400;
+  @apply text-gray-900 dark:text-gray-100;
+  @apply focus:outline-none;
+}
+
+.vromm-input--default {
+  @apply border border-gray-300 dark:border-gray-600;
+  @apply bg-white dark:bg-gray-900;
+  @apply focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.vromm-input--filled {
+  @apply border-0 bg-gray-100 dark:bg-gray-800;
+  @apply focus:ring-2 focus:ring-blue-500;
+}
+
+.vromm-input--outline {
+  @apply border-2 border-gray-300 dark:border-gray-600;
+  @apply bg-transparent;
+  @apply focus:border-blue-500 focus:ring-0;
+}
+
+.vromm-input--error {
+  @apply border-red-500 dark:border-red-500;
+  @apply focus:ring-red-500 focus:border-red-500;
+}
+
+// Input sizes
+.vromm-input--sm {
+  @apply h-8 px-3 text-sm;
+}
+
+.vromm-input--md {
+  @apply h-10 px-4 text-base;
+}
+
+.vromm-input--lg {
+  @apply h-12 px-5 text-lg;
+}
+
+// TextArea styles
+.vromm-textarea {
+  @apply w-full rounded-lg transition-colors;
+  @apply placeholder:text-gray-500 dark:placeholder:text-gray-400;
+  @apply text-gray-900 dark:text-gray-100;
+  @apply focus:outline-none;
+}
+
+.vromm-textarea--sm {
+  @apply p-3 text-sm;
+}
+
+.vromm-textarea--md {
+  @apply p-4 text-base;
+}
+
+.vromm-textarea--lg {
+  @apply p-5 text-lg;
+}
+
+// Select styles
+.vromm-select {
+  @apply w-full rounded-lg transition-colors;
+  @apply text-gray-900 dark:text-gray-100;
+  @apply focus:outline-none appearance-none cursor-pointer pr-10;
+}
+
+// Switch styles
+.vromm-switch {
+  @apply relative inline-flex items-center cursor-pointer rounded-full;
+  @apply border-2 border-transparent transition-colors duration-200 ease-in-out;
+  @apply focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2;
+}
+
+.vromm-switch--sm {
+  @apply w-9 h-5;
+}
+
+.vromm-switch--md {
+  @apply w-11 h-6;
+}
+
+.vromm-switch--lg {
+  @apply w-14 h-7;
+}
+
+.vromm-switch-thumb {
+  @apply inline-block transform rounded-full bg-white shadow-lg ring-0;
+  @apply transition duration-200 ease-in-out;
+}
+
+.vromm-switch-thumb--sm {
+  @apply w-4 h-4;
+}
+
+.vromm-switch-thumb--md {
+  @apply w-5 h-5;
+}
+
+.vromm-switch-thumb--lg {
+  @apply w-6 h-6;
+}
+
+.vromm-switch--checked {
+  @apply bg-blue-600;
+}
+
+.vromm-switch--unchecked {
+  @apply bg-gray-300 dark:bg-gray-600;
+}
+
+.vromm-switch-thumb--checked-sm {
+  @apply translate-x-4;
+}
+
+.vromm-switch-thumb--checked-md {
+  @apply translate-x-5;
+}
+
+.vromm-switch-thumb--checked-lg {
+  @apply translate-x-7;
+}
+
+.vromm-switch-thumb--unchecked {
+  @apply translate-x-0;
+}
+
+// Checkbox styles
+.vromm-checkbox {
+  @apply rounded border-2 bg-white dark:bg-gray-900;
+  @apply text-blue-600 shadow-sm;
+  @apply focus:ring-2 focus:ring-offset-0 transition-colors;
+}
+
+.vromm-checkbox--sm {
+  @apply w-4 h-4;
+}
+
+.vromm-checkbox--md {
+  @apply w-5 h-5;
+}
+
+.vromm-checkbox--lg {
+  @apply w-6 h-6;
+}
+
+.vromm-checkbox--error {
+  @apply border-red-500 focus:ring-red-500;
+}
+
+.vromm-checkbox--normal {
+  @apply border-gray-300 dark:border-gray-600 focus:ring-blue-500;
+}
+
+// FileUpload styles
+.vromm-file-upload {
+  @apply relative rounded-lg transition-colors cursor-pointer;
+}
+
+.vromm-file-upload--default {
+  @apply border-2 border-gray-300 dark:border-gray-600;
+  @apply bg-gray-50 dark:bg-gray-800;
+}
+
+.vromm-file-upload--dashed {
+  @apply border-2 border-dashed border-gray-300 dark:border-gray-600;
+  @apply bg-white dark:bg-gray-900;
+}
+
+.vromm-file-upload--drag {
+  @apply border-blue-500 bg-blue-50 dark:bg-blue-900/20;
+}
+
+.vromm-file-upload--error {
+  @apply border-red-500 dark:border-red-500;
+}
+
+.vromm-file-upload--sm {
+  @apply p-4;
+}
+
+.vromm-file-upload--md {
+  @apply p-6;
+}
+
+.vromm-file-upload--lg {
+  @apply p-8;
+}
+
+.vromm-file-upload-input {
+  @apply absolute inset-0 w-full h-full opacity-0 cursor-pointer;
+}
+
+.vromm-file-item {
+  @apply flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded-lg;
+}
+
+.vromm-file-remove {
+  @apply ml-2 p-1 text-gray-400 hover:text-red-500 transition-colors;
+} 
+// Import Slider styles
+@import "./Slider/Slider.scss";

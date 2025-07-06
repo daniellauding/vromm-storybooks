@@ -1,0 +1,240 @@
+/* Tooltip Component Styles - Scoped to avoid conflicts */
+
+// Base tooltip wrapper
+.vromm-tooltip-wrapper {
+  @apply relative inline-block;
+}
+
+// Tooltip trigger
+.vromm-tooltip-trigger {
+  @apply cursor-help;
+}
+
+// Tooltip content
+.vromm-tooltip-content {
+  @apply absolute z-50 rounded-md shadow-lg;
+  @apply transition-all duration-200 ease-in-out;
+  @apply opacity-100 scale-100;
+  pointer-events: none;
+  /* Ensure tooltip is visible */
+  display: block !important;
+  visibility: visible !important;
+}
+
+// Tooltip text content
+.vromm-tooltip-text {
+  @apply px-3 py-2 text-sm font-medium;
+  @apply break-words;
+}
+
+// Tooltip arrow base
+.vromm-tooltip-arrow {
+  @apply absolute;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+}
+
+// Positioning - Top
+.vromm-tooltip--top {
+  @apply bottom-full mb-2;
+}
+
+.vromm-tooltip--top .vromm-tooltip-arrow {
+  @apply top-full;
+  margin-top: -4px;
+}
+
+// Positioning - Right
+.vromm-tooltip--right {
+  @apply left-full ml-2 top-1/2 transform -translate-y-1/2;
+}
+
+.vromm-tooltip--right .vromm-tooltip-arrow {
+  @apply right-full;
+  margin-right: -4px;
+}
+
+// Positioning - Bottom
+.vromm-tooltip--bottom {
+  @apply top-full mt-2;
+}
+
+.vromm-tooltip--bottom .vromm-tooltip-arrow {
+  @apply bottom-full;
+  margin-bottom: -4px;
+}
+
+// Positioning - Left
+.vromm-tooltip--left {
+  @apply right-full mr-2 top-1/2 transform -translate-y-1/2;
+}
+
+.vromm-tooltip--left .vromm-tooltip-arrow {
+  @apply left-full;
+  margin-left: -4px;
+}
+
+// Alignment - Start
+.vromm-tooltip--align-start {
+  @apply left-0;
+}
+
+.vromm-tooltip--align-start .vromm-tooltip-arrow {
+  @apply left-4;
+}
+
+// Alignment - Center
+.vromm-tooltip--align-center {
+  @apply left-1/2 transform -translate-x-1/2;
+}
+
+.vromm-tooltip--align-center .vromm-tooltip-arrow {
+  @apply left-1/2 transform -translate-x-1/2;
+}
+
+// Alignment - End
+.vromm-tooltip--align-end {
+  @apply right-0;
+}
+
+.vromm-tooltip--align-end .vromm-tooltip-arrow {
+  @apply right-4;
+}
+
+// For right/left positioned tooltips
+.vromm-tooltip--right.vromm-tooltip--align-start,
+.vromm-tooltip--left.vromm-tooltip--align-start {
+  @apply top-0 transform-none;
+}
+
+.vromm-tooltip--right.vromm-tooltip--align-start .vromm-tooltip-arrow,
+.vromm-tooltip--left.vromm-tooltip--align-start .vromm-tooltip-arrow {
+  @apply top-4;
+}
+
+.vromm-tooltip--right.vromm-tooltip--align-end,
+.vromm-tooltip--left.vromm-tooltip--align-end {
+  @apply bottom-0 top-auto transform-none;
+}
+
+.vromm-tooltip--right.vromm-tooltip--align-end .vromm-tooltip-arrow,
+.vromm-tooltip--left.vromm-tooltip--align-end .vromm-tooltip-arrow {
+  @apply bottom-4 top-auto;
+}
+
+// Variants - Default
+.vromm-tooltip--default {
+  @apply bg-gray-900 text-white;
+}
+
+.vromm-tooltip--default .vromm-tooltip-arrow {
+  @apply bg-gray-900;
+}
+
+// Variants - Dark
+.vromm-tooltip--dark {
+  @apply bg-black text-white;
+}
+
+.vromm-tooltip--dark .vromm-tooltip-arrow {
+  @apply bg-black;
+}
+
+// Variants - Light
+.vromm-tooltip--light {
+  @apply bg-white text-gray-900 border border-gray-200;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.vromm-tooltip--light .vromm-tooltip-arrow {
+  @apply bg-white border-gray-200;
+  box-shadow: 0 0 0 1px rgba(229, 231, 235, 1);
+}
+
+// Variants - Error
+.vromm-tooltip--error {
+  @apply bg-red-600 text-white;
+}
+
+.vromm-tooltip--error .vromm-tooltip-arrow {
+  @apply bg-red-600;
+}
+
+// Variants - Warning
+.vromm-tooltip--warning {
+  @apply bg-yellow-500 text-yellow-900;
+}
+
+.vromm-tooltip--warning .vromm-tooltip-arrow {
+  @apply bg-yellow-500;
+}
+
+// Variants - Success
+.vromm-tooltip--success {
+  @apply bg-green-600 text-white;
+}
+
+.vromm-tooltip--success .vromm-tooltip-arrow {
+  @apply bg-green-600;
+}
+
+// Max width variants
+.vromm-tooltip--max-w-xs {
+  @apply max-w-xs;
+}
+
+.vromm-tooltip--max-w-sm {
+  @apply max-w-sm;
+}
+
+.vromm-tooltip--max-w-md {
+  @apply max-w-md;
+}
+
+.vromm-tooltip--max-w-lg {
+  @apply max-w-lg;
+}
+
+.vromm-tooltip--max-w-xl {
+  @apply max-w-xl;
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .vromm-tooltip--light {
+    @apply bg-gray-800 text-gray-100 border-gray-600;
+  }
+  
+  .vromm-tooltip--light .vromm-tooltip-arrow {
+    @apply bg-gray-800;
+    box-shadow: 0 0 0 1px rgba(75, 85, 99, 1);
+  }
+}
+
+// Animation for entrance
+@keyframes vromm-tooltip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.vromm-tooltip-content {
+  animation: vromm-tooltip-in 150ms ease-out;
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .vromm-tooltip-content {
+    @apply max-w-xs;
+  }
+  
+  .vromm-tooltip-text {
+    @apply text-xs px-2 py-1.5;
+  }
+} 

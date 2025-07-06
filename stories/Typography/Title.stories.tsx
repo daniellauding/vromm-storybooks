@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Title } from '../../src/components/Typography/Title';
+import { Title } from '../../src/components/Typography';
 
 const meta: Meta<typeof Title> = {
-  title: 'Typography/Title',
+  title: 'Components/Typography/Title',
   component: Title,
   parameters: {
     layout: 'centered',

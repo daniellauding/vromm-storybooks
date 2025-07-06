@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '../../../utils/cn';
+import '../Typography.scss';
 
 export interface TitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
   children: React.ReactNode;
@@ -74,7 +75,7 @@ const alignClasses = {
 };
 
 const familyClasses = {
-  title: 'font-title font-extrabold italic',
+  title: 'vromm-title',
   sans: 'font-sans',
   mono: 'font-mono',
 };

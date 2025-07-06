@@ -1,0 +1,278 @@
+/* Popover Component Styles - Scoped to avoid conflicts */
+
+// Base popover wrapper
+.vromm-popover-wrapper {
+  @apply relative inline-block;
+}
+
+// Popover trigger
+.vromm-popover-trigger {
+  @apply cursor-pointer;
+}
+
+// Popover content
+.vromm-popover-content {
+  @apply absolute z-50 rounded-lg shadow-lg border;
+  @apply bg-white dark:bg-gray-800;
+  @apply border-gray-200 dark:border-gray-700;
+  @apply transition-all duration-200 ease-in-out;
+  @apply opacity-100 scale-100;
+  transform-origin: var(--vromm-popover-transform-origin);
+}
+
+// Non-interactive content
+.vromm-popover-content--non-interactive {
+  pointer-events: none;
+}
+
+// Popover arrow
+.vromm-popover-arrow {
+  @apply absolute;
+  width: 12px;
+  height: 12px;
+  @apply bg-white dark:bg-gray-800;
+  @apply border border-gray-200 dark:border-gray-700;
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+// Positioning - Top
+.vromm-popover--top {
+  @apply bottom-full mb-3;
+  --vromm-popover-transform-origin: bottom center;
+}
+
+.vromm-popover--top .vromm-popover-arrow {
+  @apply top-full;
+  margin-top: -6px;
+  @apply border-t-0 border-l-0;
+}
+
+// Positioning - Right
+.vromm-popover--right {
+  @apply left-full ml-3;
+  --vromm-popover-transform-origin: left center;
+}
+
+.vromm-popover--right .vromm-popover-arrow {
+  @apply right-full;
+  margin-right: -6px;
+  @apply border-r-0 border-t-0;
+}
+
+// Positioning - Bottom
+.vromm-popover--bottom {
+  @apply top-full mt-3;
+  --vromm-popover-transform-origin: top center;
+}
+
+.vromm-popover--bottom .vromm-popover-arrow {
+  @apply bottom-full;
+  margin-bottom: -6px;
+  @apply border-b-0 border-r-0;
+}
+
+// Positioning - Left
+.vromm-popover--left {
+  @apply right-full mr-3;
+  --vromm-popover-transform-origin: right center;
+}
+
+.vromm-popover--left .vromm-popover-arrow {
+  @apply left-full;
+  margin-left: -6px;
+  @apply border-l-0 border-b-0;
+}
+
+// Alignment - Start
+.vromm-popover--align-start {
+  @apply left-0;
+}
+
+.vromm-popover--align-start .vromm-popover-arrow {
+  @apply left-6;
+}
+
+// Alignment - Center
+.vromm-popover--align-center {
+  @apply left-1/2 transform -translate-x-1/2;
+}
+
+.vromm-popover--align-center .vromm-popover-arrow {
+  @apply left-1/2 transform -translate-x-1/2;
+}
+
+// Alignment - End
+.vromm-popover--align-end {
+  @apply right-0;
+}
+
+.vromm-popover--align-end .vromm-popover-arrow {
+  @apply right-6;
+}
+
+// For right/left positioned popovers
+.vromm-popover--right.vromm-popover--align-start,
+.vromm-popover--left.vromm-popover--align-start {
+  @apply top-0;
+}
+
+.vromm-popover--right.vromm-popover--align-start .vromm-popover-arrow,
+.vromm-popover--left.vromm-popover--align-start .vromm-popover-arrow {
+  @apply top-6;
+}
+
+.vromm-popover--right.vromm-popover--align-center,
+.vromm-popover--left.vromm-popover--align-center {
+  @apply top-1/2 transform -translate-y-1/2;
+}
+
+.vromm-popover--right.vromm-popover--align-center .vromm-popover-arrow,
+.vromm-popover--left.vromm-popover--align-center .vromm-popover-arrow {
+  @apply top-1/2 transform -translate-y-1/2;
+}
+
+.vromm-popover--right.vromm-popover--align-end,
+.vromm-popover--left.vromm-popover--align-end {
+  @apply bottom-0;
+}
+
+.vromm-popover--right.vromm-popover--align-end .vromm-popover-arrow,
+.vromm-popover--left.vromm-popover--align-end .vromm-popover-arrow {
+  @apply bottom-6;
+}
+
+// Size variants
+.vromm-popover--sm {
+  @apply w-64 max-w-sm;
+}
+
+.vromm-popover--md {
+  @apply w-80 max-w-md;
+}
+
+.vromm-popover--lg {
+  @apply w-96 max-w-lg;
+}
+
+.vromm-popover--xl {
+  @apply w-96 max-w-xl;
+}
+
+// Popover header
+.vromm-popover-header {
+  @apply flex items-center justify-between;
+  @apply px-4 py-3 border-b border-gray-200 dark:border-gray-700;
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.vromm-popover-header-content {
+  @apply flex-1 truncate;
+}
+
+.vromm-popover-close {
+  @apply ml-3 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300;
+  @apply transition-colors duration-200;
+  @apply text-xl leading-none;
+  @apply hover:bg-gray-100 dark:hover:bg-gray-700;
+  @apply rounded-full w-6 h-6 flex items-center justify-center;
+}
+
+// Popover body
+.vromm-popover-body {
+  @apply p-4;
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+// Popover footer
+.vromm-popover-footer {
+  @apply px-4 py-3 border-t border-gray-200 dark:border-gray-700;
+  @apply bg-gray-50 dark:bg-gray-800/50;
+  @apply flex items-center justify-end gap-2;
+}
+
+// Animation for entrance
+@keyframes vromm-popover-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Animation for exit
+@keyframes vromm-popover-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.vromm-popover-content[data-state="open"] {
+  animation: vromm-popover-in 150ms ease-out;
+}
+
+.vromm-popover-content[data-state="closed"] {
+  animation: vromm-popover-out 150ms ease-in;
+}
+
+// Focus styles
+.vromm-popover-content:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-800;
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .vromm-popover-content {
+    @apply max-w-xs;
+  }
+  
+  .vromm-popover--sm,
+  .vromm-popover--md,
+  .vromm-popover--lg,
+  .vromm-popover--xl {
+    @apply w-80 max-w-sm;
+  }
+  
+  .vromm-popover-header {
+    @apply px-3 py-2 text-base;
+  }
+  
+  .vromm-popover-body {
+    @apply px-3 py-2;
+  }
+  
+  .vromm-popover-footer {
+    @apply px-3 py-2;
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .vromm-popover-content {
+    @apply border-2 border-gray-900 dark:border-gray-100;
+  }
+  
+  .vromm-popover-arrow {
+    @apply border-2 border-gray-900 dark:border-gray-100;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .vromm-popover-content {
+    animation: none;
+  }
+  
+  .vromm-popover-content,
+  .vromm-popover-close {
+    transition: none;
+  }
+} 

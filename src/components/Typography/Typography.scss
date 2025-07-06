@@ -1,11 +1,17 @@
-/* Typography Component Styles - Minimal since components use Tailwind classes */
+/* Typography Component Styles - Scoped to avoid conflicts */
 
-// Base text styles - only for design system font families
-.vromm-text {
-  font-family: var(--vromm-font-family-sans);
+// Base typography styles using @apply for cleaner code
+.vromm-typography {
+  @apply transition-colors;
 }
 
-// Base title styles - only for design system font families
+// Title font family - Rubrik for headers
 .vromm-title {
-  font-family: var(--vromm-font-family-title);
+  font-family: Rubrik, system-ui, sans-serif;
+  @apply font-extrabold italic;
+}
+
+// Text font family - System UI stack for body text
+.vromm-text {
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 } 

@@ -1,0 +1,305 @@
+/* Slider Component Styles - Scoped to avoid conflicts */
+
+// Slider container
+.vromm-slider-container {
+  @apply w-full;
+}
+
+// Slider label
+.vromm-slider-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300;
+  @apply mb-2;
+}
+
+// Base slider
+.vromm-slider {
+  @apply relative touch-none select-none;
+}
+
+// Horizontal slider
+.vromm-slider--horizontal {
+  @apply w-full;
+  height: 20px;
+}
+
+// Vertical slider
+.vromm-slider--vertical {
+  @apply h-64;
+  width: 20px;
+}
+
+// Track
+.vromm-slider-track {
+  @apply relative;
+  @apply bg-gray-200 dark:bg-gray-700;
+  @apply cursor-pointer;
+  @apply transition-colors duration-200;
+}
+
+.vromm-slider--horizontal .vromm-slider-track {
+  @apply h-2 w-full rounded-full;
+}
+
+.vromm-slider--vertical .vromm-slider-track {
+  @apply w-2 h-full rounded-full;
+}
+
+// Progress/Range
+.vromm-slider-progress,
+.vromm-slider-range {
+  @apply absolute rounded-full;
+  @apply transition-all duration-200;
+}
+
+.vromm-slider--horizontal .vromm-slider-progress,
+.vromm-slider--horizontal .vromm-slider-range {
+  @apply h-2 top-0;
+}
+
+.vromm-slider--vertical .vromm-slider-progress,
+.vromm-slider--vertical .vromm-slider-range {
+  @apply w-2 left-0;
+}
+
+// Thumb
+.vromm-slider-thumb {
+  @apply absolute block;
+  @apply w-5 h-5 rounded-full;
+  @apply bg-white dark:bg-gray-100;
+  @apply border-2 border-gray-400 dark:border-gray-600;
+  @apply cursor-grab;
+  @apply transition-all duration-200;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  @apply dark:focus:ring-offset-gray-800;
+  @apply shadow-sm;
+  transform: translate(-50%, -50%);
+}
+
+.vromm-slider--horizontal .vromm-slider-thumb {
+  @apply top-1/2;
+  margin-left: -2px;
+}
+
+.vromm-slider--vertical .vromm-slider-thumb {
+  @apply left-1/2;
+  margin-bottom: -2px;
+}
+
+.vromm-slider-thumb:hover,
+.vromm-slider-thumb--active {
+  @apply shadow-md;
+  @apply scale-110;
+}
+
+.vromm-slider-thumb:active,
+.vromm-slider--dragging .vromm-slider-thumb {
+  @apply cursor-grabbing;
+}
+
+// Size variants
+.vromm-slider--sm .vromm-slider-track {
+  @apply h-1;
+}
+
+.vromm-slider--sm.vromm-slider--vertical .vromm-slider-track {
+  @apply w-1;
+}
+
+.vromm-slider--sm .vromm-slider-progress,
+.vromm-slider--sm .vromm-slider-range {
+  @apply h-1;
+}
+
+.vromm-slider--sm.vromm-slider--vertical .vromm-slider-progress,
+.vromm-slider--sm.vromm-slider--vertical .vromm-slider-range {
+  @apply w-1;
+}
+
+.vromm-slider--sm .vromm-slider-thumb {
+  @apply w-4 h-4;
+}
+
+.vromm-slider--lg .vromm-slider-track {
+  @apply h-3;
+}
+
+.vromm-slider--lg.vromm-slider--vertical .vromm-slider-track {
+  @apply w-3;
+}
+
+.vromm-slider--lg .vromm-slider-progress,
+.vromm-slider--lg .vromm-slider-range {
+  @apply h-3;
+}
+
+.vromm-slider--lg.vromm-slider--vertical .vromm-slider-progress,
+.vromm-slider--lg.vromm-slider--vertical .vromm-slider-range {
+  @apply w-3;
+}
+
+.vromm-slider--lg .vromm-slider-thumb {
+  @apply w-6 h-6;
+}
+
+// Variant colors
+.vromm-slider--default .vromm-slider-progress,
+.vromm-slider--default .vromm-slider-range {
+  @apply bg-blue-500;
+}
+
+.vromm-slider--default .vromm-slider-thumb {
+  @apply border-blue-500;
+}
+
+.vromm-slider--success .vromm-slider-progress,
+.vromm-slider--success .vromm-slider-range {
+  @apply bg-green-500;
+}
+
+.vromm-slider--success .vromm-slider-thumb {
+  @apply border-green-500;
+}
+
+.vromm-slider--warning .vromm-slider-progress,
+.vromm-slider--warning .vromm-slider-range {
+  @apply bg-yellow-500;
+}
+
+.vromm-slider--warning .vromm-slider-thumb {
+  @apply border-yellow-500;
+}
+
+.vromm-slider--error .vromm-slider-progress,
+.vromm-slider--error .vromm-slider-range {
+  @apply bg-red-500;
+}
+
+.vromm-slider--error .vromm-slider-thumb {
+  @apply border-red-500;
+}
+
+// Disabled state
+.vromm-slider--disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.vromm-slider--disabled .vromm-slider-track {
+  @apply cursor-not-allowed;
+}
+
+.vromm-slider--disabled .vromm-slider-thumb {
+  @apply cursor-not-allowed;
+}
+
+// Ticks
+.vromm-slider-ticks {
+  @apply absolute;
+}
+
+.vromm-slider--horizontal .vromm-slider-ticks {
+  @apply w-full h-full;
+}
+
+.vromm-slider--vertical .vromm-slider-ticks {
+  @apply w-full h-full;
+}
+
+.vromm-slider-tick {
+  @apply absolute;
+  @apply w-1 h-1 rounded-full;
+  @apply bg-gray-400 dark:bg-gray-500;
+  transform: translate(-50%, -50%);
+}
+
+.vromm-slider--horizontal .vromm-slider-tick {
+  @apply top-1/2;
+}
+
+.vromm-slider--vertical .vromm-slider-tick {
+  @apply left-1/2;
+}
+
+// Values
+.vromm-slider-values {
+  @apply absolute;
+}
+
+.vromm-slider--horizontal .vromm-slider-values {
+  @apply w-full;
+  top: 100%;
+  margin-top: 8px;
+}
+
+.vromm-slider--vertical .vromm-slider-values {
+  @apply h-full;
+  left: 100%;
+  margin-left: 8px;
+}
+
+.vromm-slider-value {
+  @apply absolute;
+  @apply text-xs text-gray-600 dark:text-gray-400;
+  @apply bg-gray-100 dark:bg-gray-700;
+  @apply px-2 py-1 rounded;
+  @apply whitespace-nowrap;
+  transform: translateX(-50%);
+}
+
+.vromm-slider--vertical .vromm-slider-value {
+  transform: translateY(50%);
+}
+
+// Helper text and error
+.vromm-slider-helper {
+  @apply mt-2;
+}
+
+.vromm-slider-helper-text {
+  @apply text-sm text-gray-600 dark:text-gray-400;
+}
+
+.vromm-slider-error {
+  @apply text-sm text-red-600 dark:text-red-400;
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .vromm-slider--vertical {
+    @apply h-40;
+  }
+  
+  .vromm-slider-value {
+    @apply text-xs px-1 py-0.5;
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .vromm-slider-thumb {
+    @apply border-2 border-gray-900 dark:border-gray-100;
+  }
+  
+  .vromm-slider-track {
+    @apply bg-gray-300 dark:bg-gray-600;
+  }
+  
+  .vromm-slider-progress,
+  .vromm-slider-range {
+    @apply bg-gray-900 dark:bg-gray-100;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .vromm-slider-thumb,
+  .vromm-slider-progress,
+  .vromm-slider-range,
+  .vromm-slider-track {
+    transition: none !important;
+  }
+  
+  .vromm-slider-thumb:hover,
+  .vromm-slider-thumb--active {
+    transform: translate(-50%, -50%) !important;
+  }
+} 

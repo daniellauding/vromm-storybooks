@@ -1,0 +1,221 @@
+/* Dropdown Component Styles - Scoped to avoid conflicts */
+
+// Dropdown wrapper
+.vromm-dropdown-wrapper {
+  @apply relative inline-block;
+}
+
+// Dropdown trigger
+.vromm-dropdown-trigger {
+  @apply cursor-pointer;
+}
+
+// Dropdown content (main menu container)
+.vromm-dropdown-content {
+  @apply absolute z-50 min-w-32 overflow-hidden rounded-md border;
+  @apply bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700;
+  @apply p-1 shadow-md;
+  @apply text-gray-900 dark:text-gray-100;
+  @apply transition-all duration-200 ease-in-out;
+  @apply opacity-100 scale-100;
+}
+
+// Searchable dropdown content has different padding
+.vromm-dropdown-content--searchable {
+  @apply p-0;
+}
+
+// Search container
+.vromm-dropdown-search {
+  @apply relative flex items-center;
+  @apply px-3 py-2 border-b border-gray-200 dark:border-gray-700;
+  @apply bg-gray-50 dark:bg-gray-800;
+}
+
+.vromm-dropdown-search-icon {
+  @apply absolute left-3 text-gray-400 dark:text-gray-500;
+  @apply pointer-events-none;
+}
+
+.vromm-dropdown-search-input {
+  @apply w-full pl-8 pr-3 py-1;
+  @apply text-sm;
+  @apply bg-transparent;
+  @apply border-none outline-none;
+  @apply text-gray-900 dark:text-gray-100;
+  @apply placeholder-gray-500 dark:placeholder-gray-400;
+}
+
+.vromm-dropdown-search-input:focus {
+  @apply ring-0;
+}
+
+// Items container
+.vromm-dropdown-items {
+  @apply p-1;
+}
+
+// Dropdown items
+.vromm-dropdown-item {
+  @apply flex items-center gap-2 w-full;
+  @apply px-2 py-1.5 text-sm;
+  @apply rounded-sm cursor-pointer;
+  @apply transition-colors duration-150;
+  @apply text-gray-700 dark:text-gray-300;
+  @apply hover:bg-gray-100 dark:hover:bg-gray-700;
+  @apply focus:bg-gray-100 dark:focus:bg-gray-700;
+  @apply focus:outline-none;
+}
+
+.vromm-dropdown-item--simple {
+  @apply pl-3;
+}
+
+.vromm-dropdown-item--disabled {
+  @apply opacity-50 cursor-not-allowed;
+  @apply hover:bg-transparent dark:hover:bg-transparent;
+}
+
+.vromm-dropdown-item--selected {
+  @apply bg-blue-50 dark:bg-blue-900/20;
+  @apply text-blue-700 dark:text-blue-300;
+}
+
+.vromm-dropdown-item:active {
+  @apply bg-gray-200 dark:bg-gray-600;
+}
+
+// Item icon
+.vromm-dropdown-item-icon {
+  @apply flex-shrink-0;
+  @apply w-4 h-4 flex items-center justify-center;
+}
+
+// Item content
+.vromm-dropdown-item-content {
+  @apply flex-1 truncate;
+}
+
+// Separator
+.vromm-dropdown-separator {
+  @apply h-px my-1 mx-1;
+  @apply bg-gray-200 dark:bg-gray-700;
+}
+
+// Label
+.vromm-dropdown-label {
+  @apply px-2 py-1.5 text-xs font-semibold;
+  @apply text-gray-500 dark:text-gray-400;
+  @apply uppercase tracking-wide;
+}
+
+// Animation when opening from different sides
+.vromm-dropdown-content[data-side="top"] {
+  transform-origin: bottom center;
+}
+
+.vromm-dropdown-content[data-side="right"] {
+  transform-origin: left center;
+}
+
+.vromm-dropdown-content[data-side="bottom"] {
+  transform-origin: top center;
+}
+
+.vromm-dropdown-content[data-side="left"] {
+  transform-origin: right center;
+}
+
+// Positioning based on side
+.vromm-dropdown--top {
+  @apply bottom-full mb-1;
+}
+
+.vromm-dropdown--right {
+  @apply left-full ml-1;
+}
+
+.vromm-dropdown--bottom {
+  @apply top-full mt-1;
+}
+
+.vromm-dropdown--left {
+  @apply right-full mr-1;
+}
+
+// Alignment
+.vromm-dropdown--align-start {
+  @apply left-0;
+}
+
+.vromm-dropdown--align-center {
+  @apply left-1/2 transform -translate-x-1/2;
+}
+
+.vromm-dropdown--align-end {
+  @apply right-0;
+}
+
+// For right/left positioned dropdowns
+.vromm-dropdown--right.vromm-dropdown--align-start,
+.vromm-dropdown--left.vromm-dropdown--align-start {
+  @apply top-0;
+}
+
+.vromm-dropdown--right.vromm-dropdown--align-center,
+.vromm-dropdown--left.vromm-dropdown--align-center {
+  @apply top-1/2 transform -translate-y-1/2;
+}
+
+.vromm-dropdown--right.vromm-dropdown--align-end,
+.vromm-dropdown--left.vromm-dropdown--align-end {
+  @apply bottom-0;
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .vromm-dropdown-content {
+    @apply min-w-40;
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .vromm-dropdown-content {
+    @apply border-2;
+  }
+  
+  .vromm-dropdown-item--selected {
+    @apply bg-blue-600 text-white;
+  }
+}
+
+// Focus styles for accessibility
+.vromm-dropdown-item:focus-visible {
+  @apply ring-2 ring-blue-500 ring-offset-1 dark:ring-offset-gray-800;
+}
+
+// RTL support
+[dir="rtl"] .vromm-dropdown-item-icon {
+  @apply mr-0 ml-2;
+}
+
+[dir="rtl"] .vromm-dropdown--align-start {
+  @apply left-auto right-0;
+}
+
+[dir="rtl"] .vromm-dropdown--align-end {
+  @apply left-0 right-auto;
+}
+
+// Mobile responsive adjustments
+@media (max-width: 640px) {
+  .vromm-dropdown-content {
+    @apply min-w-48 max-w-xs;
+    max-height: 60vh;
+  }
+  
+  .vromm-dropdown-item {
+    @apply py-3 text-base;
+  }
+} 

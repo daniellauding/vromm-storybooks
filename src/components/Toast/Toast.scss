@@ -1,0 +1,313 @@
+/* Toast Component Styles - Scoped to avoid conflicts */
+
+// Toast containers for different positions
+.vromm-toast-container {
+  @apply fixed z-50 flex flex-col gap-2 p-4 max-w-sm;
+  pointer-events: none;
+}
+
+.vromm-toast-container--top-left {
+  @apply top-0 left-0;
+}
+
+.vromm-toast-container--top-center {
+  @apply top-0 left-1/2 transform -translate-x-1/2;
+}
+
+.vromm-toast-container--top-right {
+  @apply top-0 right-0;
+}
+
+.vromm-toast-container--bottom-left {
+  @apply bottom-0 left-0;
+}
+
+.vromm-toast-container--bottom-center {
+  @apply bottom-0 left-1/2 transform -translate-x-1/2;
+}
+
+.vromm-toast-container--bottom-right {
+  @apply bottom-0 right-0;
+}
+
+// Base toast styles
+.vromm-toast {
+  @apply flex items-start gap-3 p-4 rounded-lg shadow-lg border;
+  @apply bg-white dark:bg-gray-800;
+  @apply border-gray-200 dark:border-gray-700;
+  @apply min-w-80 max-w-md;
+  @apply transition-all duration-300 ease-in-out;
+  pointer-events: auto;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+// Clickable toast
+.vromm-toast--clickable {
+  @apply cursor-pointer;
+  
+  &:hover {
+    @apply shadow-xl;
+    transform: translateY(-2px);
+  }
+}
+
+// Toast icon
+.vromm-toast-icon {
+  @apply flex-shrink-0;
+  @apply w-5 h-5 flex items-center justify-center;
+}
+
+// Toast content
+.vromm-toast-content {
+  @apply flex-1 min-w-0;
+}
+
+.vromm-toast-title {
+  @apply font-semibold text-gray-900 dark:text-gray-100;
+  @apply mb-1 text-sm;
+}
+
+.vromm-toast-message {
+  @apply text-gray-700 dark:text-gray-300;
+  @apply text-sm leading-relaxed;
+}
+
+// Toast action
+.vromm-toast-action {
+  @apply flex-shrink-0;
+  @apply ml-4;
+}
+
+// Close button
+.vromm-toast-close {
+  @apply flex-shrink-0;
+  @apply text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300;
+  @apply transition-colors duration-200;
+  @apply hover:bg-gray-100 dark:hover:bg-gray-700;
+  @apply rounded-full p-1 -m-1;
+}
+
+// Variant styles
+.vromm-toast--default {
+  @apply bg-white dark:bg-gray-800;
+  @apply border-gray-200 dark:border-gray-700;
+}
+
+.vromm-toast--success {
+  @apply bg-green-50 dark:bg-green-900/20;
+  @apply border-green-200 dark:border-green-800;
+}
+
+.vromm-toast--success .vromm-toast-title {
+  @apply text-green-800 dark:text-green-200;
+}
+
+.vromm-toast--success .vromm-toast-message {
+  @apply text-green-700 dark:text-green-300;
+}
+
+.vromm-toast--error {
+  @apply bg-red-50 dark:bg-red-900/20;
+  @apply border-red-200 dark:border-red-800;
+}
+
+.vromm-toast--error .vromm-toast-title {
+  @apply text-red-800 dark:text-red-200;
+}
+
+.vromm-toast--error .vromm-toast-message {
+  @apply text-red-700 dark:text-red-300;
+}
+
+.vromm-toast--warning {
+  @apply bg-yellow-50 dark:bg-yellow-900/20;
+  @apply border-yellow-200 dark:border-yellow-800;
+}
+
+.vromm-toast--warning .vromm-toast-title {
+  @apply text-yellow-800 dark:text-yellow-200;
+}
+
+.vromm-toast--warning .vromm-toast-message {
+  @apply text-yellow-700 dark:text-yellow-300;
+}
+
+.vromm-toast--info {
+  @apply bg-blue-50 dark:bg-blue-900/20;
+  @apply border-blue-200 dark:border-blue-800;
+}
+
+.vromm-toast--info .vromm-toast-title {
+  @apply text-blue-800 dark:text-blue-200;
+}
+
+.vromm-toast--info .vromm-toast-message {
+  @apply text-blue-700 dark:text-blue-300;
+}
+
+// Animation states
+.vromm-toast[data-state="open"] {
+  animation: vromm-toast-slide-in 300ms ease-out;
+}
+
+.vromm-toast[data-state="closed"] {
+  animation: vromm-toast-slide-out 150ms ease-in;
+}
+
+// Animations for top positions
+@keyframes vromm-toast-slide-in {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes vromm-toast-slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+// Animations for bottom positions
+.vromm-toast-container--bottom-left .vromm-toast[data-state="open"],
+.vromm-toast-container--bottom-center .vromm-toast[data-state="open"],
+.vromm-toast-container--bottom-right .vromm-toast[data-state="open"] {
+  animation: vromm-toast-slide-in-bottom 300ms ease-out;
+}
+
+.vromm-toast-container--bottom-left .vromm-toast[data-state="closed"],
+.vromm-toast-container--bottom-center .vromm-toast[data-state="closed"],
+.vromm-toast-container--bottom-right .vromm-toast[data-state="closed"] {
+  animation: vromm-toast-slide-out-bottom 150ms ease-in;
+}
+
+@keyframes vromm-toast-slide-in-bottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes vromm-toast-slide-out-bottom {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .vromm-toast-container {
+    @apply left-4 right-4 max-w-none;
+  }
+  
+  .vromm-toast-container--top-center,
+  .vromm-toast-container--bottom-center {
+    @apply left-4 right-4 transform-none;
+  }
+  
+  .vromm-toast {
+    @apply min-w-0 max-w-none;
+  }
+}
+
+// Progress indicator (optional enhancement)
+.vromm-toast-progress {
+  @apply absolute bottom-0 left-0 h-1 rounded-b-lg;
+  @apply bg-gray-200 dark:bg-gray-600;
+  width: 100%;
+  overflow: hidden;
+}
+
+.vromm-toast-progress-bar {
+  @apply h-full rounded-b-lg transition-all duration-100 ease-linear;
+  @apply bg-gray-500 dark:bg-gray-400;
+}
+
+.vromm-toast--success .vromm-toast-progress-bar {
+  @apply bg-green-500;
+}
+
+.vromm-toast--error .vromm-toast-progress-bar {
+  @apply bg-red-500;
+}
+
+.vromm-toast--warning .vromm-toast-progress-bar {
+  @apply bg-yellow-500;
+}
+
+.vromm-toast--info .vromm-toast-progress-bar {
+  @apply bg-blue-500;
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .vromm-toast {
+    @apply border-2;
+  }
+  
+  .vromm-toast--success {
+    @apply border-green-600;
+  }
+  
+  .vromm-toast--error {
+    @apply border-red-600;
+  }
+  
+  .vromm-toast--warning {
+    @apply border-yellow-600;
+  }
+  
+  .vromm-toast--info {
+    @apply border-blue-600;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .vromm-toast {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .vromm-toast--clickable:hover {
+    transform: none;
+  }
+}
+
+// Focus styles for accessibility
+.vromm-toast:focus-within {
+  @apply ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-800;
+}
+
+// Stacking styles
+.vromm-toast-container .vromm-toast + .vromm-toast {
+  @apply mt-2;
+}
+
+// Fade effect for older toasts
+.vromm-toast-container .vromm-toast:nth-child(n+4) {
+  opacity: 0.8;
+}
+
+.vromm-toast-container .vromm-toast:nth-child(n+5) {
+  opacity: 0.6;
+} 

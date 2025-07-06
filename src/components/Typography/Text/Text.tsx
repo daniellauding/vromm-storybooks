@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '../../../utils/cn';
+import '../Typography.scss';
 
 export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
@@ -78,7 +79,7 @@ const alignClasses = {
 };
 
 const familyClasses = {
-  sans: 'font-sans',
+  sans: 'vromm-text',
   mono: 'font-mono',
 };
 

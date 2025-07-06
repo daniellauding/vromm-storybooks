@@ -1,0 +1,147 @@
+/* Modal Component Styles - Scoped to avoid conflicts */
+
+// Base modal styles using @apply for cleaner code
+.vromm-modal {
+  @apply fixed inset-0 z-50 overflow-y-auto;
+}
+
+.vromm-modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 transition-opacity;
+  @apply backdrop-blur-sm;
+}
+
+.vromm-modal-container {
+  @apply min-h-screen px-4 text-center;
+}
+
+.vromm-modal-spacer {
+  @apply inline-block h-screen align-middle;
+}
+
+.vromm-modal-content {
+  @apply relative inline-block w-full text-left align-middle transition-all transform;
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-xl;
+  @apply max-h-[90vh] overflow-hidden;
+}
+
+// Modal sizes
+.vromm-modal--sm {
+  @apply max-w-sm;
+}
+
+.vromm-modal--md {
+  @apply max-w-md;
+}
+
+.vromm-modal--lg {
+  @apply max-w-lg;
+}
+
+.vromm-modal--xl {
+  @apply max-w-xl;
+}
+
+.vromm-modal--2xl {
+  @apply max-w-2xl;
+}
+
+.vromm-modal--3xl {
+  @apply max-w-3xl;
+}
+
+.vromm-modal--4xl {
+  @apply max-w-4xl;
+}
+
+.vromm-modal--full {
+  @apply max-w-none w-[95vw] h-[95vh];
+}
+
+// Modal header
+.vromm-modal-header {
+  @apply flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700;
+}
+
+.vromm-modal-title {
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.vromm-modal-close {
+  @apply rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-200;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  @apply transition-colors duration-200;
+}
+
+// Modal body
+.vromm-modal-body {
+  @apply p-6 overflow-y-auto;
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+// Modal footer
+.vromm-modal-footer {
+  @apply flex justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700;
+  @apply bg-gray-50 dark:bg-gray-900;
+}
+
+// Alert modal variants
+.vromm-alert-modal--info {
+  .vromm-modal-icon {
+    @apply text-blue-600 bg-blue-100 dark:bg-blue-900 dark:text-blue-400;
+  }
+}
+
+.vromm-alert-modal--success {
+  .vromm-modal-icon {
+    @apply text-green-600 bg-green-100 dark:bg-green-900 dark:text-green-400;
+  }
+}
+
+.vromm-alert-modal--warning {
+  .vromm-modal-icon {
+    @apply text-yellow-600 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-400;
+  }
+}
+
+.vromm-alert-modal--destructive {
+  .vromm-modal-icon {
+    @apply text-red-600 bg-red-100 dark:bg-red-900 dark:text-red-400;
+  }
+}
+
+.vromm-modal-icon {
+  @apply flex items-center justify-center w-12 h-12 mx-auto rounded-full;
+}
+
+// Animation classes
+.vromm-modal-enter {
+  @apply opacity-0;
+}
+
+.vromm-modal-enter-active {
+  @apply opacity-100 transition-opacity duration-300;
+}
+
+.vromm-modal-exit {
+  @apply opacity-100;
+}
+
+.vromm-modal-exit-active {
+  @apply opacity-0 transition-opacity duration-300;
+}
+
+.vromm-modal-content-enter {
+  @apply opacity-0 scale-95;
+}
+
+.vromm-modal-content-enter-active {
+  @apply opacity-100 scale-100 transition-all duration-300;
+}
+
+.vromm-modal-content-exit {
+  @apply opacity-100 scale-100;
+}
+
+.vromm-modal-content-exit-active {
+  @apply opacity-0 scale-95 transition-all duration-300;
+} 
