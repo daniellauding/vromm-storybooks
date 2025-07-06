@@ -73,18 +73,6 @@ export interface CardDescriptionProps {
   className?: string;
 }
 
-// Default carousel options
-const DEFAULT_CAROUSEL_OPTIONS: CarouselOptions = {
-  showDots: true,
-  showArrows: true,
-  loop: true,
-  autoPlay: false,
-  autoPlayInterval: 5000,
-  enableSwipe: true,
-  preloadNext: true,
-  transition: 'slide'
-};
-
 /**
  * Enhanced Card component with full carousel support
  * 
@@ -123,8 +111,18 @@ export const Card: React.FC<CardProps> = ({
   const hasImages = imageArray.length > 0;
   const hasMultipleImages = imageArray.length > 1;
   
-  // Merge carousel options with defaults
-  const options = { ...DEFAULT_CAROUSEL_OPTIONS, ...carouselOptions };
+  // Merge carousel options with defaults (inline to ensure bundler includes them)
+  const options = { 
+    showDots: true,
+    showArrows: true,
+    loop: true,
+    autoPlay: false,
+    autoPlayInterval: 5000,
+    enableSwipe: true,
+    preloadNext: true,
+    transition: 'slide',
+    ...carouselOptions 
+  };
   
   // State management
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
