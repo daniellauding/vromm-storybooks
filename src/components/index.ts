@@ -91,6 +91,18 @@ export type {
 } from './Forms';
 
 // Tour System
-export { TourProvider, useTour } from './Tour/TourContext';
-export { Tour } from './Tour/Tour';
-export type { TourStep, TourOptions, TourContextType } from './Tour/TourContext';
+// TODO: Fix Tour exports
+// export { TourProvider, useTour } from './Tour/TourContext';
+// export { Tour } from './Tour/Tour';
+// export type { TourStep, TourOptions, TourContextType } from './Tour/TourContext';
+
+// Utils
+export { cn } from '../utils/cn';
+export { 
+  transformMediaForCard, 
+  transformMediaWithDetection,
+  isLocalFile,
+  isVideoFile,
+  getFileExtension,
+  type UserMediaItem 
+} from '../utils/mediaTransformers';

@@ -1075,4 +1075,122 @@ export const VideoInteractionDemo: Story = {
       },
     },
   },
+};
+
+export const UserDataFormatExample: Story = {
+  render: () => {
+    // User's actual data format (like from mobile app or API)
+    const userMediaData = [
+      {
+        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        type: "video" as const,
+        description: "Adventure video from mobile upload"
+      },
+      {
+        url: "https://picsum.photos/400/300?random=300",
+        type: "image" as const,
+        description: "Photo from camera roll"
+      },
+      {
+        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        type: "video" as const,
+        description: ""
+      },
+      {
+        url: "https://picsum.photos/400/300?random=301",
+        type: "image" as const,
+        description: "Another photo"
+      }
+    ];
+
+    // Transform user data to Card format
+    const transformMediaForCard = (mediaItems: typeof userMediaData) => {
+      return mediaItems.map((item, index) => ({
+        src: item.url,
+        alt: item.description || `Media item ${index + 1}`,
+        type: item.type === 'image' ? 'photo' as const : 'video' as const,
+        // Add video duration for demo (in real app, you might extract this)
+        ...(item.type === 'video' && { duration: '2:30' })
+      }));
+    };
+
+    const transformedMedia = transformMediaForCard(userMediaData);
+
+    return (
+      <LightWrapper>
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-xl font-bold mb-2">User Data Format Integration</h3>
+            <p className="text-gray-600 mb-4">
+              Example showing how to use your actual data format with the Card component.
+            </p>
+          </div>
+
+          <div className="w-80">
+            <Card
+              images={transformedMedia}
+              title="Mixed Media from User Upload"
+              description="This card uses your actual data format (url, type, description) transformed to work with the Card component."
+              rating={4.8}
+              reviewCount={234}
+              price="User Generated Content"
+              location="Mobile App"
+              carouselOptions={{
+                showDots: true,
+                showArrows: true,
+                loop: true,
+                videoControls: {
+                  muted: true,
+                  autoPlay: false,
+                  showDuration: true,
+                }
+              }}
+              onImageChange={(index, media) => {
+                console.log(`User media ${index + 1}:`, media.alt);
+              }}
+              onVideoPlay={(index, video) => {
+                console.log(`Playing user video: ${video.alt}`);
+              }}
+              onVideoPause={(index, video) => {
+                console.log(`Paused user video: ${video.alt}`);
+              }}
+            />
+          </div>
+
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <h4 className="font-semibold text-green-800 mb-2">📱 Your Data Format:</h4>
+            <pre className="text-sm text-green-700 bg-green-100 p-3 rounded overflow-auto">
+{JSON.stringify(userMediaData, null, 2)}
+            </pre>
+          </div>
+
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h4 className="font-semibold text-blue-800 mb-2">🔄 Transformation Code:</h4>
+            <pre className="text-sm text-blue-700 bg-blue-100 p-3 rounded overflow-auto">
+{`// Simple transformation function
+const transformMediaForCard = (mediaItems) => {
+  return mediaItems.map((item, index) => ({
+    src: item.url,  // url → src
+    alt: item.description || \`Media item \${index + 1}\`,
+    type: item.type === 'image' ? 'photo' : 'video',
+    ...(item.type === 'video' && { duration: '2:30' })
+  }));
+};
+
+// Usage
+const transformedMedia = transformMediaForCard(userMediaData);
+<Card images={transformedMedia} ... />`}
+            </pre>
+          </div>
+        </div>
+      </LightWrapper>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Example showing how to transform your actual data format (with url, type, description properties) to work seamlessly with the Card component. Includes local file support for mobile apps.'
+      }
+    }
+  }
 }; 
