@@ -89,3 +89,8 @@ export type {
   SearchProps,
   SearchOption
 } from './Forms';
+
+// Tour System
+export { TourProvider, useTour } from './Tour/TourContext';
+export { Tour } from './Tour/Tour';
+export type { TourStep, TourOptions, TourContextType } from './Tour/TourContext';

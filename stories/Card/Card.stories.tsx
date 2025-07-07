@@ -80,6 +80,40 @@ const sampleImages = [
   { src: 'https://picsum.photos/400/300?random=4', alt: 'Summit vista' },
 ];
 
+// Sample videos for carousel examples
+const sampleVideos = [
+  { 
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    alt: 'Adventure video: Mountain biking trail',
+    type: 'video' as const,
+    poster: 'https://picsum.photos/400/300?random=100',
+    duration: '3:24'
+  },
+  { 
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    alt: 'Adventure video: Rock climbing expedition',
+    type: 'video' as const,
+    poster: 'https://picsum.photos/400/300?random=101',
+    duration: '5:47'
+  },
+  { 
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    alt: 'Adventure video: Hiking through forests',
+    type: 'video' as const,
+    poster: 'https://picsum.photos/400/300?random=102',
+    duration: '2:15'
+  }
+];
+
+// Mixed media for comprehensive examples
+const mixedMedia = [
+  sampleImages[0],
+  sampleVideos[0],
+  sampleImages[1],
+  sampleVideos[1],
+  sampleImages[2]
+];
+
 const mapImages = [
   { src: 'https://picsum.photos/400/300?random=10', alt: 'Trail overview photo' },
   { src: 'https://picsum.photos/400/300?random=11', alt: 'Scenic viewpoint' },
@@ -843,6 +877,201 @@ export const DarkModePreview: Story = {
     docs: {
       description: {
         story: 'Dark mode preview showing automatic adaptation of all card elements and carousel features.',
+      },
+    },
+  },
+};
+
+// Video Support Examples
+export const SingleVideo: Story = {
+  render: () => (
+    <LightWrapper>
+      <div className="w-80">
+        <Card
+          images={[sampleVideos[0]]}
+          title="Adventure Video Preview"
+          description="Experience the thrill of mountain biking through scenic trails. Click to play/pause the video."
+          rating={4.7}
+          reviewCount={145}
+          price="Free Preview"
+          location="Rocky Mountain Trails"
+          carouselOptions={{
+            videoControls: {
+              muted: true,
+              autoPlay: false,
+              showDuration: true,
+            }
+          }}
+          onVideoPlay={(index, video) => console.log('Video started playing:', video.alt)}
+          onVideoPause={(index, video) => console.log('Video paused:', video.alt)}
+          onSave={() => console.log('Video saved!')}
+          onClick={() => console.log('Video card clicked!')}
+        />
+      </div>
+    </LightWrapper>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Single video card with play/pause controls. Videos are muted by default with no timeline or volume controls for a clean experience. Use spacebar or click to control playback.',
+      },
+    },
+  },
+};
+
+export const VideoCarousel: Story = {
+  render: () => (
+    <LightWrapper>
+      <div className="w-80">
+        <Card
+          images={sampleVideos}
+          title="Adventure Video Collection"
+          description="Browse through our collection of exciting adventure videos. Each video can be played independently."
+          rating={4.8}
+          reviewCount={267}
+          price="$12.99/month"
+          location="Premium Content"
+          carouselOptions={{
+            showDots: true,
+            showArrows: true,
+            loop: true,
+            videoControls: {
+              muted: true,
+              autoPlay: false,
+              showDuration: true,
+            }
+          }}
+          onVideoPlay={(index, video) => console.log(`▶️ Playing video ${index + 1}:`, video.alt)}
+          onVideoPause={(index, video) => console.log(`⏸️ Paused video ${index + 1}:`, video.alt)}
+          onImageChange={(index, media) => console.log(`Switched to video ${index + 1}:`, media.alt)}
+          onSave={() => console.log('Video collection saved!')}
+        />
+      </div>
+    </LightWrapper>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Video carousel with multiple videos. Notice the rectangular pagination dots for videos. Navigation automatically pauses any currently playing video.',
+      },
+    },
+  },
+};
+
+export const MixedMediaCarousel: Story = {
+  render: () => (
+    <LightWrapper>
+      <div className="w-80">
+        <Card
+          images={mixedMedia}
+          title="Complete Adventure Experience"
+          description="Explore both stunning photos and exciting videos showcasing the full adventure experience."
+          rating={4.9}
+          reviewCount={189}
+          price="$299/experience"
+          location="Adventure Package"
+          carouselOptions={{
+            showDots: true,
+            showArrows: true,
+            loop: true,
+            enableSwipe: true,
+            videoControls: {
+              muted: true,
+              autoPlay: false,
+              showDuration: true,
+            }
+          }}
+          onImageChange={(index, media) => {
+            console.log(`Switched to ${media.type || 'photo'} ${index + 1}:`, media.alt);
+          }}
+          onVideoPlay={(index, video) => console.log(`▶️ Playing video:`, video.alt)}
+          onVideoPause={(index, video) => console.log(`⏸️ Paused video:`, video.alt)}
+          onSave={() => console.log('Mixed media experience saved!')}
+        />
+      </div>
+    </LightWrapper>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Mixed media carousel combining photos and videos. Notice different pagination dot styles: circles for photos, rectangles for videos. Perfect for showcasing comprehensive content.',
+      },
+    },
+  },
+};
+
+export const VideoInteractionDemo: Story = {
+  render: () => (
+    <LightWrapper>
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-xl font-bold mb-2">Video Interaction Demo</h3>
+          <p className="text-gray-600 mb-4">
+            Try different ways to interact with videos: spacebar, click, arrow keys for navigation.
+          </p>
+        </div>
+
+        <div className="w-80">
+          <Card
+            images={mixedMedia}
+            title="Interactive Video Experience"
+            description="🎮 Controls: Spacebar/Click = Play/Pause • Arrow Keys = Navigate • Swipe = Mobile Navigation"
+            rating={5.0}
+            reviewCount={99}
+            price="Interactive Demo"
+            location="Feature Showcase"
+            isSaved={false}
+            isClosable={true}
+            carouselOptions={{
+              showDots: true,
+              showArrows: true,
+              loop: true,
+              enableSwipe: true,
+              videoControls: {
+                muted: true,
+                autoPlay: false,
+                showDuration: true,
+              }
+            }}
+            onImageChange={(index, media) => {
+              const mediaType = media.type === 'video' ? '🎥 Video' : '📷 Photo';
+              console.log(`${mediaType} ${index + 1}:`, media.alt);
+            }}
+            onVideoPlay={(index, video) => {
+              console.log(`▶️ Video Playing: ${video.alt}`);
+            }}
+            onVideoPause={(index, video) => {
+              console.log(`⏸️ Video Paused: ${video.alt}`);
+            }}
+            onSave={() => {
+              alert('Demo saved! 💾');
+            }}
+            onClose={() => {
+              alert('Demo closed! ❌');
+            }}
+            onClick={() => {
+              console.log('Card clicked for more details');
+            }}
+          />
+        </div>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <h4 className="font-semibold text-blue-800 mb-2">💡 Interaction Tips:</h4>
+          <ul className="text-sm text-blue-700 space-y-1">
+            <li>• <strong>Spacebar:</strong> Play/pause current video</li>
+            <li>• <strong>Click video:</strong> Toggle play/pause</li>
+            <li>• <strong>Arrow keys:</strong> Navigate between media</li>
+            <li>• <strong>Touch/swipe:</strong> Mobile navigation</li>
+            <li>• <strong>Auto-pause:</strong> Videos pause when navigating away</li>
+          </ul>
+        </div>
+      </div>
+    </LightWrapper>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Comprehensive demo of video interaction features including keyboard controls, touch gestures, and automatic pause behavior.',
       },
     },
   },

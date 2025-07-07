@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Heart, X, Star, MapPin, Map } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Heart, X, Star, MapPin, Map, Play, Pause } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 export interface CardImage {
   src: string;
   alt: string;
-  type?: 'photo' | 'map';
+  type?: 'photo' | 'map' | 'video';
+  poster?: string; // For video thumbnail
+  duration?: string; // For video duration display
 }
 
 export interface CarouselOptions {
@@ -17,6 +19,11 @@ export interface CarouselOptions {
   enableSwipe?: boolean;
   preloadNext?: boolean;
   transition?: 'slide' | 'fade';
+  videoControls?: {
+    muted?: boolean;
+    autoPlay?: boolean;
+    showDuration?: boolean;
+  };
 }
 
 export interface CardProps {
@@ -25,7 +32,7 @@ export interface CardProps {
   className?: string;
   children?: React.ReactNode;
   
-  // Enhanced image support - backwards compatible
+  // Enhanced image/video support - backwards compatible
   images?: CardImage | CardImage[];
   
   // Map preview card specific props
@@ -46,6 +53,8 @@ export interface CardProps {
   onClose?: () => void;
   onClick?: () => void;
   onImageChange?: (currentIndex: number, image: CardImage) => void;
+  onVideoPlay?: (currentIndex: number, image: CardImage) => void;
+  onVideoPause?: (currentIndex: number, image: CardImage) => void;
 }
 
 export interface CardHeaderProps {
@@ -104,6 +113,8 @@ export const Card: React.FC<CardProps> = ({
   onClose,
   onClick,
   onImageChange,
+  onVideoPlay,
+  onVideoPause,
   ...props
 }) => {
   // Normalize images to array format for backwards compatibility
@@ -121,6 +132,11 @@ export const Card: React.FC<CardProps> = ({
     enableSwipe: true,
     preloadNext: true,
     transition: 'slide',
+    videoControls: {
+      muted: true,
+      autoPlay: false,
+      showDuration: true,
+    },
     ...carouselOptions 
   };
   
@@ -129,9 +145,11 @@ export const Card: React.FC<CardProps> = ({
   const [isImageSaved, setIsImageSaved] = useState(isSaved);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
+  const [videoStates, setVideoStates] = useState<{ [key: number]: { isPlaying: boolean } }>({});
   
-  // Refs for touch handling and auto-play
+  // Refs for touch handling, auto-play, and video control
   const carouselRef = useRef<HTMLDivElement>(null);
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
   const touchStartX = useRef<number>(0);
   const touchStartY = useRef<number>(0);
   const autoPlayTimer = useRef<NodeJS.Timeout>();
@@ -178,6 +196,37 @@ export const Card: React.FC<CardProps> = ({
     }
   }, [currentImageIndex, imageArray, options.preloadNext, options.loop, hasMultipleImages, loadedImages]);
   
+  // Video control functions
+  const handleVideoToggle = useCallback((index: number, event?: React.MouseEvent) => {
+    if (event) {
+      event.stopPropagation();
+    }
+    
+    const video = videoRefs.current[index];
+    if (!video || imageArray[index]?.type !== 'video') return;
+    
+    const isCurrentlyPlaying = videoStates[index]?.isPlaying || false;
+    
+    if (isCurrentlyPlaying) {
+      video.pause();
+      setVideoStates(prev => ({ ...prev, [index]: { isPlaying: false } }));
+      onVideoPause?.(index, imageArray[index]);
+    } else {
+      // Pause all other videos first
+      Object.keys(videoRefs.current).forEach(key => {
+        const otherVideo = videoRefs.current[parseInt(key)];
+        if (otherVideo && parseInt(key) !== index) {
+          otherVideo.pause();
+          setVideoStates(prev => ({ ...prev, [parseInt(key)]: { isPlaying: false } }));
+        }
+      });
+      
+      video.play();
+      setVideoStates(prev => ({ ...prev, [index]: { isPlaying: true } }));
+      onVideoPlay?.(index, imageArray[index]);
+    }
+  }, [videoStates, imageArray, onVideoPlay, onVideoPause]);
+  
   // Navigation functions
   const goToImage = useCallback((index: number, event?: React.MouseEvent | React.KeyboardEvent) => {
     if (event) {
@@ -187,6 +236,15 @@ export const Card: React.FC<CardProps> = ({
     if (index < 0 || index >= imageArray.length || index === currentImageIndex) {
       return;
     }
+    
+    // Pause any playing videos when switching
+    Object.keys(videoRefs.current).forEach(key => {
+      const video = videoRefs.current[parseInt(key)];
+      if (video) {
+        video.pause();
+        setVideoStates(prev => ({ ...prev, [parseInt(key)]: { isPlaying: false } }));
+      }
+    });
     
     setIsTransitioning(true);
     setCurrentImageIndex(index);
@@ -300,6 +358,14 @@ export const Card: React.FC<CardProps> = ({
         e.preventDefault();
         goToImage(imageArray.length - 1, e);
         break;
+      case ' ':
+      case 'Spacebar':
+        // Play/pause video if current item is a video
+        if (imageArray[currentImageIndex]?.type === 'video') {
+          e.preventDefault();
+          handleVideoToggle(currentImageIndex);
+        }
+        break;
     }
   };
   
@@ -378,31 +444,99 @@ export const Card: React.FC<CardProps> = ({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Main Image Container */}
+            {/* Main Media Container (Image/Video) */}
             <div className="relative">
-              <img
-                src={currentImage.src}
-                alt={currentImage.alt}
-                className={cn(
-                  "w-full h-48 object-cover transition-opacity duration-300",
-                  options.transition === 'fade' && isTransitioning && "opacity-0"
-                )}
-                loading={currentImageIndex === 0 ? "eager" : "lazy"}
-                onLoad={() => {
-                  setLoadedImages(prev => new Set([...prev, currentImageIndex]));
-                }}
-                onError={(e) => {
-                  // Fallback for broken images
-                  const target = e.target as HTMLImageElement;
-                  target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y5ZmFmYiIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzZiNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBhdmFpbGFibGU8L3RleHQ+Cjwvc3ZnPg==';
-                }}
-              />
+              {currentImage.type === 'video' ? (
+                <>
+                  {/* Video Element */}
+                  <video
+                    ref={(ref) => { videoRefs.current[currentImageIndex] = ref; }}
+                    src={currentImage.src}
+                    poster={currentImage.poster}
+                    className={cn(
+                      "w-full h-48 object-cover transition-opacity duration-300",
+                      options.transition === 'fade' && isTransitioning && "opacity-0"
+                    )}
+                    muted={options.videoControls?.muted !== false}
+                    playsInline
+                    preload="metadata"
+                    onPlay={() => {
+                      setVideoStates(prev => ({ ...prev, [currentImageIndex]: { isPlaying: true } }));
+                      onVideoPlay?.(currentImageIndex, currentImage);
+                    }}
+                    onPause={() => {
+                      setVideoStates(prev => ({ ...prev, [currentImageIndex]: { isPlaying: false } }));
+                      onVideoPause?.(currentImageIndex, currentImage);
+                    }}
+                    onEnded={() => {
+                      setVideoStates(prev => ({ ...prev, [currentImageIndex]: { isPlaying: false } }));
+                      onVideoPause?.(currentImageIndex, currentImage);
+                    }}
+                    onError={(e) => {
+                      console.error('Video failed to load:', currentImage.src);
+                    }}
+                  />
+                  
+                  {/* Video Play/Pause Button */}
+                  <button
+                    onClick={(e) => handleVideoToggle(currentImageIndex, e)}
+                    className={cn(
+                      "absolute inset-0 flex items-center justify-center",
+                      "bg-black/20 hover:bg-black/30 transition-all duration-200",
+                      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white",
+                      videoStates[currentImageIndex]?.isPlaying && "opacity-0 hover:opacity-100"
+                    )}
+                    aria-label={videoStates[currentImageIndex]?.isPlaying ? "Pause video" : "Play video"}
+                  >
+                    <div className="bg-white/90 hover:bg-white rounded-full p-3 shadow-lg">
+                      {videoStates[currentImageIndex]?.isPlaying ? (
+                        <Pause className="h-6 w-6 text-gray-700" />
+                      ) : (
+                        <Play className="h-6 w-6 text-gray-700 ml-0.5" />
+                      )}
+                    </div>
+                  </button>
+                  
+                  {/* Video Duration Badge */}
+                  {currentImage.duration && options.videoControls?.showDuration && (
+                    <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                      {currentImage.duration}
+                    </div>
+                  )}
+                </>
+              ) : (
+                /* Image Element */
+                <img
+                  src={currentImage.src}
+                  alt={currentImage.alt}
+                  className={cn(
+                    "w-full h-48 object-cover transition-opacity duration-300",
+                    options.transition === 'fade' && isTransitioning && "opacity-0"
+                  )}
+                  loading={currentImageIndex === 0 ? "eager" : "lazy"}
+                  onLoad={() => {
+                    setLoadedImages(prev => new Set([...prev, currentImageIndex]));
+                  }}
+                  onError={(e) => {
+                    // Fallback for broken images
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y5ZmFmYiIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzZiNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBhdmFpbGFibGU8L3RleHQ+Cjwvc3ZnPg==';
+                  }}
+                />
+              )}
               
-              {/* Map Icon Overlay for map type images */}
+              {/* Type Icon Overlays */}
               {currentImage.type === 'map' && (
                 <div className="absolute top-2 left-2 bg-white/90 rounded-md px-2 py-1 flex items-center gap-1">
                   <Map className="h-3 w-3 text-gray-700" />
                   <span className="text-xs font-medium text-gray-700">Map</span>
+                </div>
+              )}
+              
+              {currentImage.type === 'video' && !videoStates[currentImageIndex]?.isPlaying && (
+                <div className="absolute top-2 left-2 bg-black/70 text-white rounded-md px-2 py-1 flex items-center gap-1">
+                  <Play className="h-3 w-3" />
+                  <span className="text-xs font-medium">Video</span>
                 </div>
               )}
             </div>
@@ -442,17 +576,22 @@ export const Card: React.FC<CardProps> = ({
             {/* Pagination Dots */}
             {hasMultipleImages && options.showDots && (
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-                {imageArray.map((_, index) => (
+                {imageArray.map((item, index) => (
                   <button
                     key={index}
                     onClick={(e) => goToImage(index, e)}
                     className={cn(
-                      'w-2 h-2 rounded-full transition-all duration-200 touch-manipulation',
+                      'transition-all duration-200 touch-manipulation',
                       'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500',
                       'hover:scale-110',
-                      index === currentImageIndex ? 'bg-white scale-110' : 'bg-white/50'
+                      item.type === 'video' 
+                        ? 'w-3 h-2 rounded-sm' // Rectangle for videos
+                        : 'w-2 h-2 rounded-full', // Circle for images
+                      index === currentImageIndex 
+                        ? 'bg-white scale-110' 
+                        : 'bg-white/50'
                     )}
-                    aria-label={`Go to image ${index + 1}`}
+                    aria-label={`Go to ${item.type === 'video' ? 'video' : 'image'} ${index + 1}`}
                   />
                 ))}
               </div>
@@ -498,9 +637,10 @@ export const Card: React.FC<CardProps> = ({
             {/* Screen Reader Instructions */}
             {hasMultipleImages && (
               <div id="carousel-instructions" className="sr-only">
-                Image {currentImageIndex + 1} of {imageArray.length}. 
+                {currentImage.type === 'video' ? 'Video' : 'Image'} {currentImageIndex + 1} of {imageArray.length}. 
                 Use arrow keys to navigate, or swipe on touch devices.
-                {currentImage.alt && ` Current image: ${currentImage.alt}`}
+                {currentImage.alt && ` Current ${currentImage.type === 'video' ? 'video' : 'image'}: ${currentImage.alt}`}
+                {currentImage.type === 'video' && ' Press space or click to play/pause video.'}
               </div>
             )}
           </div>
