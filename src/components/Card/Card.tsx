@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Heart, X, Star, MapPin, Map, Play, Pause } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Heart, X, Star, MapPin, Map, Play, Pause, Check } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 export interface CardImage {
@@ -43,6 +43,7 @@ export interface CardProps {
   price?: string;
   location?: string;
   isSaved?: boolean;
+  isDriven?: boolean;
   isClosable?: boolean;
   
   // Enhanced carousel options
@@ -50,6 +51,7 @@ export interface CardProps {
   
   // Event handlers
   onSave?: () => void;
+  onMarkAsDriven?: () => void;
   onClose?: () => void;
   onClick?: () => void;
   onImageChange?: (currentIndex: number, image: CardImage) => void;
@@ -107,9 +109,11 @@ export const Card: React.FC<CardProps> = ({
   price,
   location,
   isSaved = false,
+  isDriven = false,
   isClosable = false,
   carouselOptions,
   onSave,
+  onMarkAsDriven,
   onClose,
   onClick,
   onImageChange,
@@ -143,9 +147,19 @@ export const Card: React.FC<CardProps> = ({
   // State management
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isImageSaved, setIsImageSaved] = useState(isSaved);
+  const [isImageDriven, setIsImageDriven] = useState(isDriven);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
   const [videoStates, setVideoStates] = useState<{ [key: number]: { isPlaying: boolean } }>({});
+  
+  // Sync state with props
+  useEffect(() => {
+    setIsImageSaved(isSaved);
+  }, [isSaved]);
+  
+  useEffect(() => {
+    setIsImageDriven(isDriven);
+  }, [isDriven]);
   
   // Refs for touch handling, auto-play, and video control
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -375,6 +389,12 @@ export const Card: React.FC<CardProps> = ({
     setIsImageSaved(!isImageSaved);
     onSave?.();
   };
+
+  const handleMarkAsDriven = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsImageDriven(!isImageDriven);
+    onMarkAsDriven?.();
+  };
   
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -597,12 +617,12 @@ export const Card: React.FC<CardProps> = ({
               </div>
             )}
             
-            {/* Save Button */}
+            {/* Save Button - Now positioned on LEFT */}
             {onSave && (
               <button
                 onClick={handleSave}
                 className={cn(
-                  "absolute top-2 right-2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
+                  "absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
                   "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
                   "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
                 )}
@@ -618,13 +638,35 @@ export const Card: React.FC<CardProps> = ({
                 />
               </button>
             )}
+
+            {/* Mark as Driven Button - Positioned in center-left */}
+            {onMarkAsDriven && (
+              <button
+                onClick={handleMarkAsDriven}
+                className={cn(
+                  "absolute top-2 left-14 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
+                  "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+                  "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+                )}
+                aria-label={isImageDriven ? "Remove from driven" : "Mark as driven"}
+              >
+                <Check
+                  className={cn(
+                    'h-4 w-4 transition-all duration-200',
+                    isImageDriven 
+                      ? 'fill-green-500 text-green-500 scale-110' 
+                      : 'text-gray-700 hover:text-green-500 hover:scale-110'
+                  )}
+                />
+              </button>
+            )}
             
-            {/* Close Button */}
+            {/* Close Button - Now positioned on RIGHT */}
             {isClosable && onClose && (
               <button
                 onClick={handleClose}
                 className={cn(
-                  "absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
+                  "absolute top-2 right-2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
                   "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
                   "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
                 )}

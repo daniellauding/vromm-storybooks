@@ -38,11 +38,16 @@ const meta = {
       control: 'boolean',
       description: 'Whether the card is saved/favorited',
     },
+    isDriven: {
+      control: 'boolean',
+      description: 'Whether the route has been driven',
+    },
     isClosable: {
       control: 'boolean',
       description: 'Whether the card can be closed',
     },
     onSave: { action: 'saved' },
+    onMarkAsDriven: { action: 'marked as driven' },
     onClose: { action: 'closed' },
     onClick: { action: 'clicked' },
     onImageChange: { action: 'image changed' },
@@ -1193,4 +1198,143 @@ const transformedMedia = transformMediaForCard(userMediaData);
       }
     }
   }
+};
+
+// Button Positioning and Mark as Driven Demo
+export const ButtonPositioningDemo: Story = {
+  render: () => {
+    const [isSaved, setIsSaved] = useState(false);
+    const [isDriven, setIsDriven] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+
+    const handleSave = () => {
+      setIsSaved(!isSaved);
+      console.log(`Route ${isSaved ? 'removed from' : 'added to'} saved list`);
+    };
+
+    const handleMarkAsDriven = () => {
+      setIsDriven(!isDriven);
+      console.log(`Route ${isDriven ? 'removed from' : 'marked as'} driven`);
+    };
+
+    const handleClose = () => {
+      setIsVisible(false);
+      setTimeout(() => setIsVisible(true), 2000); // Reappear after 2 seconds for demo
+      console.log('Route card closed');
+    };
+
+    if (!isVisible) {
+      return (
+        <LightWrapper>
+          <div className="w-80 h-80 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg">
+            <div className="text-center text-gray-500">
+              <p>Card closed - will reappear in 2 seconds</p>
+              <p className="text-sm mt-2">(Demo auto-reopen)</p>
+            </div>
+          </div>
+        </LightWrapper>
+      );
+    }
+
+    return (
+      <LightWrapper>
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-xl font-bold mb-2">Fixed Button Positioning & Mark as Driven</h3>
+            <p className="text-gray-600 mb-4">
+              <strong>Fixed:</strong> Heart button now on LEFT, X button on RIGHT, plus new check button for "Mark as Driven" functionality.
+            </p>
+          </div>
+
+          <div className="w-80">
+            <Card
+              images={sampleImages}
+              title="Scenic Mountain Route"
+              description="Beautiful winding road through mountain valleys with stunning viewpoints. Perfect for a day trip!"
+              rating={4.8}
+              reviewCount={342}
+              price="Free"
+              location="Rocky Mountain National Park"
+              isSaved={isSaved}
+              isDriven={isDriven}
+              isClosable={true}
+              carouselOptions={{
+                showDots: true,
+                showArrows: true,
+                loop: true,
+                enableSwipe: true,
+              }}
+              onSave={handleSave}
+              onMarkAsDriven={handleMarkAsDriven}
+              onClose={handleClose}
+              onClick={() => console.log('Route card clicked for details')}
+              onImageChange={(index, image) => console.log(`Image ${index + 1}: ${image.alt}`)}
+            />
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <h4 className="font-semibold text-blue-800 mb-2">✅ Button Layout (Fixed):</h4>
+              <div className="grid grid-cols-3 gap-4 text-sm text-blue-700">
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-1">
+                    ❤️
+                  </div>
+                  <strong>LEFT:</strong> Save/Unsave<br />
+                  <span className="text-xs">({isSaved ? 'Saved' : 'Not Saved'})</span>
+                </div>
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-1">
+                    ✅
+                  </div>
+                  <strong>CENTER:</strong> Mark as Driven<br />
+                  <span className="text-xs">({isDriven ? 'Driven' : 'Not Driven'})</span>
+                </div>
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-1">
+                    ❌
+                  </div>
+                  <strong>RIGHT:</strong> Close<br />
+                  <span className="text-xs">(Closes card)</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <h4 className="font-semibold text-green-800 mb-2">🚗 Usage in Your Route App:</h4>
+              <pre className="text-sm text-green-700 bg-green-100 p-3 rounded overflow-auto">
+{`<Card 
+  images={route.media_attachments}
+  title={route.name}
+  description={route.description}
+  isSaved={selectedLocation.isSaved}
+  isDriven={selectedLocation.isDriven}  // NEW
+  isClosable={true}
+  onSave={handleCardSave}               // Now properly called!
+  onMarkAsDriven={handleMarkAsDriven}   // NEW callback
+  onClose={handleCardClose}             // Now positioned RIGHT
+/>`}
+              </pre>
+            </div>
+
+            <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
+              <h4 className="font-semibold mb-2">Current States:</h4>
+              <div className="text-sm space-y-1">
+                <div>💾 <strong>Saved:</strong> {isSaved ? '✅ Yes' : '❌ No'}</div>
+                <div>🚗 <strong>Driven:</strong> {isDriven ? '✅ Yes' : '❌ No'}</div>
+                <div>👁️ <strong>Visible:</strong> {isVisible ? '✅ Yes' : '❌ No'}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </LightWrapper>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates the fixed button positioning (Heart LEFT, X RIGHT) and new "Mark as Driven" functionality. This solves the original issue where the design system Card component was not calling onSave and had wrong button positions.',
+      },
+    },
+  },
 }; 
