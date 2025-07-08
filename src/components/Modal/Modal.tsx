@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { cn } from '../../utils/cn';
-import { X, ChevronLeft, ChevronRight, Play, Pause, MapPin, Heart, Check } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Play, Pause, MapPin, Heart, Check, MoreVertical, Edit, Trash2, Share, Flag, ExternalLink, Map } from 'lucide-react';
 import { Button } from '../Button/Button';
 import { zIndex } from '../../tokens';
 import './Modal.scss';
@@ -29,6 +29,19 @@ const isModalMediaItem = (item: ModalMediaOrComponent): item is ModalMediaItem =
 const isModalComponentItem = (item: ModalMediaOrComponent): item is ModalComponentItem => {
   return item.type === 'component';
 };
+
+// Media Actions Dropdown Types
+export interface ModalMediaAction {
+  id: string;
+  label: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  type: 'edit' | 'delete' | 'share' | 'report' | 'external' | 'maps' | 'custom';
+  onClick: (mediaIndex: number, media: ModalMediaOrComponent) => void;
+  url?: string; // For external links
+  coordinates?: { lat: number; lng: number }; // For Google Maps
+  disabled?: boolean;
+  destructive?: boolean; // For styling delete/report actions
+}
 
 export interface ModalCarouselOptions {
   showDots?: boolean;
@@ -121,6 +134,14 @@ export interface ModalProps {
    */
   media?: ModalMediaOrComponent | ModalMediaOrComponent[];
   /**
+   * Height of the media header (default: '16rem' / 256px)
+   */
+  mediaHeight?: 'sm' | 'md' | 'lg' | 'xl' | string;
+  /**
+   * Actions dropdown for media header
+   */
+  mediaActions?: ModalMediaAction[];
+  /**
    * Carousel options for media header
    */
   carouselOptions?: ModalCarouselOptions;
@@ -185,6 +206,145 @@ const releaseZIndex = () => {
   openModalCount = Math.max(0, openModalCount - 1);
 };
 
+// Media Actions Dropdown Component
+const MediaActionsDropdown: React.FC<{
+  actions: ModalMediaAction[];
+  currentMediaIndex: number;
+  currentMedia: ModalMediaOrComponent | null;
+  className?: string;
+}> = ({ actions, currentMediaIndex, currentMedia, className }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+
+  // Close dropdown on escape key
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [isOpen]);
+
+  const handleActionClick = (action: ModalMediaAction, event: React.MouseEvent) => {
+    event.stopPropagation();
+    
+    if (action.disabled || !currentMedia) return;
+
+    // Handle different action types
+    switch (action.type) {
+      case 'external':
+        if (action.url) {
+          window.open(action.url, '_blank', 'noopener,noreferrer');
+        }
+        break;
+      case 'maps':
+        if (action.coordinates) {
+          const { lat, lng } = action.coordinates;
+          window.open(`https://www.google.com/maps?q=${lat},${lng}`, '_blank', 'noopener,noreferrer');
+        }
+        break;
+      default:
+        // For edit, delete, share, report, custom actions
+        action.onClick(currentMediaIndex, currentMedia);
+        break;
+    }
+    
+    setIsOpen(false);
+  };
+
+  const getDefaultIcon = (type: ModalMediaAction['type']) => {
+    switch (type) {
+      case 'edit': return Edit;
+      case 'delete': return Trash2;
+      case 'share': return Share;
+      case 'report': return Flag;
+      case 'external': return ExternalLink;
+      case 'maps': return Map;
+      default: return undefined;
+    }
+  };
+
+  if (!actions.length) return null;
+
+  return (
+    <div ref={dropdownRef} className={className}>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen(!isOpen);
+        }}
+        className={cn(
+          "bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
+          "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+          "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+        )}
+        aria-label="Media actions"
+        aria-expanded={isOpen}
+      >
+        <MoreVertical className="h-4 w-4 text-gray-700" />
+      </button>
+
+      {isOpen && (
+        <div className={cn(
+          "absolute left-0 top-full mt-1 bg-white rounded-lg shadow-lg border z-50 min-w-[180px]",
+          "py-1 max-h-64 overflow-y-auto"
+        )}>
+          {actions.map((action) => {
+            const IconComponent = action.icon || getDefaultIcon(action.type);
+            
+            return (
+              <button
+                key={action.id}
+                onClick={(e) => handleActionClick(action, e)}
+                disabled={action.disabled}
+                className={cn(
+                  "w-full flex items-center gap-3 px-4 py-2 text-sm text-left",
+                  "hover:bg-gray-50 transition-colors duration-150",
+                  "disabled:opacity-50 disabled:cursor-not-allowed",
+                  action.destructive && "text-red-600 hover:bg-red-50",
+                  "focus:outline-none focus:bg-gray-50"
+                )}
+              >
+                {IconComponent && (
+                  <IconComponent 
+                    className={cn(
+                      "h-4 w-4 flex-shrink-0",
+                      action.destructive ? "text-red-500" : "text-gray-500"
+                    )} 
+                  />
+                )}
+                <span className="truncate">{action.label}</span>
+                {action.type === 'external' && (
+                  <ExternalLink className="h-3 w-3 ml-auto flex-shrink-0 text-gray-400" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
 /**
  * Modal component for displaying content in an overlay.
  * 
@@ -219,6 +379,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({
   overlayClassName,
   // Media header props
   media,
+  mediaHeight = '16rem', // Default media height
+  mediaActions,
   carouselOptions,
   showSaveButton = false,
   showDrivenButton = false,
@@ -496,6 +658,30 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({
 
   const currentMedia = hasMedia ? mediaArray[currentMediaIndex] : null;
 
+  // Helper function to get media height styling
+  const getMediaHeightStyle = () => {
+    const heightMap = {
+      'sm': '12rem',    // 192px
+      'md': '14rem',    // 224px  
+      'lg': '16rem',    // 256px (current default)
+      'xl': '20rem',    // 320px
+    };
+
+    if (mediaHeight && mediaHeight in heightMap) {
+      return { height: heightMap[mediaHeight as keyof typeof heightMap] };
+    }
+    
+    // If it's a custom value (like '300px', '18rem', '60vh')
+    if (mediaHeight && typeof mediaHeight === 'string') {
+      return { height: mediaHeight };
+    }
+    
+    // Default height
+    return { height: '16rem' };
+  };
+
+  const mediaHeightStyle = getMediaHeightStyle();
+
   return (
     <div
       className={cn(
@@ -532,232 +718,247 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({
         >
           {/* Media Header */}
           {hasMedia && (
-            <div 
-              ref={carouselRef}
-              className="vromm-modal-media-header"
-              role="region"
-              aria-label="Media carousel"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              {/* Main Media Container (Image/Video/Component) */}
-              <div className="relative">
-                {currentMedia && isModalComponentItem(currentMedia) ? (
-                  /* React Component */
-                  <div 
-                    className={cn(
-                      "w-full h-64 transition-opacity duration-300",
-                      options.transition === 'fade' && isTransitioning && "opacity-0"
-                    )}
-                    role="img"
-                    aria-label={currentMedia.alt || "Custom component"}
-                  >
-                    {currentMedia.component}
-                  </div>
-                ) : currentMedia && isModalMediaItem(currentMedia) && currentMedia.type === 'video' ? (
-                  <>
-                    {/* Video Element */}
-                    <video
-                      ref={(ref) => { videoRefs.current[currentMediaIndex] = ref; }}
-                      src={currentMedia.src}
-                      poster={currentMedia.poster}
-                      className={cn(
-                        "w-full h-64 object-cover transition-opacity duration-300",
-                        options.transition === 'fade' && isTransitioning && "opacity-0"
-                      )}
-                      muted={options.videoControls?.muted !== false}
-                      playsInline
-                      preload="metadata"
-                      onPlay={() => {
-                        setVideoStates(prev => ({ ...prev, [currentMediaIndex]: { isPlaying: true } }));
-                        if (isModalMediaItem(currentMedia)) {
-                          onVideoPlay?.(currentMediaIndex, currentMedia);
-                        }
+            <div className="relative">
+              <div 
+                ref={carouselRef}
+                className="vromm-modal-media-header"
+                role="region"
+                aria-label="Media carousel"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                {/* Main Media Container (Image/Video/Component) */}
+                <div className="relative">
+                  {currentMedia && isModalComponentItem(currentMedia) ? (
+                    /* React Component */
+                    <div 
+                      className="w-full transition-opacity duration-300"
+                      style={{
+                        ...mediaHeightStyle,
+                        ...(options.transition === 'fade' && isTransitioning && { opacity: 0 })
                       }}
-                      onPause={() => {
-                        setVideoStates(prev => ({ ...prev, [currentMediaIndex]: { isPlaying: false } }));
-                        if (isModalMediaItem(currentMedia)) {
-                          onVideoPause?.(currentMediaIndex, currentMedia);
-                        }
-                      }}
-                      onEnded={() => {
-                        setVideoStates(prev => ({ ...prev, [currentMediaIndex]: { isPlaying: false } }));
-                        if (isModalMediaItem(currentMedia)) {
-                          onVideoPause?.(currentMediaIndex, currentMedia);
-                        }
-                      }}
-                    />
-                    
-                    {/* Video Play/Pause Button */}
-                    <button
-                      onClick={(e) => handleVideoToggle(currentMediaIndex, e)}
-                      className={cn(
-                        "absolute inset-0 flex items-center justify-center",
-                        "bg-black/20 hover:bg-black/30 transition-all duration-200",
-                        "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white",
-                        videoStates[currentMediaIndex]?.isPlaying && "opacity-0 hover:opacity-100"
-                      )}
-                      aria-label={videoStates[currentMediaIndex]?.isPlaying ? "Pause video" : "Play video"}
+                      role="img"
+                      aria-label={currentMedia.alt || "Custom component"}
                     >
-                      <div className="bg-white/90 hover:bg-white rounded-full p-3 shadow-lg">
-                        {videoStates[currentMediaIndex]?.isPlaying ? (
-                          <Pause className="h-6 w-6 text-gray-700" />
-                        ) : (
-                          <Play className="h-6 w-6 text-gray-700 ml-0.5" />
+                      {currentMedia.component}
+                    </div>
+                  ) : currentMedia && isModalMediaItem(currentMedia) && currentMedia.type === 'video' ? (
+                    <>
+                      {/* Video Element */}
+                      <video
+                        ref={(ref) => { videoRefs.current[currentMediaIndex] = ref; }}
+                        src={currentMedia.src}
+                        poster={currentMedia.poster}
+                        className="w-full object-cover transition-opacity duration-300"
+                        style={{
+                          ...mediaHeightStyle,
+                          ...(options.transition === 'fade' && isTransitioning && { opacity: 0 })
+                        }}
+                        muted={options.videoControls?.muted !== false}
+                        playsInline
+                        preload="metadata"
+                        onPlay={() => {
+                          setVideoStates(prev => ({ ...prev, [currentMediaIndex]: { isPlaying: true } }));
+                          if (isModalMediaItem(currentMedia)) {
+                            onVideoPlay?.(currentMediaIndex, currentMedia);
+                          }
+                        }}
+                        onPause={() => {
+                          setVideoStates(prev => ({ ...prev, [currentMediaIndex]: { isPlaying: false } }));
+                          if (isModalMediaItem(currentMedia)) {
+                            onVideoPause?.(currentMediaIndex, currentMedia);
+                          }
+                        }}
+                        onEnded={() => {
+                          setVideoStates(prev => ({ ...prev, [currentMediaIndex]: { isPlaying: false } }));
+                          if (isModalMediaItem(currentMedia)) {
+                            onVideoPause?.(currentMediaIndex, currentMedia);
+                          }
+                        }}
+                      />
+                      
+                      {/* Video Play/Pause Button */}
+                      <button
+                        onClick={(e) => handleVideoToggle(currentMediaIndex, e)}
+                        className={cn(
+                          "absolute inset-0 flex items-center justify-center",
+                          "bg-black/20 hover:bg-black/30 transition-all duration-200",
+                          "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white",
+                          videoStates[currentMediaIndex]?.isPlaying && "opacity-0 hover:opacity-100"
                         )}
-                      </div>
-                    </button>
-                    
-                    {/* Video Duration Badge */}
-                    {currentMedia.duration && options.videoControls?.showDuration && (
-                      <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                        {currentMedia.duration}
-                      </div>
-                    )}
-                  </>
-                ) : currentMedia && isModalMediaItem(currentMedia) ? (
-                  /* Image Element */
-                  <img
-                    src={currentMedia.src}
-                    alt={currentMedia.alt}
-                    className={cn(
-                      "w-full h-64 object-cover transition-opacity duration-300",
-                      options.transition === 'fade' && isTransitioning && "opacity-0"
-                    )}
-                    loading="eager"
-                  />
-                ) : null}
+                        aria-label={videoStates[currentMediaIndex]?.isPlaying ? "Pause video" : "Play video"}
+                      >
+                        <div className="bg-white/90 hover:bg-white rounded-full p-3 shadow-lg">
+                          {videoStates[currentMediaIndex]?.isPlaying ? (
+                            <Pause className="h-6 w-6 text-gray-700" />
+                          ) : (
+                            <Play className="h-6 w-6 text-gray-700 ml-0.5" />
+                          )}
+                        </div>
+                      </button>
+                      
+                      {/* Video Duration Badge */}
+                      {currentMedia.duration && options.videoControls?.showDuration && (
+                        <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                          {currentMedia.duration}
+                        </div>
+                      )}
+                    </>
+                  ) : currentMedia && isModalMediaItem(currentMedia) ? (
+                    /* Image Element */
+                    <img
+                      src={currentMedia.src}
+                      alt={currentMedia.alt}
+                      className="w-full object-cover transition-opacity duration-300"
+                      style={{
+                        ...mediaHeightStyle,
+                        ...(options.transition === 'fade' && isTransitioning && { opacity: 0 })
+                      }}
+                      loading="eager"
+                    />
+                  ) : null}
+                  
+                  {/* Type Icon Overlays - Only for media items */}
+                  {currentMedia && isModalMediaItem(currentMedia) && currentMedia.type === 'map' && (
+                    <div className="absolute top-2 left-2 bg-white/90 rounded-md px-2 py-1 flex items-center gap-1">
+                      <MapPin className="h-3 w-3 text-gray-700" />
+                      <span className="text-xs font-medium text-gray-700">Map</span>
+                    </div>
+                  )}
+                  
+                  {/* Component Type Icon Overlay */}
+                  {currentMedia && isModalComponentItem(currentMedia) && (
+                    <div className="absolute top-2 left-2 bg-white/90 rounded-md px-2 py-1 flex items-center gap-1">
+                      <span className="text-xs font-medium text-gray-700">Component</span>
+                    </div>
+                  )}
+                </div>
                 
-                {/* Type Icon Overlays - Only for media items */}
-                {currentMedia && isModalMediaItem(currentMedia) && currentMedia.type === 'map' && (
-                  <div className="absolute top-2 left-2 bg-white/90 rounded-md px-2 py-1 flex items-center gap-1">
-                    <MapPin className="h-3 w-3 text-gray-700" />
-                    <span className="text-xs font-medium text-gray-700">Map</span>
+                {/* Navigation Arrows */}
+                {hasMultipleMedia && options.showArrows && (
+                  <>
+                    <button
+                      onClick={handlePrevMedia}
+                      disabled={!options.loop && currentMediaIndex === 0}
+                      className={cn(
+                        "absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
+                        "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+                        "disabled:opacity-50 disabled:cursor-not-allowed",
+                        "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+                      )}
+                      aria-label="Previous media"
+                    >
+                      <ChevronLeft className="h-4 w-4 text-gray-700" />
+                    </button>
+                    <button
+                      onClick={handleNextMedia}
+                      disabled={!options.loop && currentMediaIndex === mediaArray.length - 1}
+                      className={cn(
+                        "absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
+                        "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+                        "disabled:opacity-50 disabled:cursor-not-allowed",
+                        "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+                      )}
+                      aria-label="Next media"
+                    >
+                      <ChevronRight className="h-4 w-4 text-gray-700" />
+                    </button>
+                  </>
+                )}
+                
+                {/* Pagination Dots */}
+                {hasMultipleMedia && options.showDots && (
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                    {mediaArray.map((item, index) => (
+                      <button
+                        key={index}
+                        onClick={(e) => goToMedia(index, e)}
+                        className={cn(
+                          'transition-all duration-200 touch-manipulation',
+                          'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500',
+                          'hover:scale-110',
+                          item.type === 'video' 
+                            ? 'w-3 h-2 rounded-sm' // Rectangle for videos
+                            : 'w-2 h-2 rounded-full', // Circle for images
+                          index === currentMediaIndex 
+                            ? 'bg-white scale-110' 
+                            : 'bg-white/50'
+                        )}
+                        aria-label={`Go to ${item.type === 'video' ? 'video' : 'image'} ${index + 1}`}
+                      />
+                    ))}
                   </div>
                 )}
                 
-                {/* Component Type Icon Overlay */}
-                {currentMedia && isModalComponentItem(currentMedia) && (
-                  <div className="absolute top-2 left-2 bg-white/90 rounded-md px-2 py-1 flex items-center gap-1">
-                    <span className="text-xs font-medium text-gray-700">Component</span>
-                  </div>
+                {/* Save Button */}
+                {showSaveButton && onSave && (
+                  <button
+                    onClick={handleSave}
+                    className={cn(
+                      "absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
+                      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+                      "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+                    )}
+                    aria-label={isMediaSaved ? "Remove from saved" : "Save"}
+                  >
+                    <Heart
+                      className={cn(
+                        'h-4 w-4 transition-all duration-200',
+                        isMediaSaved 
+                          ? 'fill-red-500 text-red-500 scale-110' 
+                          : 'text-gray-700 hover:text-red-500 hover:scale-110'
+                      )}
+                    />
+                  </button>
+                )}
+
+                {/* Mark as Driven Button */}
+                {showDrivenButton && onMarkAsDriven && (
+                  <button
+                    onClick={handleMarkAsDriven}
+                    className={cn(
+                      "absolute top-2 left-14 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
+                      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+                      "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+                    )}
+                    aria-label={isMediaDriven ? "Remove from driven" : "Mark as driven"}
+                  >
+                    <Check
+                      className={cn(
+                        'h-4 w-4 transition-all duration-200',
+                        isMediaDriven 
+                          ? 'fill-green-500 text-green-500 scale-110' 
+                          : 'text-gray-700 hover:text-green-500 hover:scale-110'
+                      )}
+                    />
+                  </button>
+                )}
+                
+                {/* Close Button - Always on right */}
+                {showCloseButton && (
+                  <button
+                    onClick={onClose}
+                    className={cn(
+                      "absolute top-2 right-2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
+                      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+                      "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+                    )}
+                    aria-label="Close"
+                  >
+                    <X className="h-4 w-4 text-gray-700" />
+                  </button>
                 )}
               </div>
               
-              {/* Navigation Arrows */}
-              {hasMultipleMedia && options.showArrows && (
-                <>
-                  <button
-                    onClick={handlePrevMedia}
-                    disabled={!options.loop && currentMediaIndex === 0}
-                    className={cn(
-                      "absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
-                      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-                      "disabled:opacity-50 disabled:cursor-not-allowed",
-                      "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-                    )}
-                    aria-label="Previous media"
-                  >
-                    <ChevronLeft className="h-4 w-4 text-gray-700" />
-                  </button>
-                  <button
-                    onClick={handleNextMedia}
-                    disabled={!options.loop && currentMediaIndex === mediaArray.length - 1}
-                    className={cn(
-                      "absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
-                      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-                      "disabled:opacity-50 disabled:cursor-not-allowed",
-                      "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-                    )}
-                    aria-label="Next media"
-                  >
-                    <ChevronRight className="h-4 w-4 text-gray-700" />
-                  </button>
-                </>
-              )}
-              
-              {/* Pagination Dots */}
-              {hasMultipleMedia && options.showDots && (
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-                  {mediaArray.map((item, index) => (
-                    <button
-                      key={index}
-                      onClick={(e) => goToMedia(index, e)}
-                      className={cn(
-                        'transition-all duration-200 touch-manipulation',
-                        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500',
-                        'hover:scale-110',
-                        item.type === 'video' 
-                          ? 'w-3 h-2 rounded-sm' // Rectangle for videos
-                          : 'w-2 h-2 rounded-full', // Circle for images
-                        index === currentMediaIndex 
-                          ? 'bg-white scale-110' 
-                          : 'bg-white/50'
-                      )}
-                      aria-label={`Go to ${item.type === 'video' ? 'video' : 'image'} ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
-              
-              {/* Save Button */}
-              {showSaveButton && onSave && (
-                <button
-                  onClick={handleSave}
-                  className={cn(
-                    "absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
-                    "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-                    "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-                  )}
-                  aria-label={isMediaSaved ? "Remove from saved" : "Save"}
-                >
-                  <Heart
-                    className={cn(
-                      'h-4 w-4 transition-all duration-200',
-                      isMediaSaved 
-                        ? 'fill-red-500 text-red-500 scale-110' 
-                        : 'text-gray-700 hover:text-red-500 hover:scale-110'
-                    )}
-                  />
-                </button>
-              )}
-
-              {/* Mark as Driven Button */}
-              {showDrivenButton && onMarkAsDriven && (
-                <button
-                  onClick={handleMarkAsDriven}
-                  className={cn(
-                    "absolute top-2 left-14 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
-                    "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-                    "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-                  )}
-                  aria-label={isMediaDriven ? "Remove from driven" : "Mark as driven"}
-                >
-                  <Check
-                    className={cn(
-                      'h-4 w-4 transition-all duration-200',
-                      isMediaDriven 
-                        ? 'fill-green-500 text-green-500 scale-110' 
-                        : 'text-gray-700 hover:text-green-500 hover:scale-110'
-                    )}
-                  />
-                </button>
-              )}
-              
-              {/* Close Button - Always on right */}
-              {showCloseButton && (
-                <button
-                  onClick={onClose}
-                  className={cn(
-                    "absolute top-2 right-2 bg-white/80 hover:bg-white rounded-full p-1.5 shadow-md transition-all duration-200",
-                    "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-                    "touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-                  )}
-                  aria-label="Close"
-                >
-                  <X className="h-4 w-4 text-gray-700" />
-                </button>
+              {/* Media Actions Dropdown - Outside media header to prevent clipping */}
+              {mediaActions && mediaActions.length > 0 && (
+                <MediaActionsDropdown
+                  actions={mediaActions}
+                  currentMediaIndex={currentMediaIndex}
+                  currentMedia={currentMedia}
+                  className="absolute top-2 left-28 z-50"
+                />
               )}
             </div>
           )}

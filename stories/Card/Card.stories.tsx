@@ -1484,3 +1484,441 @@ const media = [
     },
   },
 }; 
+
+export const MediaHeightDemo: Story = {
+  render: () => (
+    <LightWrapper>
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-xl font-bold mb-2">Configurable Media Height</h3>
+          <p className="text-gray-600 mb-4">
+            Control the height of card media with predefined sizes or custom CSS values.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Small */}
+          <div className="space-y-2">
+            <h4 className="font-semibold">Small (sm)</h4>
+            <p className="text-xs text-gray-500">10rem / 160px</p>
+            <Card
+              images={[{
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h4 className="font-bold">Small</h4>
+                      <p className="text-xs">10rem</p>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Small height demo'
+              }]}
+              mediaHeight="sm"
+              title="Compact Card"
+              description="Perfect for lists and grids"
+              rating={4.5}
+              reviewCount={23}
+              onSave={() => console.log('Small card saved')}
+            />
+          </div>
+
+          {/* Medium */}
+          <div className="space-y-2">
+            <h4 className="font-semibold">Medium (md)</h4>
+            <p className="text-xs text-gray-500">12rem / 192px - Default</p>
+            <Card
+              images={[{
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h4 className="font-bold">Medium</h4>
+                      <p className="text-xs">12rem (default)</p>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Medium height demo'
+              }]}
+              mediaHeight="md"
+              title="Standard Card"
+              description="The default card height"
+              rating={4.7}
+              reviewCount={156}
+              onSave={() => console.log('Medium card saved')}
+            />
+          </div>
+
+          {/* Large */}
+          <div className="space-y-2">
+            <h4 className="font-semibold">Large (lg)</h4>
+            <p className="text-xs text-gray-500">14rem / 224px</p>
+            <Card
+              images={[{
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h4 className="font-bold">Large</h4>
+                      <p className="text-xs">14rem</p>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Large height demo'
+              }]}
+              mediaHeight="lg"
+              title="Large Card"
+              description="More space for content"
+              rating={4.9}
+              reviewCount={89}
+              onSave={() => console.log('Large card saved')}
+            />
+          </div>
+
+          {/* Extra Large */}
+          <div className="space-y-2">
+            <h4 className="font-semibold">Extra Large (xl)</h4>
+            <p className="text-xs text-gray-500">16rem / 256px</p>
+            <Card
+              images={[{
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h4 className="font-bold">Extra Large</h4>
+                      <p className="text-xs">16rem</p>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Extra large height demo'
+              }]}
+              mediaHeight="xl"
+              title="XL Card"
+              description="Maximum preset height"
+              rating={5.0}
+              reviewCount={234}
+              onSave={() => console.log('XL card saved')}
+            />
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h4 className="text-lg font-semibold">Custom Height Examples</h4>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Custom pixel height */}
+            <Card
+              images={[{
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h4 className="font-bold">Custom Pixels</h4>
+                      <p className="text-xs">250px</p>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Custom pixel height demo'
+              }]}
+              mediaHeight="250px"
+              title="Custom Pixel Height"
+              description="Using 250px custom height"
+              onSave={() => console.log('Custom pixel card saved')}
+            />
+
+            {/* Custom rem height */}
+            <Card
+              images={[{
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h4 className="font-bold">Custom Rem</h4>
+                      <p className="text-xs">18rem</p>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Custom rem height demo'
+              }]}
+              mediaHeight="18rem"
+              title="Custom Rem Height"
+              description="Using 18rem custom height"
+              onSave={() => console.log('Custom rem card saved')}
+            />
+
+            {/* Custom viewport height */}
+            <Card
+              images={[{
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h4 className="font-bold">Viewport Height</h4>
+                      <p className="text-xs">25vh</p>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Viewport height demo'
+              }]}
+              mediaHeight="25vh"
+              title="Viewport Height"
+              description="Using 25vh for responsive height"
+              onSave={() => console.log('Viewport height card saved')}
+            />
+          </div>
+        </div>
+
+        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+          <h4 className="font-semibold text-emerald-800 mb-2">📏 Usage Examples:</h4>
+          <pre className="text-sm text-emerald-700 bg-emerald-100 p-3 rounded overflow-auto">
+{`// Predefined sizes
+<Card mediaHeight="sm" ... />     // 10rem (160px)
+<Card mediaHeight="md" ... />     // 12rem (192px) - default
+<Card mediaHeight="lg" ... />     // 14rem (224px)
+<Card mediaHeight="xl" ... />     // 16rem (256px)
+
+// Custom values
+<Card mediaHeight="250px" ... />  // Exact pixels
+<Card mediaHeight="18rem" ... />  // Custom rem
+<Card mediaHeight="25vh" ... />   // Viewport height
+<Card mediaHeight="300px" ... />  // Any CSS value
+
+// Modal uses same API
+<Modal mediaHeight="xl" ... />    // 20rem for Modal (bigger default)`}
+          </pre>
+        </div>
+      </div>
+    </LightWrapper>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates the new mediaHeight prop for Cards. Supports predefined sizes (sm, md, lg, xl) and any custom CSS value (px, rem, vh, etc.). Modal component uses the same API with different default values.',
+      },
+    },
+  },
+}; 
+
+export const MediaActionsDemo: Story = {
+  render: () => {
+    const [notifications, setNotifications] = useState<string[]>([]);
+
+    const addNotification = (message: string) => {
+      setNotifications(prev => [...prev, message]);
+      setTimeout(() => {
+        setNotifications(prev => prev.slice(1));
+      }, 3000);
+    };
+
+    const createActions = (cardName: string) => [
+      {
+        id: 'edit',
+        label: 'Edit Card',
+        type: 'edit' as const,
+        onClick: (mediaIndex: number, media: any) => {
+          addNotification(`Edit ${cardName}: ${media.alt || `media ${mediaIndex + 1}`}`);
+        }
+      },
+      {
+        id: 'share',
+        label: 'Share',
+        type: 'share' as const,
+        onClick: (mediaIndex: number, media: any) => {
+          addNotification(`Share ${cardName}`);
+        }
+      },
+      {
+        id: 'external',
+        label: 'View Details',
+        type: 'external' as const,
+        url: 'https://example.com/details',
+        onClick: () => {
+          addNotification(`Opening details for ${cardName}...`);
+        }
+      },
+      {
+        id: 'report',
+        label: 'Report',
+        type: 'report' as const,
+        destructive: true,
+        onClick: (mediaIndex: number, media: any) => {
+          addNotification(`Report ${cardName}`);
+        }
+      }
+    ];
+
+    return (
+      <LightWrapper>
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-xl font-bold mb-2">Card Media Actions</h3>
+            <p className="text-gray-600 mb-4">
+              Cards with configurable action dropdowns in the media header. Click the three-dot menu to see available actions.
+            </p>
+          </div>
+
+          {/* Notifications */}
+          {notifications.length > 0 && (
+            <div className="fixed top-4 right-4 space-y-2 z-50">
+              {notifications.map((notification, index) => (
+                <div
+                  key={index}
+                  className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg"
+                >
+                  {notification}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Route Card with Actions */}
+            <Card
+              images={[{
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h4 className="font-bold mb-1">Route #1</h4>
+                      <p className="text-xs opacity-90">Stockholm → Oslo</p>
+                      <div className="mt-2 text-xs bg-white/20 rounded px-2 py-1">
+                        485 km • 5h 20m
+                      </div>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Stockholm to Oslo route'
+              }]}
+              mediaHeight="md"
+              mediaActions={createActions('Stockholm Route')}
+              title="Nordic Adventure"
+              description="Beautiful scenic route through Sweden and Norway"
+              rating={4.8}
+              reviewCount={127}
+              onSave={() => addNotification('Route saved!')}
+            />
+
+            {/* Landscape Card with Actions */}
+            <Card
+              images={[
+                {
+                  src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
+                  alt: 'Mountain landscape',
+                  type: 'photo'
+                },
+                {
+                  src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop',
+                  alt: 'Forest road',
+                  type: 'photo'
+                }
+              ]}
+              mediaHeight="md"
+              mediaActions={[
+                ...createActions('Mountain Card'),
+                {
+                  id: 'maps',
+                  label: 'Open in Maps',
+                  type: 'maps' as const,
+                  coordinates: { lat: 68.7604, lng: 15.1484 },
+                  onClick: () => {
+                    addNotification('Opening location in Google Maps...');
+                  }
+                }
+              ]}
+              title="Mountain Views"
+              description="Stunning mountain landscapes from northern Sweden"
+              rating={4.9}
+              reviewCount={89}
+              price="Free"
+              onSave={() => addNotification('Mountain view saved!')}
+            />
+
+            {/* Custom Component Card */}
+            <Card
+              images={[{
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h4 className="font-bold mb-1">Custom Widget</h4>
+                      <p className="text-xs opacity-90">Interactive Component</p>
+                      <div className="mt-2 grid grid-cols-2 gap-1 text-xs">
+                        <div className="bg-white/20 rounded px-1 py-1">Data A</div>
+                        <div className="bg-white/20 rounded px-1 py-1">Data B</div>
+                      </div>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Custom dashboard widget'
+              }]}
+              mediaHeight="md"
+              mediaActions={[
+                {
+                  id: 'configure',
+                  label: 'Configure Widget',
+                  type: 'custom' as const,
+                  icon: ({ className }) => (
+                    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  ),
+                  onClick: () => {
+                    addNotification('Widget configuration opened');
+                  }
+                },
+                {
+                  id: 'refresh',
+                  label: 'Refresh Data',
+                  type: 'custom' as const,
+                  icon: ({ className }) => (
+                    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  ),
+                  onClick: () => {
+                    addNotification('Data refreshed');
+                  }
+                },
+                ...createActions('Widget Card').slice(1) // Skip edit, add others
+              ]}
+              title="Dashboard Widget"
+              description="Interactive component with custom actions"
+              onSave={() => addNotification('Widget saved!')}
+            />
+          </div>
+
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+            <h4 className="font-semibold text-purple-800 mb-2">🎯 Action Types Available:</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-purple-700">
+              <div>
+                <p className="font-medium mb-1">Built-in Actions:</p>
+                <ul className="space-y-0.5">
+                  <li>• <strong>edit:</strong> Edit functionality</li>
+                  <li>• <strong>share:</strong> Share content</li>
+                  <li>• <strong>external:</strong> Open URLs</li>
+                  <li>• <strong>maps:</strong> Google Maps integration</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium mb-1">Destructive Actions:</p>
+                <ul className="space-y-0.5">
+                  <li>• <strong>report:</strong> Report/flag content</li>
+                  <li>• <strong>delete:</strong> Delete content</li>
+                  <li>• <strong>custom:</strong> Any custom action</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </LightWrapper>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates the new mediaActions prop for Cards. Adds a three-dot dropdown menu to card media headers with support for various action types including edit, share, external links, Google Maps, and custom actions with custom icons.',
+      },
+    },
+  },
+}; 

@@ -1180,3 +1180,311 @@ export const MediaHeaderWithComponents: Story = {
     )
   }
 }; 
+
+export const MediaHeightDemo: Story = {
+  render: () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedHeight, setSelectedHeight] = useState<'sm' | 'md' | 'lg' | 'xl' | 'custom'>('lg');
+    const [customHeight, setCustomHeight] = useState('20rem');
+
+    const media = [
+      {
+        component: (
+          <div className="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold mb-2">Custom Height Demo</h3>
+              <p className="text-sm opacity-90">Height: {selectedHeight === 'custom' ? customHeight : selectedHeight}</p>
+              <div className="mt-4 bg-white/20 rounded-lg p-4">
+                <div className="text-sm">
+                  <div>This component adapts to any height!</div>
+                  <div className="mt-2 opacity-75">Try different sizes in the controls above</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+        type: 'component' as const,
+        alt: 'Height demo component'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
+        alt: 'Mountain landscape',
+        type: 'photo' as const
+      }
+    ];
+
+    const getMediaHeight = () => {
+      if (selectedHeight === 'custom') return customHeight;
+      return selectedHeight;
+    };
+
+    return (
+      <LightWrapper>
+        <div className="space-y-4">
+          <div className="mb-6">
+            <Title level={2}>Configurable Media Height</Title>
+            <Text variant="weak">
+              Control the height of modal media headers with predefined sizes or custom values.
+            </Text>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
+            {(['sm', 'md', 'lg', 'xl', 'custom'] as const).map((height) => (
+              <Button
+                key={height}
+                onClick={() => setSelectedHeight(height)}
+                variant={selectedHeight === height ? 'primary' : 'secondary'}
+                size="sm"
+                className="flex flex-col items-center gap-1 h-auto py-3"
+              >
+                <span className="font-semibold">{height.toUpperCase()}</span>
+                <span className="text-xs opacity-70">
+                  {height === 'sm' ? '10rem' : 
+                   height === 'md' ? '12rem' :
+                   height === 'lg' ? '14rem' :
+                   height === 'xl' ? '16rem' :
+                   'Custom'}
+                </span>
+              </Button>
+            ))}
+          </div>
+
+          {selectedHeight === 'custom' && (
+            <div className="flex items-center gap-3 mb-4">
+              <Text size="sm" className="font-medium">Custom Height:</Text>
+              <input
+                type="text"
+                value={customHeight}
+                onChange={(e) => setCustomHeight(e.target.value)}
+                placeholder="e.g., 20rem, 300px, 40vh"
+                className="px-3 py-1 border border-gray-300 rounded text-sm"
+              />
+              <Text size="xs" variant="weak">
+                Use any CSS value (rem, px, vh, etc.)
+              </Text>
+            </div>
+          )}
+
+          <Button onClick={() => setIsModalOpen(true)} variant="primary">
+            Open Modal with {selectedHeight === 'custom' ? customHeight : `${selectedHeight.toUpperCase()}`} Height
+          </Button>
+
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            size="lg"
+            media={media}
+            mediaHeight={getMediaHeight()}
+            showSaveButton
+            showDrivenButton
+            carouselOptions={{
+              showDots: true,
+              showArrows: true,
+              loop: true
+            }}
+          >
+            <div className="p-4">
+              <h2 className="text-lg font-semibold mb-2">Media Height Customization</h2>
+              <p className="text-gray-600 mb-4">
+                The media header is currently using <strong>{selectedHeight === 'custom' ? customHeight : selectedHeight}</strong> height.
+              </p>
+              
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-800 mb-2">📏 Height Options:</h4>
+                <ul className="text-sm text-blue-700 space-y-1">
+                  <li>• <strong>sm:</strong> 10rem (160px) - Compact</li>
+                  <li>• <strong>md:</strong> 12rem (192px) - Card default</li>
+                  <li>• <strong>lg:</strong> 14rem (224px) - Balanced</li>
+                  <li>• <strong>xl:</strong> 16rem (256px) - Modal default</li>
+                  <li>• <strong>Custom:</strong> Any CSS value (e.g., "300px", "25vh")</li>
+                </ul>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      </LightWrapper>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates the new mediaHeight prop that allows you to control the height of modal media headers. Supports predefined sizes (sm, md, lg, xl) and custom CSS values.'
+      }
+    }
+  }
+}; 
+
+export const MediaActionsDemo: Story = {
+  render: () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [notifications, setNotifications] = useState<string[]>([]);
+
+    const addNotification = (message: string) => {
+      setNotifications(prev => [...prev, message]);
+      setTimeout(() => {
+        setNotifications(prev => prev.slice(1));
+      }, 3000);
+    };
+
+    const media = [
+      {
+        component: (
+          <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white">
+            <div className="text-center">
+              <h3 className="text-xl font-bold mb-2">Route Preview</h3>
+              <p className="text-sm opacity-90">Interactive map component</p>
+              <div className="mt-4 bg-white/20 rounded-lg p-3">
+                <div className="text-xs">
+                  Stockholm → Gothenburg<br/>
+                  Distance: 470 km<br/>
+                  Duration: 4h 45m
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+        type: 'component',
+        alt: 'Route preview component'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
+        alt: 'Mountain landscape',
+        type: 'photo'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop',
+        alt: 'Forest road',
+        type: 'photo'
+      }
+    ];
+
+    const mediaActions = [
+      {
+        id: 'edit',
+        label: 'Edit Route',
+        type: 'edit' as const,
+        onClick: (mediaIndex: number, media: any) => {
+          addNotification(`Edit clicked for ${media.alt || `media ${mediaIndex + 1}`}`);
+        }
+      },
+      {
+        id: 'share',
+        label: 'Share Route',
+        type: 'share' as const,
+        onClick: (mediaIndex: number, media: any) => {
+          addNotification(`Share clicked for ${media.alt || `media ${mediaIndex + 1}`}`);
+        }
+      },
+      {
+        id: 'maps',
+        label: 'Open in Google Maps',
+        type: 'maps' as const,
+        coordinates: { lat: 59.3293, lng: 18.0686 },
+        onClick: (mediaIndex: number, media: any) => {
+          addNotification(`Opening in Google Maps...`);
+        }
+      },
+      {
+        id: 'external',
+        label: 'View on Website',
+        type: 'external' as const,
+        url: 'https://example.com/route/123',
+        onClick: (mediaIndex: number, media: any) => {
+          addNotification(`Opening external link...`);
+        }
+      },
+      {
+        id: 'report',
+        label: 'Report Issue',
+        type: 'report' as const,
+        destructive: true,
+        onClick: (mediaIndex: number, media: any) => {
+          addNotification(`Report issue clicked for ${media.alt || `media ${mediaIndex + 1}`}`);
+        }
+      },
+      {
+        id: 'delete',
+        label: 'Delete Route',
+        type: 'delete' as const,
+        destructive: true,
+        onClick: (mediaIndex: number, media: any) => {
+          addNotification(`Delete clicked for ${media.alt || `media ${mediaIndex + 1}`}`);
+        }
+      }
+    ];
+
+    return (
+      <LightWrapper>
+        <div className="space-y-4">
+          <div className="mb-6">
+            <Title level={2}>Media Actions Dropdown</Title>
+            <Text variant="weak">
+              Add configurable action menus to media headers with support for various action types.
+            </Text>
+          </div>
+
+          <Button onClick={() => setIsModalOpen(true)} variant="primary">
+            Open Modal with Actions Menu
+          </Button>
+
+          {/* Notifications */}
+          {notifications.length > 0 && (
+            <div className="fixed top-4 right-4 space-y-2 z-50">
+              {notifications.map((notification, index) => (
+                <div
+                  key={index}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg animate-slide-in"
+                >
+                  {notification}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            size="lg"
+            media={media}
+            mediaHeight="lg"
+            mediaActions={mediaActions}
+            showSaveButton
+            showDrivenButton
+            carouselOptions={{
+              showDots: true,
+              showArrows: true,
+              loop: true
+            }}
+          >
+            <div className="p-4">
+              <h2 className="text-lg font-semibold mb-2">Media Actions Menu</h2>
+              <p className="text-gray-600 mb-4">
+                Click the three-dot menu (⋮) on the left side of the media header next to the save/driven buttons to see available actions.
+              </p>
+              
+              <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                <h4 className="font-semibold text-indigo-800 mb-2">🎛️ Supported Actions:</h4>
+                <ul className="text-sm text-indigo-700 space-y-1">
+                  <li>• <strong>Edit:</strong> Custom edit functionality</li>
+                  <li>• <strong>Share:</strong> Share functionality</li>
+                  <li>• <strong>Google Maps:</strong> Open coordinates in Google Maps</li>
+                  <li>• <strong>External:</strong> Open custom URLs in new tab</li>
+                  <li>• <strong>Report:</strong> Report/flag functionality</li>
+                  <li>• <strong>Delete:</strong> Delete with destructive styling</li>
+                  <li>• <strong>Custom:</strong> Any custom action with custom icons</li>
+                </ul>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      </LightWrapper>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates the new mediaActions prop that adds a configurable dropdown menu to media headers. Supports various action types including edit, delete, share, report, external URLs, Google Maps, and custom actions.',
+      },
+    },
+  },
+}; 
