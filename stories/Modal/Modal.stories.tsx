@@ -20,8 +20,16 @@ const meta: Meta<typeof Modal> = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg', 'xl', 'full'],
+      options: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', 'full'],
       description: 'Modal size',
+    },
+    mobileBottomSheet: {
+      control: 'boolean',
+      description: 'Enable mobile bottom sheet behavior',
+    },
+    mobileHeight: {
+      control: 'text',
+      description: 'Height for mobile bottom sheet (e.g., "60vh", "70vh")',
     },
     isOpen: {
       control: 'boolean',
@@ -122,19 +130,51 @@ export const Default: Story = {
 export const Sizes: Story = {
   render: () => {
     const [openModal, setOpenModal] = useState<string | null>(null);
-    const sizes = ['sm', 'md', 'lg', 'xl', 'full'] as const;
+    const sizes = ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', 'full'] as const;
+
+    const getSizeDescription = (size: string) => {
+      switch (size) {
+        case 'sm': return '320px - Perfect for simple confirmations and alerts';
+        case 'md': return '512px - Great for forms and moderate content';
+        case 'lg': return '768px - Ideal for detailed content and complex forms';
+        case 'xl': return '1024px - Excellent for tables and multi-column layouts';
+        case '2xl': return '1152px - Very large content areas';
+        case '3xl': return '1280px - Huge modals for complex interfaces';
+        case '4xl': return '1440px - Maximum width before full screen';
+        case 'full': return '95% viewport - Takes up almost the entire screen';
+        default: return '';
+      }
+    };
 
     return (
       <LightWrapper>
         <div className="space-y-4">
-          <div className="flex flex-wrap gap-2">
+          <div className="mb-6">
+            <Title level={2}>Modal Sizes Comparison</Title>
+            <Text variant="weak">
+              Click any button below to see the dramatic size differences between modal sizes.
+            </Text>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {sizes.map((size) => (
               <Button
                 key={size}
                 onClick={() => setOpenModal(size)}
                 variant="secondary"
+                className="h-auto py-3 px-4 flex flex-col items-center gap-1"
               >
-                Open {size.toUpperCase()} Modal
+                <span className="font-semibold">{size.toUpperCase()}</span>
+                <span className="text-xs opacity-70">
+                  {size === 'sm' ? '320px' : 
+                   size === 'md' ? '512px' :
+                   size === 'lg' ? '768px' :
+                   size === 'xl' ? '1024px' :
+                   size === '2xl' ? '1152px' :
+                   size === '3xl' ? '1280px' :
+                   size === '4xl' ? '1440px' :
+                   '95% screen'}
+                </span>
               </Button>
             ))}
           </div>
@@ -145,22 +185,61 @@ export const Sizes: Story = {
               isOpen={openModal === size}
               onClose={() => setOpenModal(null)}
               title={`${size.toUpperCase()} Modal`}
-              description={`This is a ${size} sized modal`}
+              description={getSizeDescription(size)}
               size={size}
             >
               <div className="space-y-4">
+                <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <Text className="font-semibold mb-2">Size Details:</Text>
+                  <Text>{getSizeDescription(size)}</Text>
+                </div>
+                
                 <Text>
-                  This modal is sized as "{size}". Different sizes are useful for different types of content.
+                  This modal demonstrates the "{size}" size. Notice how much {size === 'sm' ? 'compact' : size === 'full' ? 'expansive' : 'larger'} this modal is compared to the others.
                 </Text>
-                <Text>
-                  Small modals work well for simple confirmations, while larger modals can accommodate 
-                  complex forms and detailed content.
-                </Text>
-                {size === 'full' && (
+                
+                {size === 'sm' && (
                   <Text>
-                    Full-size modals take up most of the viewport and are perfect for detailed 
-                    workflows or when you need maximum screen real estate.
+                    Small modals are perfect for quick confirmations, simple alerts, or minimal forms. 
+                    They don't overwhelm the user and maintain focus on the primary action.
                   </Text>
+                )}
+                
+                {size === 'md' && (
+                  <Text>
+                    Medium modals strike a good balance for most use cases. They're ideal for forms with 
+                    several fields, moderate amounts of content, or when you need more space than small but 
+                    don't want to dominate the screen.
+                  </Text>
+                )}
+                
+                {(size === 'lg' || size === 'xl') && (
+                  <Text>
+                    {size === 'lg' ? 'Large' : 'Extra large'} modals provide ample space for detailed content, 
+                    complex forms, data tables, or when you need to display multiple sections of information 
+                    within the modal.
+                  </Text>
+                )}
+                
+                {(size === '2xl' || size === '3xl' || size === '4xl') && (
+                  <Text>
+                    Very large modals like this one are useful for complex interfaces, detailed workflows, 
+                    or when you need to display substantial amounts of information while still maintaining 
+                    the modal context.
+                  </Text>
+                )}
+                
+                {size === 'full' && (
+                  <div className="space-y-3">
+                    <Text>
+                      Full-size modals take up 95% of the viewport and are perfect for detailed workflows, 
+                      complex applications within a modal, or when you need maximum screen real estate.
+                    </Text>
+                    <Text>
+                      They're essentially full-screen experiences while still maintaining the modal context 
+                      and overlay behavior. Perfect for editing interfaces, detailed forms, or rich content.
+                    </Text>
+                  </div>
                 )}
               </div>
             </Modal>
@@ -362,11 +441,11 @@ export const Interactive: Story = {
   render: (args) => <ModalWrapper {...args} />,
   args: {
     title: 'Interactive Modal',
-    description: 'Use the controls below to experiment with different modal settings.',
     size: 'md',
     showCloseButton: true,
     closeOnOverlayClick: true,
-    closeOnEscape: true,
+    mobileBottomSheet: false,
+    mobileHeight: '70vh',
   },
 };
 
@@ -452,5 +531,255 @@ export const DarkModePreview: Story = {
   parameters: {
     layout: 'fullscreen',
     backgrounds: { default: 'dark' },
+  },
+};
+
+export const MobileBottomSheet: Story = {
+  render: () => {
+    const [openModal, setOpenModal] = useState<string | null>(null);
+    const heights = ['60vh', '70vh', '80vh'] as const;
+
+    return (
+      <LightWrapper>
+        <div className="space-y-6">
+          <div>
+            <Title level={2}>📱 Mobile Bottom Sheet</Title>
+            <Text variant="weak">
+              These modals automatically become bottom sheets on mobile and regular modals on desktop. 
+              Try resizing your browser or viewing on mobile!
+            </Text>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {heights.map((height) => (
+              <Button
+                key={height}
+                onClick={() => setOpenModal(height)}
+                variant="secondary"
+                className="h-auto py-4 px-6 flex flex-col items-center gap-2"
+              >
+                <span className="font-semibold">Open {height} Modal</span>
+                <span className="text-xs opacity-70">
+                  Mobile: {height} bottom sheet | Desktop: Regular modal
+                </span>
+              </Button>
+            ))}
+          </div>
+
+          {heights.map((height) => (
+            <Modal
+              key={height}
+              isOpen={openModal === height}
+              onClose={() => setOpenModal(null)}
+              title={`${height} Bottom Sheet`}
+              description={`Mobile: ${height} bottom sheet | Desktop: Regular modal`}
+              mobileBottomSheet={true}
+              mobileHeight={height}
+            >
+              <div className="space-y-4">
+                <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <Text className="font-semibold mb-2">Responsive Behavior:</Text>
+                  <Text>
+                    This modal adapts its behavior based on screen size. On mobile devices, 
+                    it appears as a bottom sheet with {height} height. On desktop, it appears 
+                    as a regular centered modal.
+                  </Text>
+                </div>
+
+                <Text>
+                  Try resizing your browser window or viewing this on different devices to see 
+                  the responsive behavior in action!
+                </Text>
+
+                <div className="space-y-3">
+                  <Text>Here's some scrollable content to demonstrate the inner scroll behavior:</Text>
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <div key={i} className="p-3 bg-white dark:bg-gray-700 rounded border">
+                      <Text className="font-medium">Content Block {i + 1}</Text>
+                      <Text size="sm" variant="weak">
+                        This is sample content to show how the modal handles scrolling when content 
+                        exceeds the available height.
+                      </Text>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Modal>
+          ))}
+        </div>
+      </LightWrapper>
+    );
+  },
+};
+
+export const StackedModals: Story = {
+  render: () => {
+    const [firstModal, setFirstModal] = useState(false);
+    const [secondModal, setSecondModal] = useState(false);
+    const [thirdModal, setThirdModal] = useState(false);
+
+    return (
+      <div>
+        <Button onClick={() => setFirstModal(true)} variant="primary">
+          Open First Modal (Z-Index Demo)
+        </Button>
+
+        {/* First Modal - Base z-index (9100) */}
+        <Modal
+          isOpen={firstModal}
+          onClose={() => setFirstModal(false)}
+          title="First Modal (z-index: 9100)"
+          mobileBottomSheet={true}
+          mobileHeight="60vh"
+        >
+          <div>
+            <p>This is the first modal with automatic z-index: 9100</p>
+            <p>It will appear above headers, navigation, and most app content.</p>
+            <Button onClick={() => setSecondModal(true)} variant="secondary">
+              Open Second Modal
+            </Button>
+          </div>
+        </Modal>
+
+        {/* Second Modal - Stacked z-index (9200) */}
+        <Modal
+          isOpen={secondModal}
+          onClose={() => setSecondModal(false)}
+          title="Second Modal (z-index: 9200)"
+          size="lg"
+          mobileBottomSheet={true}
+          mobileHeight="70vh"
+        >
+          <div>
+            <p>This is the second modal with automatic z-index: 9200</p>
+            <p>It automatically appears above the first modal.</p>
+            <div style={{ marginTop: '1rem' }}>
+              <Button onClick={() => setThirdModal(true)} variant="primary">
+                Open Third Modal
+              </Button>
+              <Button 
+                onClick={() => setSecondModal(false)} 
+                variant="secondary" 
+                style={{ marginLeft: '0.5rem' }}
+              >
+                Close This Modal
+              </Button>
+            </div>
+          </div>
+        </Modal>
+
+        {/* Third Modal - Higher stacked z-index (9300) */}
+        <Modal
+          isOpen={thirdModal}
+          onClose={() => setThirdModal(false)}
+          title="Third Modal (z-index: 9300)"
+          size="sm"
+          mobileBottomSheet={true}
+          mobileHeight="50vh"
+        >
+          <div>
+            <p>This is the third modal with automatic z-index: 9300</p>
+            <p>Z-index stacking is handled automatically by the design system!</p>
+            <div style={{ marginTop: '1rem' }}>
+              <Button onClick={() => setThirdModal(false)} variant="primary">
+                Close This Modal
+              </Button>
+              <Button 
+                onClick={() => {
+                  setThirdModal(false);
+                  setSecondModal(false);
+                  setFirstModal(false);
+                }} 
+                variant="destructive"
+                style={{ marginLeft: '0.5rem' }}
+              >
+                Close All Modals
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      </div>
+    );
+  },
+};
+
+export const BackdropClickDemo: Story = {
+  render: () => {
+    const [modalWithBackdrop, setModalWithBackdrop] = useState(false);
+    const [modalWithoutBackdrop, setModalWithoutBackdrop] = useState(false);
+
+    return (
+      <LightWrapper>
+        <div className="space-y-6">
+          <div>
+            <Title level={2}>🎯 Backdrop Click Behavior</Title>
+            <Text variant="weak">
+              Demonstration of backdrop click functionality - click outside the modal content to close.
+            </Text>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Button onClick={() => setModalWithBackdrop(true)} variant="primary">
+              Modal WITH Backdrop Close
+            </Button>
+            <Button onClick={() => setModalWithoutBackdrop(true)} variant="secondary">
+              Modal WITHOUT Backdrop Close
+            </Button>
+          </div>
+
+          {/* Modal with backdrop close */}
+          <Modal
+            isOpen={modalWithBackdrop}
+            onClose={() => setModalWithBackdrop(false)}
+            title="Backdrop Close Enabled"
+            description="Click outside this modal to close it"
+            closeOnOverlayClick={true}
+            mobileBottomSheet={true}
+          >
+            <div className="space-y-4">
+              <Text>
+                This modal has backdrop click enabled (the default behavior). Try clicking outside 
+                the modal content area - anywhere on the dark overlay - and the modal will close.
+              </Text>
+              <Text>
+                This is great for non-critical modals where users might want to quickly dismiss 
+                the modal without looking for a close button.
+              </Text>
+            </div>
+          </Modal>
+
+          {/* Modal without backdrop close */}
+          <Modal
+            isOpen={modalWithoutBackdrop}
+            onClose={() => setModalWithoutBackdrop(false)}
+            title="Backdrop Close Disabled"
+            description="You must use the buttons to close this modal"
+            closeOnOverlayClick={false}
+            mobileBottomSheet={true}
+            footer={
+              <div className="flex gap-3 justify-end">
+                <Button variant="secondary" onClick={() => setModalWithoutBackdrop(false)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onClick={() => setModalWithoutBackdrop(false)}>
+                  Confirm Action
+                </Button>
+              </div>
+            }
+          >
+            <div className="space-y-4">
+              <Text>
+                This modal has backdrop click disabled. Try clicking outside the modal content - 
+                nothing will happen! You must use the X button or the footer buttons to close it.
+              </Text>
+              <Text>
+                This is useful for important confirmations, forms with unsaved data, or any situation 
+                where accidental dismissal could be problematic.
+              </Text>
+            </div>
+          </Modal>
+        </div>
+      </LightWrapper>
+    );
   },
 }; 

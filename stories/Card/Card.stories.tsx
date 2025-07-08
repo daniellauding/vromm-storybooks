@@ -825,8 +825,8 @@ export const DarkModePreview: Story = {
     <div style={{ colorScheme: 'dark', backgroundColor: '#1f2937', padding: '2rem', minHeight: '100vh' }}>
       <style>{`
         .dark-demo .vromm-card { 
-          background-color: #1f2937 !important; 
-          border-color: #374151 !important;
+          background-color: #1c1c1c !important; 
+          border-color: transparent !important;
           color: #f9fafb !important;
         }
         .dark-demo .vromm-card-title { color: #e6f1ef !important; }

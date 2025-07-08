@@ -1,7 +1,8 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useMemo } from 'react';
 import { cn } from '../../utils/cn';
 import { X } from 'lucide-react';
 import { Button } from '../Button/Button';
+import { zIndex } from '../../tokens';
 import './Modal.scss';
 
 export interface ModalProps {
@@ -24,7 +25,7 @@ export interface ModalProps {
   /**
    * Modal size
    */
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | 'full';
   /**
    * Whether to show close button
    */
@@ -37,6 +38,18 @@ export interface ModalProps {
    * Whether pressing escape closes modal
    */
   closeOnEscape?: boolean;
+  /**
+   * Enable mobile bottom sheet behavior
+   */
+  mobileBottomSheet?: boolean;
+  /**
+   * Height for mobile bottom sheet (e.g., '60vh', '70vh', '80vh')
+   */
+  mobileHeight?: string;
+  /**
+   * Z-index override for custom stacking (optional)
+   */
+  zIndexOverride?: number;
   /**
    * Custom header content
    */
@@ -68,14 +81,31 @@ const sizeClasses = {
   md: 'vromm-modal--md',
   lg: 'vromm-modal--lg',
   xl: 'vromm-modal--xl',
+  '2xl': 'vromm-modal--2xl',
+  '3xl': 'vromm-modal--3xl',
+  '4xl': 'vromm-modal--4xl',
   full: 'vromm-modal--full',
+};
+
+// Track open modals for automatic z-index stacking
+let openModalCount = 0;
+const getNextZIndex = () => {
+  openModalCount++;
+  // Base modal z-index + stacking increment
+  return zIndex.modal + (openModalCount - 1) * 100;
+};
+
+const releaseZIndex = () => {
+  openModalCount = Math.max(0, openModalCount - 1);
 };
 
 /**
  * Modal component for displaying content in an overlay.
  * 
  * Features:
- * - Multiple sizes (sm, md, lg, xl, full)
+ * - Multiple sizes (sm, md, lg, xl, 2xl, 3xl, 4xl, full)
+ * - Mobile bottom sheet behavior
+ * - Automatic z-index management for stacked modals
  * - Customizable header, content, and footer
  * - Overlay and escape key closing
  * - Accessible with focus management
@@ -91,6 +121,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({
   showCloseButton = true,
   closeOnOverlayClick = true,
   closeOnEscape = true,
+  mobileBottomSheet = false,
+  mobileHeight = '70vh',
+  zIndexOverride,
   header,
   children,
   footer,
@@ -98,6 +131,13 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({
   contentClassName,
   overlayClassName,
 }, ref) => {
+  // Calculate z-index for this modal instance
+  const modalZIndex = useMemo(() => {
+    if (zIndexOverride) return zIndexOverride;
+    if (!isOpen) return zIndex.modal;
+    return getNextZIndex();
+  }, [isOpen, zIndexOverride]);
+
   // Handle escape key
   useEffect(() => {
     if (!isOpen || !closeOnEscape) return;
@@ -112,18 +152,25 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, closeOnEscape, onClose]);
 
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open and manage z-index count
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      // Z-index is already calculated in useMemo
     } else {
       document.body.style.overflow = 'unset';
+      if (!zIndexOverride) {
+        releaseZIndex();
+      }
     }
 
     return () => {
       document.body.style.overflow = 'unset';
+      if (isOpen && !zIndexOverride) {
+        releaseZIndex();
+      }
     };
-  }, [isOpen]);
+  }, [isOpen, zIndexOverride]);
 
   if (!isOpen) return null;
 
@@ -137,23 +184,34 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({
     <div
       className={cn(
         'vromm-modal-overlay',
+        mobileBottomSheet && 'vromm-modal-overlay--mobile',
         overlayClassName
       )}
+      style={{ zIndex: modalZIndex }}
       onClick={handleOverlayClick}
     >
-      <div className="vromm-modal-container">
-        <span className="vromm-modal-spacer" aria-hidden="true">&#8203;</span>
+      <div 
+        className={cn(
+          'vromm-modal-container',
+          mobileBottomSheet && 'vromm-modal-container--mobile'
+        )}
+        onClick={handleOverlayClick}
+      >
+        {!mobileBottomSheet && <span className="vromm-modal-spacer" aria-hidden="true">&#8203;</span>}
         <div
           ref={ref}
           className={cn(
             'vromm-modal-content',
-            sizeClasses[size],
+            !mobileBottomSheet && sizeClasses[size],
+            mobileBottomSheet && 'vromm-modal-content--mobile',
             className
           )}
+          style={mobileBottomSheet ? { height: mobileHeight } : undefined}
           role="dialog"
           aria-modal="true"
           aria-labelledby={title ? 'modal-title' : undefined}
           aria-describedby={description ? 'modal-description' : undefined}
+          onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
           {(header || title || showCloseButton) && (
@@ -199,6 +257,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({
           <div
             className={cn(
               'vromm-modal-body',
+              mobileBottomSheet && 'vromm-modal-body--mobile',
               contentClassName
             )}
           >

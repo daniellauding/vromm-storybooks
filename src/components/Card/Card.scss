@@ -4,9 +4,9 @@
 
 .vromm-card {
   background-color: #ffffff;
-  border-color: #e5e7eb;
+  border-color: transparent;
   border-radius: 12px;
-  border-width: 1px;
+  border-width: 0px;
   color: #000000;
   transition: all 0.2s ease-in-out;
 }
@@ -14,8 +14,8 @@
 // Automatic dark mode support using system preference
 @media (prefers-color-scheme: dark) {
   .vromm-card {
-    background-color: #1f2937;
-    border-color: #374151;
+    background-color: #1c1c1c;
+    border-color: transparent;
     color: #f9fafb;
   }
 }

@@ -14,6 +14,87 @@ A comprehensive, modern design system built with React, TypeScript, Tailwind CSS
 - ✅ **Tree Shaking** - Only import what you need
 - ✅ **Cross-Platform** - Works with React, Next.js, and React Native
 
+## 🎯 Z-Index Management
+
+The design system handles z-index automatically to prevent conflicts and ensure proper layering across all applications.
+
+### Automatic Z-Index Scale
+
+```typescript
+export const zIndex = {
+  // Base content layers
+  base: 1,
+  dropdown: 1000,
+  sticky: 1010,
+  fixed: 1020,
+  
+  // Modal layers - automatically managed
+  modalBackdrop: 9000,
+  modal: 9100,           // First modal
+  modalStacked1: 9200,   // Second modal
+  modalStacked2: 9300,   // Third modal
+  modalStacked3: 9400,   // Fourth modal
+  modalStacked4: 9500,   // Fifth modal
+  
+  // UI layers above modals
+  toast: 9800,
+  tooltip: 9900,
+  skipLink: 9999,
+};
+```
+
+### Modal Stacking
+
+Modals automatically handle z-index stacking:
+
+```tsx
+// ✅ Automatic stacking - no configuration needed
+<Modal isOpen={firstModal} onClose={closeFirst}>
+  First modal (z-index: 9100)
+  <Modal isOpen={secondModal} onClose={closeSecond}>
+    Second modal (z-index: 9200) - automatically above first
+  </Modal>
+</Modal>
+
+// ✅ Custom z-index if needed
+<Modal 
+  isOpen={isOpen} 
+  onClose={onClose}
+  zIndexOverride={10000}  // Optional: custom z-index
+>
+  Custom z-index modal
+</Modal>
+```
+
+### Benefits for Applications
+
+1. **No Configuration Required**: Modals work above headers, navigation, search bars automatically
+2. **Stacked Modal Support**: Multiple modals stack properly without conflicts
+3. **Consistent Behavior**: Same z-index behavior across all apps using the design system
+4. **Conflict Prevention**: No z-index wars between components
+
+### Integration in Your App
+
+Simply use the Modal component - no z-index setup required:
+
+```tsx
+import { Modal } from '@daniellauding/vromm-design-system';
+
+function MyApp() {
+  return (
+    <div>
+      {/* Your app header with z-index: 100 */}
+      <header style={{ zIndex: 100 }}>App Header</header>
+      
+      {/* Modal automatically appears above (z-index: 9100+) */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        Modal content - automatically above header
+      </Modal>
+    </div>
+  );
+}
+```
+
 ## 📦 Installation
 
 ### Using npm

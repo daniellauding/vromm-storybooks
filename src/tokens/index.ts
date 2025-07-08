@@ -198,4 +198,28 @@ export const tokens = {
     textTransform: 'uppercase',
     fontStyle: 'italic',
   },
-} as const; 
+} as const;
+
+// Z-Index Scale for Design System
+export const zIndex = {
+  // Base content layers
+  base: 1,
+  dropdown: 1000,
+  sticky: 1010,
+  fixed: 1020,
+  
+  // Modal layers - high enough to be above most app content
+  modalBackdrop: 9000,
+  modal: 9100,
+  modalStacked1: 9200,  // Second modal layer
+  modalStacked2: 9300,  // Third modal layer
+  modalStacked3: 9400,  // Fourth modal layer
+  modalStacked4: 9500,  // Fifth modal layer
+  
+  // UI layers that should be above modals
+  toast: 9800,
+  tooltip: 9900,
+  skipLink: 9999,
+} as const;
+
+export type ZIndex = typeof zIndex; 
