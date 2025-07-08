@@ -15,7 +15,7 @@ export interface TitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
   /**
    * Font weight
    */
-  weight?: 'light' | 'normal' | 'medium' | 'semibold' | 'bold';
+  weight?: 'light' | 'normal' | 'medium' | 'semibold' | 'bold' | 'extrabold';
   /**
    * Text color variant
    */
@@ -53,6 +53,7 @@ const weightClasses = {
   medium: 'font-medium',
   semibold: 'font-semibold',
   bold: 'font-bold',
+  extrabold: 'font-extrabold',
 };
 
 const variantClasses = {
@@ -98,7 +99,7 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>(({
   children,
   level = 1,
   size = '2xl',
-  weight = 'semibold',
+  weight = 'extrabold',
   variant = 'page-title',
   align = 'left',
   truncate = false,

@@ -1,6 +1,6 @@
 {
   "name": "@daniellauding/vromm-design-system",
-  "version": "1.5.3",
+  "version": "1.6.2",
   "type": "module",
   "description": "Vromm Design System - A comprehensive component library with Storybook",
   "main": "dist/index.js",

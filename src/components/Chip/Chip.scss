@@ -2,99 +2,131 @@
 
 // Base chip styles
 .vromm-chip {
-  @apply inline-flex items-center justify-center gap-1;
-  @apply font-medium rounded-brand transition-all duration-200;
-  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
-  @apply select-none relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-weight: 500;
+  border-radius: var(--vromm-border-radius-default);
+  transition: all 200ms ease-in-out;
+  user-select: none;
+  position: relative;
   font-family: var(--vromm-font-family-body);
+}
+
+.vromm-chip:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5), 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
   
-  // Hover and focus states for clickable chips
-  &.vromm-chip--clickable {
-    @apply cursor-pointer;
-    
-    &:hover {
-      @apply shadow-sm transform scale-105;
-    }
-    
-    &:active {
-      @apply transform scale-95;
-    }
-    
-    &:focus {
-      @apply ring-primary-500;
-    }
-  }
-  
-  // Disabled state
-  &.vromm-chip--disabled {
-    @apply opacity-50 cursor-not-allowed pointer-events-none;
-  }
+// Hover and focus states for clickable chips
+.vromm-chip.vromm-chip--clickable {
+  cursor: pointer;
+}
+
+.vromm-chip.vromm-chip--clickable:hover {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transform: scale(1.05);
+}
+
+.vromm-chip.vromm-chip--clickable:active {
+  transform: scale(0.95);
+}
+
+.vromm-chip.vromm-chip--clickable:focus {
+  box-shadow: 0 0 0 2px var(--vromm-color-primary-500, #3b82f6);
+}
+
+// Disabled state
+.vromm-chip.vromm-chip--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 // Size variants
 .vromm-chip--sm {
-  @apply px-2 py-1 text-xs;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
   min-height: 24px;
-  
-  .vromm-chip-icon {
-    @apply w-3 h-3;
-  }
-  
-  .vromm-chip-remove {
-    @apply w-4 h-4 ml-1;
-  }
+}
+
+.vromm-chip--sm .vromm-chip-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.vromm-chip--sm .vromm-chip-remove {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.25rem;
 }
 
 .vromm-chip--md {
-  @apply px-3 py-1.5 text-sm;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   min-height: 32px;
-  
-  .vromm-chip-icon {
-    @apply w-4 h-4;
-  }
-  
-  .vromm-chip-remove {
-    @apply w-5 h-5 ml-1.5;
-  }
+}
+
+.vromm-chip--md .vromm-chip-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.vromm-chip--md .vromm-chip-remove {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.375rem;
 }
 
 .vromm-chip--lg {
-  @apply px-4 py-2 text-base;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   min-height: 40px;
-  
-  .vromm-chip-icon {
-    @apply w-5 h-5;
-  }
-  
-  .vromm-chip-remove {
-    @apply w-6 h-6 ml-2;
-  }
+}
+
+.vromm-chip--lg .vromm-chip-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.vromm-chip--lg .vromm-chip-remove {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
 }
 
 // Variant styles using brand colors
 .vromm-chip--default {
-  @apply bg-gray-100 text-gray-800 border border-gray-200;
-  @apply dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700;
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
 }
 
 .vromm-chip--secondary {
-  @apply bg-gray-200 text-gray-900 border border-gray-300;
-  @apply dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600;
+  background-color: #e5e7eb;
+  color: #111827;
+  border: 1px solid #d1d5db;
 }
 
 .vromm-chip--outline {
-  @apply bg-transparent border-2;
+  background-color: transparent;
+  border: 2px solid;
   color: var(--vromm-text-page-title);
   border-color: var(--vromm-border-default);
-  
-  &:hover {
-    background-color: var(--vromm-button-tertiary-bg);
-  }
+}
+
+.vromm-chip--outline:hover {
+  background-color: var(--vromm-button-tertiary-bg);
 }
 
 .vromm-chip--filled {
-  @apply bg-gray-900 text-white border border-gray-900;
-  @apply dark:bg-gray-100 dark:text-gray-900 dark:border-gray-100;
+  background-color: #111827;
+  color: #ffffff;
+  border: 1px solid #111827;
 }
 
 // Color variants
@@ -106,104 +138,128 @@
   background-color: var(--vromm-button-primary-bg);
   color: var(--vromm-button-primary-text);
   border-color: var(--vromm-button-primary-border);
-  
-  &.vromm-chip--outline {
-    @apply bg-transparent;
-    color: var(--vromm-button-primary-bg);
-    border-color: var(--vromm-button-primary-bg);
-    
-    &:hover {
-      background-color: var(--vromm-button-primary-bg);
-      color: var(--vromm-button-primary-text);
-    }
-  }
+}
+
+.vromm-chip--color-primary.vromm-chip--outline {
+  background-color: transparent;
+  color: var(--vromm-button-primary-bg);
+  border-color: var(--vromm-button-primary-bg);
+}
+
+.vromm-chip--color-primary.vromm-chip--outline:hover {
+  background-color: var(--vromm-button-primary-bg);
+  color: var(--vromm-button-primary-text);
 }
 
 .vromm-chip--color-secondary {
   background-color: var(--vromm-button-secondary-bg);
   color: var(--vromm-button-secondary-text);
   border-color: var(--vromm-button-secondary-border);
-  
-  &.vromm-chip--outline {
-    @apply bg-transparent;
-    color: var(--vromm-button-secondary-bg);
-    border-color: var(--vromm-button-secondary-bg);
-    
-    &:hover {
-      background-color: var(--vromm-button-secondary-bg);
-      color: var(--vromm-button-secondary-text);
-    }
-  }
+}
+
+.vromm-chip--color-secondary.vromm-chip--outline {
+  background-color: transparent;
+  color: var(--vromm-button-secondary-bg);
+  border-color: var(--vromm-button-secondary-bg);
+}
+
+.vromm-chip--color-secondary.vromm-chip--outline:hover {
+  background-color: var(--vromm-button-secondary-bg);
+  color: var(--vromm-button-secondary-text);
 }
 
 .vromm-chip--color-success {
-  @apply bg-green-100 text-green-800 border-green-200;
-  @apply dark:bg-green-900/30 dark:text-green-300 dark:border-green-800;
-  
-  &.vromm-chip--outline {
-    @apply bg-transparent text-green-600 border-green-500;
-    @apply dark:text-green-400 dark:border-green-400;
-    
-    &:hover {
-      @apply bg-green-50 dark:bg-green-900/20;
-    }
-  }
+  background-color: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.vromm-chip--color-success.vromm-chip--outline {
+  background-color: transparent;
+  color: #16a34a;
+  border-color: #22c55e;
+}
+
+.vromm-chip--color-success.vromm-chip--outline:hover {
+  background-color: #f0fdf4;
 }
 
 .vromm-chip--color-warning {
-  @apply bg-yellow-100 text-yellow-800 border-yellow-200;
-  @apply dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-800;
-  
-  &.vromm-chip--outline {
-    @apply bg-transparent text-yellow-600 border-yellow-500;
-    @apply dark:text-yellow-400 dark:border-yellow-400;
-    
-    &:hover {
-      @apply bg-yellow-50 dark:bg-yellow-900/20;
-    }
-  }
+  background-color: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.vromm-chip--color-warning.vromm-chip--outline {
+  background-color: transparent;
+  color: #ca8a04;
+  border-color: #eab308;
+}
+
+.vromm-chip--color-warning.vromm-chip--outline:hover {
+  background-color: #fefce8;
 }
 
 .vromm-chip--color-error {
-  @apply bg-red-100 text-red-800 border-red-200;
-  @apply dark:bg-red-900/30 dark:text-red-300 dark:border-red-800;
-  
-  &.vromm-chip--outline {
-    @apply bg-transparent text-red-600 border-red-500;
-    @apply dark:text-red-400 dark:border-red-400;
-    
-    &:hover {
-      @apply bg-red-50 dark:bg-red-900/20;
-    }
-  }
+  background-color: #fecaca;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+.vromm-chip--color-error.vromm-chip--outline {
+  background-color: transparent;
+  color: #dc2626;
+  border-color: #ef4444;
+}
+
+.vromm-chip--color-error.vromm-chip--outline:hover {
+  background-color: #fef2f2;
 }
 
 // Icon styling
 .vromm-chip-icon {
-  @apply flex items-center justify-center flex-shrink-0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   color: currentColor;
 }
 
 // Content styling
 .vromm-chip-content {
-  @apply truncate;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 // Remove button styling
 .vromm-chip-remove {
-  @apply flex items-center justify-center flex-shrink-0;
-  @apply rounded-full transition-colors;
-  @apply hover:bg-black/10 dark:hover:bg-white/10;
-  @apply focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-current;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
   color: currentColor;
-  
-  &:disabled {
-    @apply opacity-50 cursor-not-allowed;
-  }
-  
-  &:active {
-    @apply transform scale-95;
-  }
+  cursor: pointer;
+}
+
+.vromm-chip-remove:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.vromm-chip-remove:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px currentColor, 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.vromm-chip-remove:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vromm-chip-remove:active {
+  transform: scale(0.95);
 }
 
 // Animation for removal
@@ -228,22 +284,92 @@
 // High contrast mode
 @media (prefers-contrast: high) {
   .vromm-chip {
-    @apply border-2;
+    border-width: 2px;
   }
   
   .vromm-chip--outline {
-    @apply border-2;
+    border-width: 2px;
   }
 }
 
 // Reduced motion
 @media (prefers-reduced-motion: reduce) {
   .vromm-chip {
-    @apply transition-none;
+    transition: none;
   }
   
   .vromm-chip--removing {
     animation: none;
-    @apply opacity-0;
+    opacity: 0;
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .vromm-chip--default {
+    background-color: #1f2937;
+    color: #e5e7eb;
+    border-color: #374151;
+  }
+
+  .vromm-chip--secondary {
+    background-color: #374151;
+    color: #f9fafb;
+    border-color: #4b5563;
+  }
+
+  .vromm-chip--filled {
+    background-color: #f9fafb;
+    color: #111827;
+    border-color: #f9fafb;
+  }
+
+  .vromm-chip--color-success {
+    background-color: rgba(20, 83, 45, 0.3);
+    color: #86efac;
+    border-color: #166534;
+  }
+
+  .vromm-chip--color-success.vromm-chip--outline {
+    color: #4ade80;
+    border-color: #4ade80;
+  }
+
+  .vromm-chip--color-success.vromm-chip--outline:hover {
+    background-color: rgba(20, 83, 45, 0.2);
+  }
+
+  .vromm-chip--color-warning {
+    background-color: rgba(161, 98, 7, 0.3);
+    color: #fcd34d;
+    border-color: #a16207;
+  }
+
+  .vromm-chip--color-warning.vromm-chip--outline {
+    color: #fbbf24;
+    border-color: #fbbf24;
+  }
+
+  .vromm-chip--color-warning.vromm-chip--outline:hover {
+    background-color: rgba(161, 98, 7, 0.2);
+  }
+
+  .vromm-chip--color-error {
+    background-color: rgba(127, 29, 29, 0.3);
+    color: #fca5a5;
+    border-color: #991b1b;
+  }
+
+  .vromm-chip--color-error.vromm-chip--outline {
+    color: #f87171;
+    border-color: #f87171;
+  }
+
+  .vromm-chip--color-error.vromm-chip--outline:hover {
+    background-color: rgba(127, 29, 29, 0.2);
+  }
+
+  .vromm-chip-remove:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 } 

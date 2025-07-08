@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Modal, AlertModal } from '../../src/components/Modal';
 import { Button } from '../../src/components/Button';
 import { Text, Title } from '../../src/components/Typography';
-import { Save, Trash2, Settings, User } from 'lucide-react';
+import { Save, Trash2, Settings, User, MapPin, Heart, Check } from 'lucide-react';
 
 const meta: Meta<typeof Modal> = {
   title: 'Components/Modal',
@@ -12,7 +12,7 @@ const meta: Meta<typeof Modal> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Modal component for displaying content in overlays with different sizes and configurations.',
+        component: 'Modal component for displaying content in overlays with different sizes, configurations, and media header support.',
       },
     },
   },
@@ -46,6 +46,18 @@ const meta: Meta<typeof Modal> = {
     closeOnEscape: {
       control: 'boolean',
       description: 'Whether pressing escape closes modal',
+    },
+    media: {
+      control: 'object',
+      description: 'Media items for header carousel',
+    },
+    showSaveButton: {
+      control: 'boolean',
+      description: 'Show save button in media header',
+    },
+    showDrivenButton: {
+      control: 'boolean',
+      description: 'Show driven button in media header',
     },
   },
 };
@@ -782,4 +794,389 @@ export const BackdropClickDemo: Story = {
       </LightWrapper>
     );
   },
+}; 
+
+export const MediaHeader: Story = {
+  render: () => {
+    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+    const [isCarouselModalOpen, setIsCarouselModalOpen] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+    const [isDriven, setIsDriven] = useState(false);
+
+    const singleImage = {
+      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
+      alt: 'Beautiful mountain landscape',
+      type: 'photo' as const
+    };
+
+    const singleVideo = {
+      src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+      alt: 'Sample video',
+      type: 'video' as const,
+      poster: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=800&h=400&fit=crop',
+      duration: '2:30'
+    };
+
+    const carouselMedia = [
+      {
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
+        alt: 'Mountain landscape view 1',
+        type: 'photo' as const
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop',
+        alt: 'Forest path',
+        type: 'photo' as const
+      },
+      {
+        src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+        alt: 'Adventure video',
+        type: 'video' as const,
+        poster: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=800&h=400&fit=crop',
+        duration: '2:30'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
+        alt: 'Map view',
+        type: 'map' as const
+      }
+    ];
+
+    return (
+      <LightWrapper>
+        <div className="space-y-4">
+          <div className="mb-6">
+            <Title level={2}>Modal with Media Header</Title>
+            <Text variant="weak">
+              Similar to the Card component, modals can now display images, videos, and maps in the header area.
+            </Text>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Button onClick={() => setIsImageModalOpen(true)} variant="secondary">
+              Modal with Single Image
+            </Button>
+            <Button onClick={() => setIsVideoModalOpen(true)} variant="secondary">
+              Modal with Video
+            </Button>
+            <Button onClick={() => setIsCarouselModalOpen(true)} variant="secondary">
+              Modal with Media Carousel
+            </Button>
+          </div>
+
+          {/* Single Image Modal */}
+          <Modal
+            isOpen={isImageModalOpen}
+            onClose={() => setIsImageModalOpen(false)}
+            size="lg"
+            media={singleImage}
+            showSaveButton
+            showDrivenButton
+            isSaved={isSaved}
+            isDriven={isDriven}
+            onSave={() => setIsSaved(!isSaved)}
+            onMarkAsDriven={() => setIsDriven(!isDriven)}
+          >
+            <div className="space-y-4">
+              <div>
+                <Title level={3}>Mountain Adventure Route</Title>
+                <div className="flex items-center gap-1 mt-2 text-sm text-gray-600">
+                  <MapPin className="w-4 h-4" />
+                  <span>Rocky Mountain National Park, Colorado</span>
+                </div>
+              </div>
+              
+              <Text>
+                Experience breathtaking views on this challenging mountain route. The trail offers 
+                stunning vistas of snow-capped peaks and pristine alpine lakes.
+              </Text>
+              
+              <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <Text className="font-semibold">Difficulty</Text>
+                  <Text size="sm" variant="weak">Advanced</Text>
+                </div>
+                <div>
+                  <Text className="font-semibold">Duration</Text>
+                  <Text size="sm" variant="weak">6-8 hours</Text>
+                </div>
+                <div>
+                  <Text className="font-semibold">Distance</Text>
+                  <Text size="sm" variant="weak">12.5 miles</Text>
+                </div>
+                <div>
+                  <Text className="font-semibold">Elevation</Text>
+                  <Text size="sm" variant="weak">+2,400 ft</Text>
+                </div>
+              </div>
+            </div>
+          </Modal>
+
+          {/* Video Modal */}
+          <Modal
+            isOpen={isVideoModalOpen}
+            onClose={() => setIsVideoModalOpen(false)}
+            size="lg"
+            media={singleVideo}
+            carouselOptions={{
+              videoControls: {
+                muted: false,
+                showDuration: true
+              }
+            }}
+            onVideoPlay={(index, media) => console.log('Video started playing:', media)}
+            onVideoPause={(index, media) => console.log('Video paused:', media)}
+          >
+            <div className="space-y-4">
+              <div>
+                <Title level={3}>Adventure Highlights</Title>
+                <Text variant="weak">Watch the most exciting moments from recent adventures</Text>
+              </div>
+              
+              <Text>
+                This video showcases some of the most spectacular moments captured during our recent 
+                mountain expeditions. From sunrise views to challenging terrain, see what awaits you.
+              </Text>
+              
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline">Share Video</Button>
+                <Button size="sm" variant="outline">Download</Button>
+              </div>
+            </div>
+          </Modal>
+
+          {/* Carousel Modal */}
+          <Modal
+            isOpen={isCarouselModalOpen}
+            onClose={() => setIsCarouselModalOpen(false)}
+            size="xl"
+            media={carouselMedia}
+            showSaveButton
+            isSaved={isSaved}
+            onSave={() => setIsSaved(!isSaved)}
+            onMediaChange={(index, media) => console.log('Media changed to:', index, media)}
+            carouselOptions={{
+              showDots: true,
+              showArrows: true,
+              loop: true,
+              enableSwipe: true
+            }}
+          >
+            <div className="space-y-6">
+              <div>
+                <Title level={3}>Epic Mountain Journey</Title>
+                <Text variant="weak">A complete visual guide to this incredible route</Text>
+              </div>
+              
+              <Text>
+                Navigate through our comprehensive media collection featuring photos, videos, and maps 
+                of this spectacular mountain route. Use the arrows or swipe to explore different views.
+              </Text>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Title level={4} size="sm">Route Details</Title>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-sm">Total Distance:</span>
+                      <span className="text-sm font-medium">15.2 miles</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm">Max Elevation:</span>
+                      <span className="text-sm font-medium">8,400 ft</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm">Estimated Time:</span>
+                      <span className="text-sm font-medium">8-10 hours</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <Title level={4} size="sm">What to Expect</Title>
+                  <ul className="text-sm space-y-1">
+                    <li>• Stunning alpine lake views</li>
+                    <li>• Wildlife spotting opportunities</li>
+                    <li>• Technical rock scrambling sections</li>
+                    <li>• 360° summit panoramas</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="flex gap-3 pt-4 border-t">
+                <Button icon={Heart} variant="outline">
+                  {isSaved ? 'Saved' : 'Save Route'}
+                </Button>
+                <Button icon={Check} variant="outline">
+                  Mark as Completed
+                </Button>
+                <Button variant="primary">
+                  Start Navigation
+                </Button>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      </LightWrapper>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Modals can now display media content in the header area, similar to the Card component. Supports single images, videos, and media carousels with navigation controls.'
+      }
+    }
+  }
+}; 
+
+// Media Header with Interactive Buttons (Save & Mark as Driven)
+export const MediaHeaderWithActions: Story = {
+  render: () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+    const [isDriven, setIsDriven] = useState(false);
+
+    const mediaItems = [
+      {
+        src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+        alt: "Beautiful mountain landscape with lake",
+        type: "photo" as const
+      },
+      {
+        src: "https://images.unsplash.com/photo-1500622944204-b135684e99fd?w=800&h=600&fit=crop", 
+        alt: "Scenic forest road",
+        type: "photo" as const
+      },
+      {
+        src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop",
+        alt: "Coastal cliffs and ocean",
+        type: "photo" as const
+      }
+    ];
+
+    return (
+      <div className="flex gap-4">
+        <Button onClick={() => setIsOpen(true)} variant="default">
+          Open Modal with Actions
+        </Button>
+        
+        <Modal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          size="lg"
+          mediaItems={mediaItems}
+          showSaveButton={true}
+          showDrivenButton={true}
+          isSaved={isSaved}
+          isDriven={isDriven}
+          onSave={() => {
+            setIsSaved(!isSaved);
+            console.log('Save toggled:', !isSaved);
+          }}
+          onMarkAsDriven={() => {
+            setIsDriven(!isDriven);
+            console.log('Driven toggled:', !isDriven);
+          }}
+          carouselOptions={{
+            showDots: true,
+            showArrows: true,
+            loop: true
+          }}
+        >
+          <Title level={2}>Scenic Mountain Route</Title>
+          <Text className="mt-4">
+            This beautiful mountain route offers stunning views and exciting driving experiences. 
+            Perfect for a weekend adventure with spectacular photo opportunities along the way.
+          </Text>
+          
+          <div className="mt-6 space-y-4">
+            <div className="flex items-center gap-4">
+              <div className="bg-gray-50 p-3 rounded-lg">
+                <Text className="text-sm text-gray-600">Distance</Text>
+                <Text className="font-semibold">127 km</Text>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg">
+                <Text className="text-sm text-gray-600">Duration</Text>
+                <Text className="font-semibold">3.5 hours</Text>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg">
+                <Text className="text-sm text-gray-600">Difficulty</Text>
+                <Text className="font-semibold">Moderate</Text>
+              </div>
+            </div>
+            
+            <div className="p-4 bg-blue-50 rounded-lg">
+              <Text className="text-sm text-blue-800">
+                💡 <strong>Pro tip:</strong> Best visited during early morning or late afternoon for optimal lighting and fewer crowds.
+              </Text>
+            </div>
+          </div>
+        </Modal>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Modal with media header featuring save and mark as driven buttons - same functionality as Card component! Click the buttons in the media header to toggle saved/driven state.'
+      }
+    }
+  }
+}; 
+
+export const MediaHeaderWithComponents: Story = {
+  args: {
+    isOpen: true,
+    title: 'Mixed Media with Components',
+    showSaveButton: true,
+    showDrivenButton: true,
+    media: [
+      {
+        src: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80',
+        alt: 'Beautiful landscape',
+        type: 'photo'
+      },
+      {
+        component: (
+          <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white">
+            <div className="text-center">
+              <h3 className="text-xl font-bold mb-2">Route Preview</h3>
+              <p className="text-sm opacity-90">Custom MapPreview Component</p>
+              <div className="mt-4 bg-white/20 rounded-lg p-3">
+                <div className="flex items-center justify-between text-xs">
+                  <span>Distance: 45 km</span>
+                  <span>Duration: 2h 30min</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ),
+        type: 'component',
+        alt: 'Route preview component'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80',
+        alt: 'Mountain view',
+        type: 'map'
+      }
+    ],
+    carouselOptions: {
+      showDots: true,
+      showArrows: true,
+      loop: true
+    },
+    children: (
+      <div className="p-4">
+        <h2 className="text-lg font-semibold mb-2">Mixed Media Carousel</h2>
+        <p className="text-gray-600 mb-4">
+          This modal demonstrates a carousel that can mix traditional media (images, videos) 
+          with custom React components like MapPreview.
+        </p>
+        <p className="text-sm text-gray-500">
+          Navigate through the carousel to see different media types including a custom component.
+        </p>
+      </div>
+    )
+  }
 }; 

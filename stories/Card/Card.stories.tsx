@@ -801,7 +801,7 @@ export const CustomContentLayout: Story = {
                   Mix and match any content within the card for complete flexibility.
                 </CardDescription>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">Learn More</Button>
+                  <Button variant="secondary" fill="outline" size="sm">Learn More</Button>
                 </div>
               </div>
             </CardContent>
@@ -1334,6 +1334,152 @@ export const ButtonPositioningDemo: Story = {
     docs: {
       description: {
         story: 'Demonstrates the fixed button positioning (Heart LEFT, X RIGHT) and new "Mark as Driven" functionality. This solves the original issue where the design system Card component was not calling onSave and had wrong button positions.',
+      },
+    },
+  },
+}; 
+
+export const ComponentSupportDemo: Story = {
+  render: () => (
+    <LightWrapper>
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-xl font-bold mb-2">React Component Support</h3>
+          <p className="text-gray-600 mb-4">
+            Cards now support React components as media items! Mix traditional media with custom components like MapPreview.
+          </p>
+        </div>
+
+        <div className="w-80">
+          <Card
+            images={[
+              {
+                src: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80',
+                alt: 'Beautiful landscape',
+                type: 'photo'
+              },
+              {
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h3 className="text-xl font-bold mb-2">Route Preview</h3>
+                      <p className="text-sm opacity-90">Custom MapPreview Component</p>
+                      <div className="mt-4 bg-white/20 rounded-lg p-3">
+                        <div className="flex items-center justify-between text-xs">
+                          <span>Distance: 45 km</span>
+                          <span>Duration: 2h 30min</span>
+                        </div>
+                        <div className="mt-2 bg-white/20 rounded h-1">
+                          <div className="bg-white rounded h-1 w-3/4"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Route preview component'
+              },
+              {
+                component: (
+                  <div className="w-full h-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white">
+                    <div className="text-center">
+                      <h3 className="text-lg font-bold mb-2">Weather Widget</h3>
+                      <div className="text-4xl mb-2">🌤️</div>
+                      <p className="text-sm opacity-90">Partly Cloudy</p>
+                      <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                          <div className="font-semibold">22°C</div>
+                          <div className="opacity-75">Now</div>
+                        </div>
+                        <div>
+                          <div className="font-semibold">18°C</div>
+                          <div className="opacity-75">Low</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ),
+                type: 'component',
+                alt: 'Weather widget component'
+              },
+              {
+                src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80',
+                alt: 'Mountain view',
+                type: 'map'
+              }
+            ]}
+            title="Mixed Media with Components"
+            description="This card demonstrates mixing traditional images with custom React components like MapPreview and WeatherWidget."
+            rating={4.9}
+            reviewCount={156}
+            price="Demo"
+            location="Component Showcase"
+            carouselOptions={{
+              showDots: true,
+              showArrows: true,
+              loop: true,
+              enableSwipe: true
+            }}
+            onImageChange={(index, media) => {
+              if (media.type === 'component') {
+                console.log(`Switched to component ${index + 1}: ${media.alt}`);
+              } else {
+                console.log(`Switched to ${media.type} ${index + 1}: ${media.alt}`);
+              }
+            }}
+            onSave={() => console.log('Mixed media card saved!')}
+          />
+        </div>
+
+        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+          <h4 className="font-semibold text-purple-800 mb-2">🧩 Component Usage:</h4>
+          <pre className="text-sm text-purple-700 bg-purple-100 p-3 rounded overflow-auto">
+{`// Mix traditional media with React components
+const media = [
+  {
+    src: 'photo.jpg',
+    alt: 'Photo',
+    type: 'photo'
+  },
+  {
+    component: (
+      <MapPreview 
+        route={route}
+        waypointDetails={waypointDetails}
+        className="w-full"
+      />
+    ),
+    type: 'component',
+    alt: 'Route preview'
+  },
+  {
+    src: 'video.mp4',
+    alt: 'Video',
+    type: 'video'
+  }
+];
+
+<Card images={media} ... />`}
+          </pre>
+        </div>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <h4 className="font-semibold text-blue-800 mb-2">✨ Component Features:</h4>
+          <ul className="text-sm text-blue-700 space-y-1">
+            <li>• Components get the full carousel container size (w-full h-48)</li>
+            <li>• Automatic accessibility with proper ARIA labels</li>
+            <li>• Smooth transitions between components and traditional media</li>
+            <li>• Component type indicator in carousel dots</li>
+            <li>• Perfect for MapPreview, charts, widgets, or any custom content</li>
+          </ul>
+        </div>
+      </div>
+    </LightWrapper>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates the new React component support in Card carousels. Perfect for integrating MapPreview components, weather widgets, or any custom React content alongside traditional images and videos.',
       },
     },
   },

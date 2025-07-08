@@ -2,111 +2,159 @@
 
 // Dropdown wrapper
 .vromm-dropdown-wrapper {
-  @apply relative inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 // Dropdown trigger
 .vromm-dropdown-trigger {
-  @apply cursor-pointer;
+  cursor: pointer;
 }
 
 // Dropdown content (main menu container)
 .vromm-dropdown-content {
-  @apply absolute z-50 min-w-32 overflow-hidden rounded-md border;
-  @apply bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700;
-  @apply p-1 shadow-md;
-  @apply text-gray-900 dark:text-gray-100;
-  @apply transition-all duration-200 ease-in-out;
-  @apply opacity-100 scale-100;
+  position: absolute;
+  z-index: 50;
+  min-width: 8rem;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  border: 1px solid;
+  background-color: #ffffff;
+  border-color: #e5e7eb;
+  padding: 0.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  color: #111827;
+  transition: all 200ms ease-in-out;
+  opacity: 1;
+  transform: scale(1);
 }
 
 // Searchable dropdown content has different padding
 .vromm-dropdown-content--searchable {
-  @apply p-0;
+  padding: 0;
 }
 
 // Search container
 .vromm-dropdown-search {
-  @apply relative flex items-center;
-  @apply px-3 py-2 border-b border-gray-200 dark:border-gray-700;
-  @apply bg-gray-50 dark:bg-gray-800;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
 }
 
 .vromm-dropdown-search-icon {
-  @apply absolute left-3 text-gray-400 dark:text-gray-500;
-  @apply pointer-events-none;
+  position: absolute;
+  left: 0.75rem;
+  color: #9ca3af;
+  pointer-events: none;
 }
 
 .vromm-dropdown-search-input {
-  @apply w-full pl-8 pr-3 py-1;
-  @apply text-sm;
-  @apply bg-transparent;
-  @apply border-none outline-none;
-  @apply text-gray-900 dark:text-gray-100;
-  @apply placeholder-gray-500 dark:placeholder-gray-400;
+  width: 100%;
+  padding: 0.25rem 0.75rem 0.25rem 2rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #111827;
+}
+
+.vromm-dropdown-search-input::placeholder {
+  color: #6b7280;
 }
 
 .vromm-dropdown-search-input:focus {
-  @apply ring-0;
+  box-shadow: none;
 }
 
 // Items container
 .vromm-dropdown-items {
-  @apply p-1;
+  padding: 0.25rem;
 }
 
 // Dropdown items
 .vromm-dropdown-item {
-  @apply flex items-center gap-2 w-full;
-  @apply px-2 py-1.5 text-sm;
-  @apply rounded-sm cursor-pointer;
-  @apply transition-colors duration-150;
-  @apply text-gray-700 dark:text-gray-300;
-  @apply hover:bg-gray-100 dark:hover:bg-gray-700;
-  @apply focus:bg-gray-100 dark:focus:bg-gray-700;
-  @apply focus:outline-none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-radius: 0.125rem;
+  cursor: pointer;
+  transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
+  color: #374151;
+}
+
+.vromm-dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.vromm-dropdown-item:focus {
+  background-color: #f3f4f6;
+  outline: none;
 }
 
 .vromm-dropdown-item--simple {
-  @apply pl-3;
+  padding-left: 0.75rem;
 }
 
 .vromm-dropdown-item--disabled {
-  @apply opacity-50 cursor-not-allowed;
-  @apply hover:bg-transparent dark:hover:bg-transparent;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vromm-dropdown-item--disabled:hover {
+  background-color: transparent;
 }
 
 .vromm-dropdown-item--selected {
-  @apply bg-blue-50 dark:bg-blue-900/20;
-  @apply text-blue-700 dark:text-blue-300;
+  background-color: #eff6ff;
+  color: #1d4ed8;
 }
 
 .vromm-dropdown-item:active {
-  @apply bg-gray-200 dark:bg-gray-600;
+  background-color: #e5e7eb;
 }
 
 // Item icon
 .vromm-dropdown-item-icon {
-  @apply flex-shrink-0;
-  @apply w-4 h-4 flex items-center justify-center;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 // Item content
 .vromm-dropdown-item-content {
-  @apply flex-1 truncate;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 // Separator
 .vromm-dropdown-separator {
-  @apply h-px my-1 mx-1;
-  @apply bg-gray-200 dark:bg-gray-700;
+  height: 1px;
+  margin: 0.25rem;
+  background-color: #e5e7eb;
 }
 
 // Label
 .vromm-dropdown-label {
-  @apply px-2 py-1.5 text-xs font-semibold;
-  @apply text-gray-500 dark:text-gray-400;
-  @apply uppercase tracking-wide;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 // Animation when opening from different sides
@@ -128,94 +176,170 @@
 
 // Positioning based on side
 .vromm-dropdown--top {
-  @apply bottom-full mb-1;
+  bottom: 100%;
+  margin-bottom: 0.25rem;
 }
 
 .vromm-dropdown--right {
-  @apply left-full ml-1;
+  left: 100%;
+  margin-left: 0.25rem;
 }
 
 .vromm-dropdown--bottom {
-  @apply top-full mt-1;
+  top: 100%;
+  margin-top: 0.25rem;
 }
 
 .vromm-dropdown--left {
-  @apply right-full mr-1;
+  right: 100%;
+  margin-right: 0.25rem;
 }
 
 // Alignment
 .vromm-dropdown--align-start {
-  @apply left-0;
+  left: 0;
 }
 
 .vromm-dropdown--align-center {
-  @apply left-1/2 transform -translate-x-1/2;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .vromm-dropdown--align-end {
-  @apply right-0;
+  right: 0;
 }
 
 // For right/left positioned dropdowns
 .vromm-dropdown--right.vromm-dropdown--align-start,
 .vromm-dropdown--left.vromm-dropdown--align-start {
-  @apply top-0;
+  top: 0;
 }
 
 .vromm-dropdown--right.vromm-dropdown--align-center,
 .vromm-dropdown--left.vromm-dropdown--align-center {
-  @apply top-1/2 transform -translate-y-1/2;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .vromm-dropdown--right.vromm-dropdown--align-end,
 .vromm-dropdown--left.vromm-dropdown--align-end {
-  @apply bottom-0;
+  bottom: 0;
 }
 
 // Responsive adjustments
 @media (max-width: 640px) {
   .vromm-dropdown-content {
-    @apply min-w-40;
+    min-width: 10rem;
   }
 }
 
 // High contrast mode
 @media (prefers-contrast: high) {
   .vromm-dropdown-content {
-    @apply border-2;
+    border-width: 2px;
   }
   
   .vromm-dropdown-item--selected {
-    @apply bg-blue-600 text-white;
+    background-color: #2563eb;
+    color: #ffffff;
   }
 }
 
 // Focus styles for accessibility
 .vromm-dropdown-item:focus-visible {
-  @apply ring-2 ring-blue-500 ring-offset-1 dark:ring-offset-gray-800;
+  box-shadow: 0 0 0 2px #3b82f6, 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
 // RTL support
 [dir="rtl"] .vromm-dropdown-item-icon {
-  @apply mr-0 ml-2;
+  margin-right: 0;
+  margin-left: 0.5rem;
 }
 
 [dir="rtl"] .vromm-dropdown--align-start {
-  @apply left-auto right-0;
+  left: auto;
+  right: 0;
 }
 
 [dir="rtl"] .vromm-dropdown--align-end {
-  @apply left-0 right-auto;
+  left: 0;
+  right: auto;
 }
 
 // Mobile responsive adjustments
 @media (max-width: 640px) {
   .vromm-dropdown-content {
-    @apply min-w-48 max-w-xs;
+    min-width: 12rem;
+    max-width: 20rem;
     max-height: 60vh;
   }
   
   .vromm-dropdown-item {
-    @apply py-3 text-base;
+    padding: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .vromm-dropdown-content {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+  }
+
+  .vromm-dropdown-search {
+    border-color: #374151;
+    background-color: #1f2937;
+  }
+
+  .vromm-dropdown-search-icon {
+    color: #6b7280;
+  }
+
+  .vromm-dropdown-search-input {
+    color: #f9fafb;
+  }
+
+  .vromm-dropdown-search-input::placeholder {
+    color: #9ca3af;
+  }
+
+  .vromm-dropdown-item {
+    color: #d1d5db;
+  }
+
+  .vromm-dropdown-item:hover {
+    background-color: #374151;
+  }
+
+  .vromm-dropdown-item:focus {
+    background-color: #374151;
+  }
+
+  .vromm-dropdown-item--disabled:hover {
+    background-color: transparent;
+  }
+
+  .vromm-dropdown-item--selected {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+  }
+
+  .vromm-dropdown-item:active {
+    background-color: #4b5563;
+  }
+
+  .vromm-dropdown-separator {
+    background-color: #374151;
+  }
+
+  .vromm-dropdown-label {
+    color: #9ca3af;
+  }
+
+  .vromm-dropdown-item:focus-visible {
+    box-shadow: 0 0 0 2px #3b82f6, 0 0 0 4px rgba(31, 41, 55, 1);
   }
 } 

@@ -2,27 +2,100 @@
 
 // Base badge styles
 .vromm-badge {
-  @apply inline-flex items-center justify-center;
-  @apply font-medium rounded-brand transition-colors;
-  @apply border focus:outline-none focus:ring-2 focus:ring-offset-2;
-  @apply whitespace-nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  transition: color 150ms ease-in-out, background-color 150ms ease-in-out, border-color 150ms ease-in-out;
+  border: 1px solid;
+  white-space: nowrap;
   font-family: var(--vromm-font-family-body);
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5), 0 0 0 4px rgba(59, 130, 246, 0.1);
+  }
 }
 
-// Size variants
-.vromm-badge--sm {
-  @apply px-2 py-1 text-xs;
+// Shape variants
+.vromm-badge--rounded {
+  border-radius: var(--vromm-border-radius-default);
+}
+
+.vromm-badge--circular {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  min-width: fit-content;
+}
+
+.vromm-badge--dot {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  min-width: fit-content;
+  padding: 0;
+}
+
+// Size variants for rounded badges
+.vromm-badge--rounded.vromm-badge--sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
   min-height: 20px;
 }
 
-.vromm-badge--md {
-  @apply px-2.5 py-1.5 text-sm;
+.vromm-badge--rounded.vromm-badge--md {
+  padding: 0.375rem 0.625rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   min-height: 24px;
 }
 
-.vromm-badge--lg {
-  @apply px-3 py-2 text-base;
+.vromm-badge--rounded.vromm-badge--lg {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   min-height: 28px;
+}
+
+// Size variants for circular badges
+.vromm-badge--circular.vromm-badge--sm {
+  width: 20px;
+  height: 20px;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.vromm-badge--circular.vromm-badge--md {
+  width: 24px;
+  height: 24px;
+  font-size: 0.875rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.vromm-badge--circular.vromm-badge--lg {
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+}
+
+// Size variants for dot badges
+.vromm-badge--dot.vromm-badge--sm {
+  width: 8px;
+  height: 8px;
+}
+
+.vromm-badge--dot.vromm-badge--md {
+  width: 10px;
+  height: 10px;
+}
+
+.vromm-badge--dot.vromm-badge--lg {
+  width: 12px;
+  height: 12px;
 }
 
 // Variant styles using brand colors
@@ -39,37 +112,45 @@
 }
 
 .vromm-badge--outline {
-  @apply bg-transparent;
+  background-color: transparent;
   color: var(--vromm-text-page-title);
   border-color: var(--vromm-border-default);
 }
 
 .vromm-badge--destructive {
-  @apply bg-red-100 text-red-800 border-red-200;
-  @apply dark:bg-red-900/30 dark:text-red-300 dark:border-red-800;
+  background-color: #fef2f2;
+  color: #991b1b;
+  border-color: #fecaca;
 }
 
 .vromm-badge--success {
-  @apply bg-green-100 text-green-800 border-green-200;
-  @apply dark:bg-green-900/30 dark:text-green-300 dark:border-green-800;
+  background-color: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
 }
 
 .vromm-badge--warning {
-  @apply bg-yellow-100 text-yellow-800 border-yellow-200;
-  @apply dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-800;
+  background-color: #fefce8;
+  color: #a16207;
+  border-color: #fde68a;
+}
+
+// Dot badges have no border by default
+.vromm-badge--dot {
+  border: none;
 }
 
 // Hover states for interactive badges
 .vromm-badge[role="button"],
 .vromm-badge[tabindex] {
-  @apply cursor-pointer;
+  cursor: pointer;
   
   &:hover {
-    @apply shadow-sm;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   }
   
   &:focus {
-    @apply ring-primary-500;
+    box-shadow: 0 0 0 2px var(--vromm-color-primary-500, #3b82f6);
   }
 }
 
@@ -90,5 +171,23 @@
   .vromm-badge--outline {
     color: var(--vromm-text-page-title-dark);
     border-color: var(--vromm-border-default-dark);
+  }
+  
+  .vromm-badge--destructive {
+    background-color: rgba(127, 29, 29, 0.3);
+    color: #fca5a5;
+    border-color: #991b1b;
+  }
+
+  .vromm-badge--success {
+    background-color: rgba(20, 83, 45, 0.3);
+    color: #86efac;
+    border-color: #166534;
+  }
+
+  .vromm-badge--warning {
+    background-color: rgba(161, 98, 7, 0.3);
+    color: #fde047;
+    border-color: #a16207;
   }
 } 

@@ -1,40 +1,57 @@
 /* Label Component Styles */
 
 .vromm-label {
-  @apply block font-medium transition-colors;
+  display: block;
+  font-weight: 500;
+  transition: color 150ms ease-in-out;
   color: var(--vromm-text-page-title);
   font-family: var(--vromm-font-family-body);
 }
 
 .vromm-label--sm {
-  @apply text-xs mb-1;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .vromm-label--md {
-  @apply text-sm mb-2;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .vromm-label--lg {
-  @apply text-base mb-2;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .vromm-label--disabled {
-  @apply opacity-50 cursor-not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .vromm-label-required {
-  @apply text-red-500 ml-1;
+  color: #ef4444;
+  margin-left: 0.25rem;
 }
 
 .vromm-label--floating {
-  @apply absolute top-2 left-3 pointer-events-none;
-  @apply transition-all duration-200 ease-out;
-  @apply text-gray-500 dark:text-gray-400;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.75rem;
+  pointer-events: none;
+  transition: all 200ms ease-out;
+  color: #6b7280;
 }
 
 // Dark mode
 @media (prefers-color-scheme: dark) {
   .vromm-label {
     color: var(--vromm-text-page-title-dark);
+  }
+
+  .vromm-label--floating {
+    color: #9ca3af;
   }
 } 

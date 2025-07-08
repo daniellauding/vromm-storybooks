@@ -1,3 +1,7 @@
+/* Import Google Fonts first - MUST be at the very top */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap');
+
 /* Import Tailwind - this makes @apply work in component files */
 @tailwind base;
 @tailwind components;
@@ -111,6 +115,7 @@
 
   /* Typography Tokens */
   --vromm-font-family-title: 'Rubik', sans-serif;
+  --vromm-font-family-body: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --vromm-font-family-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --vromm-font-family-mono: 'Fira Code', 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
 
@@ -128,6 +133,26 @@
   --vromm-radius-lg: 0.5rem;
   --vromm-radius-xl: 0.75rem;
   --vromm-radius-brand: 0.75rem; /* 12px - brand border radius */
+  --vromm-border-radius-default: 8px;
+  --vromm-border-radius-lg: 12px;
+
+  /* Z-Index Tokens */
+  --vromm-z-dropdown: 1000;
+  --vromm-z-sticky: 1020;
+  --vromm-z-fixed: 1030;
+  --vromm-z-modal: 1040;
+  --vromm-z-popover: 1050;
+  --vromm-z-tooltip: 1060;
+  --vromm-z-toast: 1070;
+
+  /* Component-specific tokens */
+  --vromm-dark-surface: #1c1c1c;
+  --vromm-dark-body: #ffffff;
+  --vromm-border-light: #e5e7eb;
+  --vromm-border-light-dark: #374151;
+  --vromm-text-page-title: #072f2d;
+  --vromm-text-page-title-dark: #e6f1ef;
+  --vromm-border-default: var(--vromm-color-border);
 }
 
 .dark {
@@ -163,4 +188,44 @@
   --vromm-color-border-weak: var(--vromm-color-neutral-700);
   --vromm-color-border-strong: var(--vromm-color-neutral-500);
   --vromm-color-border-disabled: var(--vromm-color-neutral-700);
+
+  /* Component-specific dark mode overrides */
+  --vromm-dark-surface: var(--vromm-color-neutral-800);
+  --vromm-border-light: var(--vromm-color-neutral-700);
+  --vromm-border-light-dark: var(--vromm-color-neutral-600);
+  --vromm-text-page-title: var(--vromm-color-page-title);
+  --vromm-text-page-title-dark: var(--vromm-color-page-title);
+}
+
+/* Automatic dark mode based on system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Override for automatic dark mode */
+    --vromm-color-page-title: #e6f1ef;
+    --vromm-color-text: #a8c4c1;
+    --vromm-color-text-weak: var(--vromm-color-neutral-300);
+    --vromm-color-text-disabled: var(--vromm-color-neutral-500);
+    --vromm-color-text-inverted: var(--vromm-color-neutral-900);
+
+    --vromm-button-tertiary-bg: #1a2e2c;
+    --vromm-button-tertiary-hover: #243432;
+    --vromm-button-tertiary-text: #00ffb6;
+
+    --vromm-color-background: var(--vromm-color-neutral-900);
+    --vromm-color-background-medium: var(--vromm-color-neutral-800);
+    --vromm-color-background-strong: var(--vromm-color-neutral-700);
+    --vromm-color-background-disabled: var(--vromm-color-neutral-800);
+
+    --vromm-color-border: var(--vromm-color-neutral-600);
+    --vromm-color-border-weak: var(--vromm-color-neutral-700);
+    --vromm-color-border-strong: var(--vromm-color-neutral-500);
+    --vromm-color-border-disabled: var(--vromm-color-neutral-700);
+
+    /* Component-specific dark mode overrides */
+    --vromm-dark-surface: var(--vromm-color-neutral-800);
+    --vromm-border-light: var(--vromm-color-neutral-700);
+    --vromm-border-light-dark: var(--vromm-color-neutral-600);
+    --vromm-text-page-title: #e6f1ef;
+    --vromm-text-page-title-dark: #e6f1ef;
+  }
 } 

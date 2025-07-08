@@ -10,6 +10,23 @@ export interface CardImage {
   duration?: string; // For video duration display
 }
 
+export interface CardComponentItem {
+  component: React.ReactNode;
+  type: 'component';
+  alt?: string; // Optional alt text for accessibility
+}
+
+export type CardMediaOrComponent = CardImage | CardComponentItem;
+
+// Type guard functions for Card
+const isCardMediaItem = (item: CardMediaOrComponent): item is CardImage => {
+  return item.type !== 'component';
+};
+
+const isCardComponentItem = (item: CardMediaOrComponent): item is CardComponentItem => {
+  return item.type === 'component';
+};
+
 export interface CarouselOptions {
   showDots?: boolean;
   showArrows?: boolean;
@@ -32,8 +49,8 @@ export interface CardProps {
   className?: string;
   children?: React.ReactNode;
   
-  // Enhanced image/video support - backwards compatible
-  images?: CardImage | CardImage[];
+  // Enhanced media/component support - backwards compatible
+  images?: CardMediaOrComponent | CardMediaOrComponent[];
   
   // Map preview card specific props
   title?: string;
@@ -54,7 +71,7 @@ export interface CardProps {
   onMarkAsDriven?: () => void;
   onClose?: () => void;
   onClick?: () => void;
-  onImageChange?: (currentIndex: number, image: CardImage) => void;
+  onImageChange?: (currentIndex: number, media: CardMediaOrComponent) => void;
   onVideoPlay?: (currentIndex: number, image: CardImage) => void;
   onVideoPause?: (currentIndex: number, image: CardImage) => void;
 }
@@ -464,9 +481,21 @@ export const Card: React.FC<CardProps> = ({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Main Media Container (Image/Video) */}
+            {/* Main Media Container (Image/Video/Component) */}
             <div className="relative">
-              {currentImage.type === 'video' ? (
+              {currentImage && isCardComponentItem(currentImage) ? (
+                /* React Component */
+                <div 
+                  className={cn(
+                    "w-full h-48 transition-opacity duration-300",
+                    options.transition === 'fade' && isTransitioning && "opacity-0"
+                  )}
+                  role="img"
+                  aria-label={currentImage.alt || "Custom component"}
+                >
+                  {currentImage.component}
+                </div>
+              ) : currentImage && isCardMediaItem(currentImage) && currentImage.type === 'video' ? (
                 <>
                   {/* Video Element */}
                   <video
@@ -482,15 +511,21 @@ export const Card: React.FC<CardProps> = ({
                     preload="metadata"
                     onPlay={() => {
                       setVideoStates(prev => ({ ...prev, [currentImageIndex]: { isPlaying: true } }));
-                      onVideoPlay?.(currentImageIndex, currentImage);
+                      if (isCardMediaItem(currentImage)) {
+                        onVideoPlay?.(currentImageIndex, currentImage);
+                      }
                     }}
                     onPause={() => {
                       setVideoStates(prev => ({ ...prev, [currentImageIndex]: { isPlaying: false } }));
-                      onVideoPause?.(currentImageIndex, currentImage);
+                      if (isCardMediaItem(currentImage)) {
+                        onVideoPause?.(currentImageIndex, currentImage);
+                      }
                     }}
                     onEnded={() => {
                       setVideoStates(prev => ({ ...prev, [currentImageIndex]: { isPlaying: false } }));
-                      onVideoPause?.(currentImageIndex, currentImage);
+                      if (isCardMediaItem(currentImage)) {
+                        onVideoPause?.(currentImageIndex, currentImage);
+                      }
                     }}
                     onError={(e) => {
                       console.error('Video failed to load:', currentImage.src);
@@ -524,7 +559,7 @@ export const Card: React.FC<CardProps> = ({
                     </div>
                   )}
                 </>
-              ) : (
+              ) : currentImage && isCardMediaItem(currentImage) ? (
                 /* Image Element */
                 <img
                   src={currentImage.src}
@@ -543,20 +578,27 @@ export const Card: React.FC<CardProps> = ({
                     target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y5ZmFmYiIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzZiNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBhdmFpbGFibGU8L3RleHQ+Cjwvc3ZnPg==';
                   }}
                 />
-              )}
+              ) : null}
               
-              {/* Type Icon Overlays */}
-              {currentImage.type === 'map' && (
+              {/* Type Icon Overlays - Only for media items */}
+              {currentImage && isCardMediaItem(currentImage) && currentImage.type === 'map' && (
                 <div className="absolute top-2 left-2 bg-white/90 rounded-md px-2 py-1 flex items-center gap-1">
                   <Map className="h-3 w-3 text-gray-700" />
                   <span className="text-xs font-medium text-gray-700">Map</span>
                 </div>
               )}
               
-              {currentImage.type === 'video' && !videoStates[currentImageIndex]?.isPlaying && (
+              {currentImage && isCardMediaItem(currentImage) && currentImage.type === 'video' && !videoStates[currentImageIndex]?.isPlaying && (
                 <div className="absolute top-2 left-2 bg-black/70 text-white rounded-md px-2 py-1 flex items-center gap-1">
                   <Play className="h-3 w-3" />
                   <span className="text-xs font-medium">Video</span>
+                </div>
+              )}
+              
+              {/* Component Type Icon Overlay */}
+              {currentImage && isCardComponentItem(currentImage) && (
+                <div className="absolute top-2 left-2 bg-white/90 rounded-md px-2 py-1 flex items-center gap-1">
+                  <span className="text-xs font-medium text-gray-700">Component</span>
                 </div>
               )}
             </div>
