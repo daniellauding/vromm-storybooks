@@ -1,0 +1,530 @@
+@import '../../tokens/brand-config.scss';
+
+.vromm-system-message {
+  position: relative;
+  width: 100%;
+  transition: all 0.3s ease;
+  z-index: var(--vromm-z-banner, 1050);
+
+  &--sticky-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--vromm-z-banner, 1050);
+  }
+
+  &--sticky-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--vromm-z-banner, 1050);
+  }
+}
+
+.vromm-system-message-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+  .vromm-system-message--sticky-top &,
+  .vromm-system-message--sticky-bottom & {
+    max-width: none;
+    padding: 0;
+  }
+}
+
+.vromm-system-message-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  position: relative;
+  
+  .vromm-system-message--sticky-top &,
+  .vromm-system-message--sticky-bottom & {
+    border-radius: 0;
+    padding: 0.75rem 1.5rem;
+  }
+  
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    
+    .vromm-system-message--sticky-top &,
+    .vromm-system-message--sticky-bottom & {
+      padding: 0.75rem 1rem;
+    }
+  }
+}
+
+// Icon styles
+.vromm-system-message-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vromm-system-message-icon-svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  
+  .vromm-system-message--lg & {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .vromm-system-message--sm & {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+// Text content
+.vromm-system-message-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.vromm-system-message-message {
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  
+  .vromm-system-message--lg & {
+    font-size: 1rem;
+  }
+  
+  .vromm-system-message--sm & {
+    font-size: 0.75rem;
+  }
+}
+
+.vromm-system-message-description {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  margin-top: 0.25rem;
+  opacity: 0.9;
+  
+  .vromm-system-message--lg & {
+    font-size: 0.875rem;
+  }
+  
+  .vromm-system-message--sm & {
+    font-size: 0.675rem;
+  }
+}
+
+// Actions
+.vromm-system-message-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  
+  @media (max-width: 640px) {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.vromm-system-message-action {
+  white-space: nowrap;
+}
+
+// Dismiss button
+.vromm-system-message-dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: currentColor;
+  opacity: 0.7;
+  
+  &:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  &:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    opacity: 1;
+  }
+  
+  @media (max-width: 640px) {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
+.vromm-system-message-dismiss-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+// Size variants
+.vromm-system-message--sm {
+  .vromm-system-message-content {
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+    
+    .vromm-system-message--sticky-top &,
+    .vromm-system-message--sticky-bottom & {
+      padding: 0.5rem 1rem;
+    }
+  }
+}
+
+.vromm-system-message--lg {
+  .vromm-system-message-content {
+    padding: 1.5rem 2rem;
+    gap: 1.5rem;
+    
+    .vromm-system-message--sticky-top &,
+    .vromm-system-message--sticky-bottom & {
+      padding: 1rem 2rem;
+    }
+  }
+}
+
+// Background variants
+.vromm-system-message--bg-subtle {
+  .vromm-system-message-content {
+    background-color: transparent;
+    border: 1px solid currentColor;
+    border-opacity: 0.2;
+  }
+}
+
+.vromm-system-message--bg-gradient {
+  .vromm-system-message-content {
+    background: linear-gradient(135deg, currentColor 0%, transparent 100%);
+    background-blend-mode: multiply;
+  }
+}
+
+// Color variants
+.vromm-system-message--info {
+  color: var(--vromm-color-info-700);
+  
+  .vromm-system-message-content {
+    background-color: var(--vromm-color-info-50);
+    border-left: 4px solid var(--vromm-color-info-500);
+  }
+  
+  @include vromm-dark-mode {
+    color: var(--vromm-color-info-200);
+    
+    .vromm-system-message-content {
+      background-color: var(--vromm-color-info-900);
+      border-left-color: var(--vromm-color-info-400);
+    }
+  }
+}
+
+.vromm-system-message--success {
+  color: var(--vromm-color-success-700);
+  
+  .vromm-system-message-content {
+    background-color: var(--vromm-color-success-50);
+    border-left: 4px solid var(--vromm-color-success-500);
+  }
+  
+  @include vromm-dark-mode {
+    color: var(--vromm-color-success-200);
+    
+    .vromm-system-message-content {
+      background-color: var(--vromm-color-success-900);
+      border-left-color: var(--vromm-color-success-400);
+    }
+  }
+}
+
+.vromm-system-message--warning {
+  color: var(--vromm-color-warning-700);
+  
+  .vromm-system-message-content {
+    background-color: var(--vromm-color-warning-50);
+    border-left: 4px solid var(--vromm-color-warning-500);
+  }
+  
+  @include vromm-dark-mode {
+    color: var(--vromm-color-warning-200);
+    
+    .vromm-system-message-content {
+      background-color: var(--vromm-color-warning-900);
+      border-left-color: var(--vromm-color-warning-400);
+    }
+  }
+}
+
+.vromm-system-message--error {
+  color: var(--vromm-color-error-700);
+  
+  .vromm-system-message-content {
+    background-color: var(--vromm-color-error-50);
+    border-left: 4px solid var(--vromm-color-error-500);
+  }
+  
+  @include vromm-dark-mode {
+    color: var(--vromm-color-error-200);
+    
+    .vromm-system-message-content {
+      background-color: var(--vromm-color-error-900);
+      border-left-color: var(--vromm-color-error-400);
+    }
+  }
+}
+
+.vromm-system-message--promotional {
+  color: var(--vromm-color-text-primary, #145251);
+  
+  .vromm-system-message-content {
+    background-color: var(--vromm-color-brand-primary, #145251);
+    color: white;
+    border: none;
+  }
+  
+  .vromm-system-message-message {
+    font-weight: 700;
+  }
+  
+  .vromm-system-message-description {
+    opacity: 0.9;
+  }
+}
+
+.vromm-system-message--announcement {
+  color: var(--vromm-color-primary-700);
+  
+  .vromm-system-message-content {
+    background: linear-gradient(135deg, var(--vromm-color-primary-50) 0%, var(--vromm-color-accent-50) 100%);
+    border-left: 4px solid var(--vromm-color-primary-500);
+  }
+  
+  @include vromm-dark-mode {
+    color: var(--vromm-color-primary-200);
+    
+    .vromm-system-message-content {
+      background: linear-gradient(135deg, var(--vromm-color-primary-900) 0%, var(--vromm-color-accent-900) 100%);
+      border-left-color: var(--vromm-color-primary-400);
+    }
+  }
+}
+
+// Animation variants
+.vromm-system-message--anim-slide {
+  &.vromm-system-message--sticky-top {
+    animation: vromm-system-message-slide-down 0.3s ease-out;
+  }
+  
+  &.vromm-system-message--sticky-bottom {
+    animation: vromm-system-message-slide-up 0.3s ease-out;
+  }
+  
+  &:not([class*="sticky"]) {
+    animation: vromm-system-message-slide-in 0.3s ease-out;
+  }
+  
+  &.vromm-system-message--animating-out {
+    &.vromm-system-message--sticky-top {
+      animation: vromm-system-message-slide-up-out 0.3s ease-in;
+    }
+    
+    &.vromm-system-message--sticky-bottom {
+      animation: vromm-system-message-slide-down-out 0.3s ease-in;
+    }
+    
+    &:not([class*="sticky"]) {
+      animation: vromm-system-message-slide-out 0.3s ease-in;
+    }
+  }
+}
+
+.vromm-system-message--anim-fade {
+  animation: vromm-system-message-fade-in 0.3s ease-out;
+  
+  &.vromm-system-message--animating-out {
+    animation: vromm-system-message-fade-out 0.3s ease-in;
+  }
+}
+
+.vromm-system-message--anim-bounce {
+  animation: vromm-system-message-bounce-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  &.vromm-system-message--animating-out {
+    animation: vromm-system-message-bounce-out 0.3s ease-in;
+  }
+}
+
+// Animation keyframes
+@keyframes vromm-system-message-slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes vromm-system-message-slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes vromm-system-message-slide-in {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes vromm-system-message-slide-up-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes vromm-system-message-slide-down-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes vromm-system-message-slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes vromm-system-message-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vromm-system-message-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vromm-system-message-bounce-in {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes vromm-system-message-bounce-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .vromm-system-message-content {
+    padding: 1rem;
+  }
+  
+  .vromm-system-message--sm .vromm-system-message-content {
+    padding: 0.75rem;
+  }
+  
+  .vromm-system-message--lg .vromm-system-message-content {
+    padding: 1.25rem;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .vromm-system-message-content {
+    border-width: 2px;
+  }
+  
+  .vromm-system-message-dismiss:focus {
+    outline-width: 3px;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .vromm-system-message,
+  .vromm-system-message-dismiss {
+    transition: none;
+  }
+  
+  .vromm-system-message--anim-slide,
+  .vromm-system-message--anim-fade,
+  .vromm-system-message--anim-bounce {
+    animation: none;
+    
+    &.vromm-system-message--animating-out {
+      animation: none;
+    }
+  }
+} 

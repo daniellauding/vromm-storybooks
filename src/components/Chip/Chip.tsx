@@ -1,14 +1,15 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
+import './Chip.scss';
 
 export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'secondary' | 'outline' | 'filled';
+  variant?: 'neutral' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   size?: 'sm' | 'md' | 'lg';
-  color?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   removable?: boolean;
   onRemove?: () => void;
-  icon?: React.ReactNode;
+  icon?: React.ComponentType<{ className?: string }>;
   disabled?: boolean;
+  selected?: boolean;
   className?: string;
   children: React.ReactNode;
 }
@@ -23,16 +24,17 @@ export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
  * - Brand color integration
  * - Dark mode support
  * - Disabled state
+ * - Selected state
  * - Accessible design
  */
 export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(({
-  variant = 'default',
+  variant = 'neutral',
   size = 'md',
-  color = 'default',
   removable = false,
   onRemove,
-  icon,
+  icon: Icon,
   disabled = false,
+  selected = false,
   className,
   children,
   onClick,
@@ -47,26 +49,11 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(({
     }
   };
 
-  const variants = {
-    default: 'vromm-chip--default',
-    secondary: 'vromm-chip--secondary',
-    outline: 'vromm-chip--outline',
-    filled: 'vromm-chip--filled'
-  };
-
-  const sizes = {
-    sm: 'vromm-chip--sm',
-    md: 'vromm-chip--md',
-    lg: 'vromm-chip--lg'
-  };
-
-  const colors = {
-    default: 'vromm-chip--color-default',
-    primary: 'vromm-chip--color-primary',
-    secondary: 'vromm-chip--color-secondary',
-    success: 'vromm-chip--color-success',
-    warning: 'vromm-chip--color-warning',
-    error: 'vromm-chip--color-error'
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (isClickable && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick?.(e as any);
+    }
   };
 
   return (
@@ -75,24 +62,25 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(({
       role={isClickable ? 'button' : undefined}
       tabIndex={isClickable ? 0 : undefined}
       onClick={isClickable ? onClick : undefined}
+      onKeyDown={handleKeyDown}
       className={cn(
         'vromm-chip',
-        variants[variant],
-        sizes[size],
-        colors[color],
+        `vromm-chip--${variant}`,
+        `vromm-chip--${size}`,
         disabled && 'vromm-chip--disabled',
+        selected && 'vromm-chip--selected',
         isClickable && 'vromm-chip--clickable',
         className
       )}
+      aria-pressed={selected}
+      aria-disabled={disabled}
       {...props}
     >
-      {icon && (
-        <span className="vromm-chip-icon">
-          {icon}
-        </span>
+      {Icon && (
+        <Icon className="vromm-chip__icon" />
       )}
       
-      <span className="vromm-chip-content">
+      <span className="vromm-chip__content">
         {children}
       </span>
       
@@ -101,7 +89,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(({
           type="button"
           onClick={handleRemove}
           disabled={disabled}
-          className="vromm-chip-remove"
+          className="vromm-chip__remove"
           aria-label="Remove"
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

@@ -12,6 +12,9 @@ import './Carousel/Carousel.scss';
 import './Badge/Badge.scss';
 import './Card/Card.scss';
 import './Label/Label.scss';
+import './Header/Header.scss';
+import './Footer/Footer.scss';
+import './SystemAlert/SystemAlert.scss';
 
 // Component exports
 export { Button, LinkButton } from './Button';
@@ -53,6 +56,50 @@ export {
   Search
 } from './Forms';
 
+// New Data Display Components
+export { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableRow, 
+  TableCell, 
+  TableHeaderCell 
+} from './Table';
+
+export { 
+  List, 
+  ListItem,
+  DescriptionList,
+  DescriptionTerm,
+  DescriptionDetails
+} from './List';
+
+export { 
+  Accordion, 
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent
+} from './Accordion';
+
+export { 
+  Tabs, 
+  TabsList,
+  TabsTrigger,
+  TabsContent
+} from './Tabs';
+
+export { 
+  Avatar, 
+  AvatarImage,
+  AvatarFallback,
+  AvatarGroup
+} from './Avatar';
+
+// Layout components
+export { Header } from './Header';
+export { Footer } from './Footer';
+export { SystemAlert } from './SystemAlert';
+
 // Re-export types for convenience
 export type { ButtonProps, LinkButtonProps } from './Button';
 export type { ModalProps, AlertModalProps } from './Modal';
@@ -90,11 +137,67 @@ export type {
   SearchOption
 } from './Forms';
 
-// Tour System
-// TODO: Fix Tour exports
-// export { TourProvider, useTour } from './Tour/TourContext';
-// export { Tour } from './Tour/Tour';
-// export type { TourStep, TourOptions, TourContextType } from './Tour/TourContext';
+// New Data Display Component Types
+export type { 
+  TableProps,
+  TableHeaderProps,
+  TableBodyProps,
+  TableRowProps,
+  TableCellProps,
+  TableHeaderCellProps
+} from './Table';
+
+export type { 
+  ListProps,
+  ListItemProps,
+  DescriptionListProps,
+  DescriptionTermProps,
+  DescriptionDetailsProps
+} from './List';
+
+export type { 
+  AccordionProps,
+  AccordionItemProps,
+  AccordionTriggerProps,
+  AccordionContentProps
+} from './Accordion';
+
+export type { 
+  TabsProps,
+  TabsListProps,
+  TabsTriggerProps,
+  TabsContentProps
+} from './Tabs';
+
+export type { 
+  AvatarProps,
+  AvatarImageProps,
+  AvatarFallbackProps,
+  AvatarGroupProps
+} from './Avatar';
+
+// Layout component types
+export type { 
+  HeaderProps, 
+  HeaderLogo, 
+  HeaderNavItem, 
+  HeaderButton,
+  HeaderDropdown
+} from './Header';
+
+export type { 
+  FooterProps, 
+  FooterLogo, 
+  FooterLink, 
+  FooterSection,
+  FooterCTA,
+  FooterSocial
+} from './Footer';
+
+export type { 
+  SystemAlertProps, 
+  SystemAlertAction
+} from './SystemAlert';
 
 // Utils
 export { cn } from '../utils/cn';
@@ -106,3 +209,6 @@ export {
   getFileExtension,
   type UserMediaItem 
 } from '../utils/mediaTransformers';
+
+// Branding
+export * from './VrommLogo';

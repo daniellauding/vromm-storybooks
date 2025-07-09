@@ -699,7 +699,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({
         )}
         onClick={handleOverlayClick}
       >
-        {!mobileBottomSheet && <span className="vromm-modal-spacer" aria-hidden="true">&#8203;</span>}
         <div
           ref={ref}
           className={cn(

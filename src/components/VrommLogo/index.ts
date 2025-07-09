@@ -1,0 +1,1 @@
+export { VrommLogo, type VrommLogoProps } from './VrommLogo'; 

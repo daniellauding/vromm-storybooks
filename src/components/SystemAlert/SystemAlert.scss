@@ -1,0 +1,412 @@
+@import '../../tokens/brand-config.scss';
+
+// Base system alert styles
+.vromm-system-alert {
+  position: relative;
+  width: 100%;
+  z-index: var(--vromm-z-banner, 1100);
+  transition: all 200ms ease-in-out;
+  
+  &--dismissing {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+// Positioning
+.vromm-system-alert--sticky {
+  position: sticky;
+  
+  &.vromm-system-alert--top {
+    top: 0;
+  }
+  
+  &.vromm-system-alert--bottom {
+    bottom: 0;
+  }
+}
+
+// Size variants
+.vromm-system-alert--sm {
+  .vromm-system-alert__container {
+    padding: 0.5rem 1rem;
+  }
+  
+  .vromm-system-alert__message {
+    font-size: 0.875rem;
+  }
+  
+  .vromm-system-alert__description {
+    font-size: 0.75rem;
+  }
+}
+
+.vromm-system-alert--md {
+  .vromm-system-alert__container {
+    padding: 0.75rem 1rem;
+    
+    @media (min-width: 1024px) {
+      padding: 0.75rem 2rem;
+    }
+  }
+  
+  .vromm-system-alert__message {
+    font-size: 0.875rem;
+    
+    @media (min-width: 1024px) {
+      font-size: 1rem;
+    }
+  }
+  
+  .vromm-system-alert__description {
+    font-size: 0.875rem;
+  }
+}
+
+.vromm-system-alert--lg {
+  .vromm-system-alert__container {
+    padding: 1rem 1rem;
+    
+    @media (min-width: 1024px) {
+      padding: 1rem 2rem;
+    }
+  }
+  
+  .vromm-system-alert__message {
+    font-size: 1rem;
+    
+    @media (min-width: 1024px) {
+      font-size: 1.125rem;
+    }
+  }
+  
+  .vromm-system-alert__description {
+    font-size: 1rem;
+  }
+}
+
+// Container
+.vromm-system-alert__container {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  
+  @media (min-width: 1280px) {
+    max-width: 1280px;
+  }
+}
+
+// Content wrapper
+.vromm-system-alert__content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0; // Allow text to truncate
+}
+
+// Orientation variants
+.vromm-system-alert--vertical {
+  .vromm-system-alert__content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .vromm-system-alert__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}
+
+.vromm-system-alert--horizontal {
+  .vromm-system-alert__content {
+    @media (max-width: 767px) {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.75rem;
+    }
+  }
+  
+  .vromm-system-alert__text {
+    @media (max-width: 767px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+  }
+}
+
+// Icon
+.vromm-system-alert__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vromm-system-alert__icon-svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+// Text content
+.vromm-system-alert__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .vromm-system-alert--vertical & {
+    align-items: center;
+    
+    @media (min-width: 768px) {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+}
+
+.vromm-system-alert__message {
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  
+  @media (min-width: 768px) {
+    white-space: nowrap;
+  }
+  
+  .vromm-system-alert--vertical & {
+    white-space: normal;
+  }
+}
+
+.vromm-system-alert__description {
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+  opacity: 0.9;
+}
+
+// Action button
+.vromm-system-alert__action {
+  flex-shrink: 0;
+}
+
+.vromm-system-alert__button {
+  white-space: nowrap;
+  
+  @media (max-width: 767px) {
+    .vromm-system-alert--horizontal & {
+      width: 100%;
+      max-width: 20rem;
+    }
+  }
+}
+
+// Custom content
+.vromm-system-alert__custom {
+  flex-shrink: 0;
+}
+
+// Dismiss button
+.vromm-system-alert__dismiss {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: all 200ms ease-in-out;
+  color: currentColor;
+  opacity: 0.7;
+  
+  &:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.vromm-system-alert__dismiss-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+// Variant styles
+.vromm-system-alert--info {
+  background-color: var(--vromm-color-blue-600);
+  color: white;
+  
+  .vromm-system-alert__button {
+    --button-bg: rgba(255, 255, 255, 0.2);
+    --button-border: rgba(255, 255, 255, 0.3);
+    --button-text: white;
+    --button-bg-hover: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.vromm-system-alert--success {
+  background-color: var(--vromm-color-green-600);
+  color: white;
+  
+  .vromm-system-alert__button {
+    --button-bg: rgba(255, 255, 255, 0.2);
+    --button-border: rgba(255, 255, 255, 0.3);
+    --button-text: white;
+    --button-bg-hover: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.vromm-system-alert--warning {
+  background-color: var(--vromm-color-yellow-500);
+  color: var(--vromm-color-yellow-900);
+  
+  .vromm-system-alert__button {
+    --button-bg: var(--vromm-color-yellow-600);
+    --button-border: var(--vromm-color-yellow-600);
+    --button-text: white;
+    --button-bg-hover: var(--vromm-color-yellow-700);
+  }
+}
+
+.vromm-system-alert--error {
+  background-color: var(--vromm-color-red-600);
+  color: white;
+  
+  .vromm-system-alert__button {
+    --button-bg: rgba(255, 255, 255, 0.2);
+    --button-border: rgba(255, 255, 255, 0.3);
+    --button-text: white;
+    --button-bg-hover: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.vromm-system-alert--announcement {
+  background: linear-gradient(135deg, var(--vromm-color-primary-600), var(--vromm-color-primary-800));
+  color: white;
+  
+  .vromm-system-alert__message {
+    font-style: italic;
+    font-weight: 700;
+  }
+  
+  .vromm-system-alert__button {
+    --button-bg: rgba(255, 255, 255, 0.2);
+    --button-border: rgba(255, 255, 255, 0.3);
+    --button-text: white;
+    --button-bg-hover: rgba(255, 255, 255, 0.3);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+}
+
+// Special styling for Vromm-style announcements (like the early access banner)
+.vromm-system-alert--vromm-style {
+  background-color: #145251;
+  color: white;
+  
+  .vromm-system-alert__message {
+    font-weight: 500;
+    
+    @media (min-width: 1024px) {
+      font-weight: 600;
+    }
+  }
+  
+  .vromm-system-alert__description {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .vromm-system-alert__button {
+    font-family: var(--font-rubik, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    background-color: #00FFBC;
+    color: #145251;
+    border: none;
+    border-radius: 0.75rem;
+    letter-spacing: 0.025em;
+    transition: all 500ms ease;
+    
+    &:hover {
+      background-color: #00E5A9;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 255, 188, 0.3);
+    }
+  }
+}
+
+// Dark mode adjustments
+@include vromm-dark-mode {
+  .vromm-system-alert--info {
+    background-color: var(--vromm-color-blue-700);
+  }
+  
+  .vromm-system-alert--success {
+    background-color: var(--vromm-color-green-700);
+  }
+  
+  .vromm-system-alert--warning {
+    background-color: var(--vromm-color-yellow-600);
+  }
+  
+  .vromm-system-alert--error {
+    background-color: var(--vromm-color-red-700);
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .vromm-system-alert {
+    border: 2px solid currentColor;
+  }
+  
+  .vromm-system-alert__dismiss {
+    &:focus {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .vromm-system-alert,
+  .vromm-system-alert *,
+  .vromm-system-alert *::before,
+  .vromm-system-alert *::after {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .vromm-system-alert--dismissing {
+    opacity: 0;
+    transform: none !important;
+  }
+} 
